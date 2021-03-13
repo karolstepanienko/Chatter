@@ -1,0 +1,12 @@
+{
+  // Some utility settings.
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.factorypath": true,
+        "**/.git": false,
+        "**/.project": true,
+        "**/.settings": true
+    },
+    "editor.tabSize": 2
+}
