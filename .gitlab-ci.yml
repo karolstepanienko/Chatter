@@ -10,9 +10,9 @@ build-code-job1:
 test-code-job1:
   stage: test
   script: mvn test
-  needs: [build]
+  needs: [build-code-job1]
 
 deploy-code-job1:
   stage: deploy
   script: mvn package
-  only: master
+  only: [master]
