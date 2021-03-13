@@ -1,3 +1,7 @@
+### Build related files ###
+.classpath
+.project
+.settings/
 ### Maven ###
 target/
 pom.xml.tag

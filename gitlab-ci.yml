@@ -1,0 +1,18 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build-code-job1:
+  stage: build
+  script: mvn compile
+
+test-code-job1:
+  stage: test
+  script: mvn test
+  needs: [build]
+
+deploy-code-job1:
+  stage: deploy
+  script: mvn package
+  only: master
