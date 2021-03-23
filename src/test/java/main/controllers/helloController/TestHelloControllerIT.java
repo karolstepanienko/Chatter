@@ -1,4 +1,4 @@
-package frontend.main;
+package main.controllers.helloController;
 
 import static org.assertj.core.api.Assertions.*;
 

@@ -1,4 +1,4 @@
-package frontend.main;
+package main.controllers.helloController;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
