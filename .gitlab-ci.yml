@@ -8,8 +8,6 @@ stages:
 build-code-job1:
   stage: build
   script: mvn compile
-  artifacts:
-      paths: [target/]
 
 test-code-job1:
   stage: test
@@ -20,3 +18,5 @@ deploy-code-job1:
   stage: deploy
   script: mvn package
   only: [master]
+  artifacts:
+      paths: [target/*.jar]
