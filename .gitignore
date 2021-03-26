@@ -2,6 +2,8 @@
 .classpath
 .project
 .settings/
+### Editor settings ###
+.vscode
 ### Maven ###
 target/
 pom.xml.tag
