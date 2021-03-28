@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+  <title>Register screen</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <h1>Create an account</h1>
+    <form action="#" th:action="@{/account/register}" th:object="${register_user}" method="POST">
+      <p>Login: <input type="text" th:field="*{name}" /></p>
+      <p>Email: <input type="text" th:field="*{email}" /></p>
+      <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+    <br>
+    <a href="/">Home</a>
+</body>
+</html>
