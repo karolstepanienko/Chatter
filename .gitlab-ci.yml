@@ -1,5 +1,8 @@
 image: maven:latest
 
+services:
+  - mysql:latest
+
 stages:
   - build
   - test
