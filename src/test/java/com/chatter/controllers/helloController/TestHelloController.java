@@ -1,4 +1,4 @@
-package main.controllers.helloController;
+package com.chatter.controllers.helloController;
 
 
 import static org.hamcrest.Matchers.equalTo;
@@ -23,8 +23,8 @@ public class TestHelloController {
 
 	@Test
 	public void getHello() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
+		mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
       .andExpect(status().isOk())
-      .andExpect(content().string(equalTo("Hello world.")));
+      .andExpect(content().string(equalTo("Hello world!")));
 	}
 }
