@@ -1,4 +1,5 @@
 image: maven:latest
+# Zrobić ubuntu i pobrać mavena
 
 services:
   - mysql:latest
@@ -18,13 +19,14 @@ stages:
 
 db-seeding:
   stage: preparation
+  image: mysql:latest
   services:
     - mysql
   script:
-    - echo "CREATE DATABASE chatter;" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
-    - echo "CREATE USER 'springuser'@'%' IDENTIFIED BY 'ThePassword';" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
-    - echo "GRANT ALL ON chatter.* TO 'springuser'@'%';" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
-    - echo "FLUSH PRIVILEGES" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
+    - echo "CREATE DATABASE chatter;" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST" "$MYSQL_DATABASE"
+    - echo "CREATE USER 'springuser'@'%' IDENTIFIED BY 'ThePassword';" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST" "$MYSQL_DATABASE"
+    - echo "GRANT ALL ON chatter.* TO 'springuser'@'%';" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST" "$MYSQL_DATABASE"
+    - echo "FLUSH PRIVILEGES" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST" "$MYSQL_DATABASE"
 
 build-code-job1:
   stage: build
