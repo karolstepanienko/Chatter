@@ -3,13 +3,33 @@ image: maven:latest
 services:
   - mysql:latest
 
+variables:
+  MYSQL_DATABASE: db_example
+  MYSQL_USER: springuser
+  MYSQL_USER_PASSWORD: ThePassword
+  MYSQL_ROOT_PASSWORD: root
+  DB_HOST: mysql
+
 stages:
+  - preparation
   - build
   - test
   - deploy
 
+db-seeding:
+  stage: preparation
+  services:
+    - mysql
+  script:
+    - echo "CREATE DATABASE chatter;" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
+    - echo "CREATE USER 'springuser'@'%' IDENTIFIED BY 'ThePassword';" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
+    - echo "GRANT ALL ON chatter.* TO 'springuser'@'%';" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
+    - echo "FLUSH PRIVILEGES" | mysql --user=root --password="MYSQL_ROOT_PASSWORD" --host="DB_HOST"
+
 build-code-job1:
   stage: build
+  dependencies:
+    - db-seeding
   script: mvn compile
 
 test-code-job1:
@@ -23,3 +43,4 @@ deploy-code-job1:
   only: [master]
   artifacts:
       paths: [target/*.jar]
+      expire_in: 3 days
