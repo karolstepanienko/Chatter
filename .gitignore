@@ -17,3 +17,33 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 .flattened-pom.xml
+### React ###
+
+# dependencies
+/src/main/javascript/com/chatter/node_modules/
+/src/main/javascript/com/chatter/.pnp
+/src/main/javascript/com/chatter/.pnp.js
+
+# testing
+/src/main/javascript/com/chatter/coverage
+
+# production
+/src/main/javascript/com/chatter/build
+
+# misc
+/src/main/javascript/com/chatter/.DS_Store
+/src/main/javascript/com/chatter/.env.local
+/src/main/javascript/com/chatter/.env.development.local
+/src/main/javascript/com/chatter/.env.test.local
+/src/main/javascript/com/chatter/.env.production.local
+/src/main/javascript/com/chatter/npm-debug.log*
+/src/main/javascript/com/chatter/yarn-debug.log*
+/src/main/javascript/com/chatter/yarn-error.log*
+/src/main/javascript/com/chatter/.env
+
+
+
+
+/src/main/javascript/com/chatter/package-lock.json
+/src/main/javascript/com/chatter/package.json
+/src/main/javascript/com/chatter/README.md
