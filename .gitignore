@@ -20,34 +20,34 @@ buildNumber.properties
 ### React ###
 
 # dependencies
-/src/main/javascript/com/chatter/node_modules/
-/src/main/javascript/com/chatter/.pnp
-/src/main/javascript/com/chatter/.pnp.js
+/src/main/js/com/chatter/node_modules/
+/src/main/js/com/chatter/.pnp
+/src/main/js/com/chatter/.pnp.js
 
 # testing
-/src/main/javascript/com/chatter/coverage
+/src/main/js/com/chatter/coverage
 
 # production
-/src/main/javascript/com/chatter/build
+/src/main/js/com/chatter/build
 
 # misc
-/src/main/javascript/com/chatter/.DS_Store
-/src/main/javascript/com/chatter/.env.local
-/src/main/javascript/com/chatter/.env.development.local
-/src/main/javascript/com/chatter/.env.test.local
-/src/main/javascript/com/chatter/.env.production.local
-/src/main/javascript/com/chatter/npm-debug.log*
-/src/main/javascript/com/chatter/yarn-debug.log*
-/src/main/javascript/com/chatter/yarn-error.log*
-/src/main/javascript/com/chatter/.env
+/src/main/js/com/chatter/.DS_Store
+/src/main/js/com/chatter/.env.local
+/src/main/js/com/chatter/.env.development.local
+/src/main/js/com/chatter/.env.test.local
+/src/main/js/com/chatter/.env.production.local
+/src/main/js/com/chatter/npm-debug.log*
+/src/main/js/com/chatter/yarn-debug.log*
+/src/main/js/com/chatter/yarn-error.log*
+/src/main/js/com/chatter/.env
 
 
 
 
-/src/main/javascript/com/chatter/package-lock.json
-/src/main/javascript/com/chatter/README.md
+/src/main/js/com/chatter/package-lock.json
+/src/main/js/com/chatter/README.md
 
 
 ### Temp files ###
-/src/main/javascript/com/chatter/src/Components/PersonInput.js
-/src/main/javascript/com/chatter/src/Components/PersonList.js
+/src/main/js/com/chatter/src/Components/PersonInput.js
+/src/main/js/com/chatter/src/Components/PersonList.js
