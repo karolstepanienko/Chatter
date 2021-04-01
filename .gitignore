@@ -45,5 +45,9 @@ buildNumber.properties
 
 
 /src/main/javascript/com/chatter/package-lock.json
-/src/main/javascript/com/chatter/package.json
 /src/main/javascript/com/chatter/README.md
+
+
+### Temp files ###
+/src/main/javascript/com/chatter/src/Components/PersonInput.js
+/src/main/javascript/com/chatter/src/Components/PersonList.js

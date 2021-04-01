@@ -1,0 +1,23 @@
+.navbar { background-color:dodgerblue; }
+
+.navbar-light .navbar-brand {
+  color: yellow;
+  font-size: 5vh;
+  font-weight: 700;
+}
+
+.navbar-light:hover .navbar-brand:hover {
+  color: cyan;
+}
+
+.form-center {
+  position: absolute !important;
+  left: 75%;
+  right: 8%;
+}
+
+#basic-navbar-nav {
+  font-size: 4vh;
+  color: blue;
+}
+

@@ -1,0 +1,13 @@
+.grid {
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  width: 40%;
+  margin-top: 1%;
+}
+
+.about-title {
+  margin-left: 30%;
+  width: 40%;
+}
+
