@@ -45,10 +45,10 @@
 		<!-- end::tests[] -->
 
     <!-- tag::thymeleaf -->
-    <dependency>
+    <!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
+		</dependency> -->
     <!-- end::thymeleaf -->
 
     <!-- tag::jpa[] -->
@@ -114,6 +114,26 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+
+
+        <!-- 
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.9</version>
+          <executions>
+            <execution>
+              <id>build-classpath</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>build-classpath</goal>
+              </goals>
+              <configuration>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin> -->
+        
       </plugins>
     </pluginManagement>
   </build>

@@ -10,4 +10,10 @@ public class AccountControllerLogic {
     user.setId(userRepository.getUserWithName(user.getName()).getId());
     userRepository.delete(user);
   }
+
+  public boolean checkUserLoginAvailable(User user, UserRepository userRepository) {
+    if (userRepository.getUserWithName(user.getName()) != null) {
+      return true;
+    } else return false;
+  }
 }

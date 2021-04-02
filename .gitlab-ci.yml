@@ -17,7 +17,6 @@ default:
   before_script:
     - apt-get update && apt-get --assume-yes install mysql-server mysql-client libmysqlclient-dev
     - service mysql start
-    - mysql -u root -e "SELECT User, Host, plugin FROM mysql.user;"
     - mysql -u root -e "CREATE USER 'springuser'@'%' IDENTIFIED BY 'ThePassword';"
     - mysql -u root -e "CREATE DATABASE chatter;"
     - mysql -u root -e "GRANT ALL ON chatter.* TO 'springuser'@'%';"

@@ -1,0 +1,22 @@
+.register-page {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+}
+
+.register-page > input, label {
+  margin-top: 10px;
+}
+
+.login {
+  width: 100%;
+}
+
+.email {
+  width: 100%;
+}
+
+.button {
+  width: 100%;
+  margin-top: 2%
+}
