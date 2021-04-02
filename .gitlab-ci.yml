@@ -1,9 +1,32 @@
-image: maven:latest
+image: ubuntu:20.04
+
+variables:
+  MYSQL_DATABASE: $MYSQL_DB
+  MYSQL_USER: springuser
+  MYSQL_USER_PASSWORD: ThePassword
+  MYSQL_ROOT_PASSWORD: $MYSQL_PASS
+  MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+  DB_HOST: mysql
 
 stages:
   - build
   - test
   - deploy
+
+default:
+  before_script:
+    - apt-get update && apt-get --assume-yes install mysql-server mysql-client libmysqlclient-dev
+    - service mysql start
+    - mysql -u root -e "SELECT User, Host, plugin FROM mysql.user;"
+    - mysql -u root -e "CREATE USER 'springuser'@'%' IDENTIFIED BY 'ThePassword';"
+    - mysql -u root -e "CREATE DATABASE chatter;"
+    - mysql -u root -e "GRANT ALL ON chatter.* TO 'springuser'@'%';"
+    - mysql -u root -e "SET GLOBAL time_zone = '+02:00';"
+    - mysql -u root -e "FLUSH PRIVILEGES"
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt-get --assume-yes install default-jre
+    - java -version
+    - apt-get --assume-yes install maven    
 
 build-code-job1:
   stage: build
@@ -20,3 +43,4 @@ deploy-code-job1:
   only: [master]
   artifacts:
       paths: [target/*.jar]
+      expire_in: 3 days

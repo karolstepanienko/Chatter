@@ -20,7 +20,7 @@
 
 	<properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>15</java.version>
+		<!-- <java.version>15</java.version> -->
 	</properties>
 
   <dependencies>
@@ -43,6 +43,29 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- end::tests[] -->
+
+    <!-- tag::thymeleaf -->
+    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+    <!-- end::thymeleaf -->
+
+    <!-- tag::jpa[] -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+    <!-- end::jpa[] -->
+
+    <!-- tag::mysql[] -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+    <!-- end::mysql[] -->
+
   </dependencies>
 
   <build>
