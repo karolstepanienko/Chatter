@@ -3,8 +3,9 @@ import axios from 'axios';
 
 // Internal imports:
 import '../../../css/Pages/Account/Register.css';
+import { link }from '../../../Constants/Constants';
 
-const backend = React.createContext('http://localhost:8080/api/account');
+const linkRegister = `${link}/account/register`;
 
 export default class Register extends React.Component {
   constructor(props) {
@@ -14,36 +15,62 @@ export default class Register extends React.Component {
       name: '',
       login: '',
       email: '',
-    }
+    },
+    // Methods:
+    this.handleLoginChange = this.handleLoginChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+
+    this.loginTaken = false;
+    this.emailTaken = false;
   }
 
   handleRegister = event => {
     event.preventDefault();
 
-    const user = {
-      name: this.state.login,
-      email: this.state.email
-    };
+    this.checkLogin();
+    this.checkEmail();
+    
+    console.log(this.loginTaken);
+    console.log(this.state.login);
+    console.log(this.emailTaken);
+    console.log(this.state.email);
 
-    axios.post(backend + '/register', user)
-      .then(res => {
-        console.log(res);
-      });
+    if(this.loginTaken==false && this.emailTaken==false) {
+      axios.post(`${linkRegister}/add/user`, this.state);
+    } 
+    if(this.loginTaken) alert("Login is already taken.");
+    if(this.emailTaken) alert("Email is already taken.");
+  }
+
+  checkLogin() {
+    axios.post(`${linkRegister}/check/login`, this.state)
+    .then(res => {
+      if(res.data) {
+        this.loginTaken = true;
+      } else this.loginTaken = false;
+    });
+  }
+
+  checkEmail() {
+    axios.post(`${linkRegister}/check/email`, this.state)
+    .then(res => {
+      if(res.data) {
+        this.emailTaken = true;
+      } else this.emailTaken = false;
+    });
   }
 
   handleLoginChange = event => {
-    this.setState({ login: event.target.value });
-    console.log(this.state.login);
-    const user = {
-      id: this.state.id,
-      name: this.state.login,
-      login: this.state.login,
-      email: this.state.email,
-    }
-    axios.post('http://localhost:8080/api/account/register/check/login', user)
-      .then(res => {
-        if(res.data) alert("Login taken.");
-    });
+    event.preventDefault();
+    this.setState({login: event.target.value});
+    this.checkLogin();
+  }
+
+  handleEmailChange = event => {
+    event.preventDefault();
+    this.setState({email: event.target.value});
+    this.checkEmail();
   }
 
   render() {
@@ -57,6 +84,7 @@ export default class Register extends React.Component {
             type="text"
             name="login"
             placeholder="Your login"
+            value={this.state.login}
             onChange={this.handleLoginChange}></input>
 
           <label className="email">Email:</label>
@@ -65,8 +93,14 @@ export default class Register extends React.Component {
             type="text"
             name="email"
             placeholder="Your email"
+            value={this.state.email}
             onChange={this.handleEmailChange}></input>
-          <input className="button" type="submit" value="Register"></input>
+          
+          <input 
+          className="button"
+          type="submit"
+          value="Register"
+          onClick={this.handleRegister}></input>
         </form>
       </div>
     );

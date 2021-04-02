@@ -1,6 +1,5 @@
 package com.chatter.controllers.AccountController;
 
-
 // Spring-boot imports:
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,6 +38,23 @@ public class AccountController {
     return this.acLogic.checkUserLoginAvailable(user, userRepository);
   }
 
+  @CrossOrigin()
+  @PostMapping("/register/check/email")
+  public boolean checkUserEmailAvailable(@RequestBody User user) {
+    return this.acLogic.checkUserEmailAvailable(user, userRepository);
+  }
+
+  @CrossOrigin
+  @PostMapping("register/add/user")
+  public void addUser(@RequestBody User user) {
+    System.out.println(user.toString());
+    System.out.println(this.acLogic.checkUserLoginAvailable(user, userRepository));
+    System.out.println(this.acLogic.checkUserEmailAvailable(user, userRepository));
+
+    // userRepository.save(user);
+  }
+
+  ////
   @GetMapping("/register")
   public String registerForm(Model model) {
     model.addAttribute("register_user", new User());
@@ -68,18 +84,6 @@ public class AccountController {
     acLogic.deleteUser(user, userRepository);
     return "account/delete_result";
   }
-
-  // @PostMapping(path="/add") // Map ONLY POST Requests
-  // public @ResponseBody String addNewUser (@RequestParam String name, @RequestParam String email) {
-  //   // @ResponseBody means the returned String is the response, not a view name
-  //   // @RequestParam means it is a parameter from the GET or POST request
-
-  //   User n = new User();
-  //   n.setName(name);
-  //   n.setEmail(email);
-  //   userRepository.save(n);
-  //   return "Saved";
-  // }
 
   @GetMapping(path="/all")
   public @ResponseBody Iterable<User> getAllUsers() {

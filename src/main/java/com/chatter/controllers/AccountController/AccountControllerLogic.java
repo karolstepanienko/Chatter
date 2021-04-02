@@ -12,8 +12,14 @@ public class AccountControllerLogic {
   }
 
   public boolean checkUserLoginAvailable(User user, UserRepository userRepository) {
-    if (userRepository.getUserWithName(user.getName()) != null) {
-      return true;
-    } else return false;
+    // System.out.println(userRepository.getUserWithLogin(user.getLogin()).toString());
+    if (userRepository.getUserWithLogin(user.getLogin()) != null) return true;
+    else return false;
+  }
+
+  public boolean checkUserEmailAvailable(User user, UserRepository userRepository) {
+    // System.out.println(userRepository.getUserWithEmail(user.getEmail()).toString());
+    if (userRepository.getUserWithEmail(user.getEmail()) != null) return true;
+    else return false;
   }
 }

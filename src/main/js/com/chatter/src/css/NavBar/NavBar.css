@@ -2,7 +2,7 @@
 
 .navbar-light .navbar-brand {
   color: yellow;
-  font-size: 5vh;
+  font-size: 2em;
   font-weight: 700;
 }
 
@@ -17,12 +17,12 @@
 }
 
 #basic-navbar-nav {
-  font-size: 4vh;
+  font-size: 10%;
   color: blue;
 }
 
 .about-link,
 .login-link {
-  font-size: 2.5vh;
+  font-size: 15em;
 }
 
