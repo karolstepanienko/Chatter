@@ -1,18 +1,16 @@
-.register-page {
+.register-page, .login-page {
   display: flex;
   flex-flow: column wrap;
+  width: 30%;
   align-items: center;
+  margin-left: 35%;
 }
 
 .register-page > input, label {
   margin-top: 10px;
 }
 
-.login {
-  width: 100%;
-}
-
-.email {
+.login, .email, .password, .password-repeat {
   width: 100%;
 }
 

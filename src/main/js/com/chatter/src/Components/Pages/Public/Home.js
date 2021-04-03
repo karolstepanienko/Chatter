@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../css/Pages/Home.css';
+import '../../../css/Pages/Public/Home.css';
 
 export const Home = (props) => (
   <div className="home">

@@ -51,7 +51,7 @@ public class AccountController {
     System.out.println(this.acLogic.checkUserLoginAvailable(user, userRepository));
     System.out.println(this.acLogic.checkUserEmailAvailable(user, userRepository));
 
-    // userRepository.save(user);
+    userRepository.save(user);
   }
 
   ////

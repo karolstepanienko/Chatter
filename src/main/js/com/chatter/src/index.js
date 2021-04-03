@@ -6,9 +6,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './css/index.css'
 
 import NavigationBar from './Components/NavBar/NavigationBar.js';
-import { Home } from './Components/Pages/Home';
-import { About } from './Components/Pages/About';
-import { NoMatch } from './Components/Pages/NoMatch';
+import { Home } from './Components/Pages/Public/Home';
+import { About } from './Components/Pages/Public/About';
+import { NoMatch } from './Components/Pages/Public/NoMatch';
 import { Login } from './Components/Pages/Account/Login';
 import Register from './Components/Pages/Account/Register';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../css/Pages/About.css';
+import '../../../css/Pages/Public/About.css';
 
 export const About = () => (
   <div className="grid">

@@ -17,13 +17,15 @@ public class User {
   private String name;
   private String login;
   private String email;
+  private String passwordHash;
 
   public User() {}
 
-  public User(String name, String login, String email) {
+  public User(String name, String login, String email, String passwordHash) {
     this.name = name;
     this.login = login;
     this.email = email;
+    this.passwordHash = passwordHash;
   }
 
   // Getters
@@ -43,6 +45,11 @@ public class User {
     return this.email;
   }
 
+  public String getPasswordHash() {
+    return this.passwordHash;
+  }
+
+
   // Setters
   public void setId(Integer id) {
     this.id = id;
@@ -61,11 +68,16 @@ public class User {
     this.email = email;
   }
 
+  public void setPasswordHash(String passwordHash) {
+    this.passwordHash = passwordHash;
+  }
+
   public String toString() {
     return "Id: " + this.id + ", " +
     "Name: " + this.name + ", " +
     "Login: " + this.login + ", " +
-    "Email: " + this.email;
+    "Email: " + this.email + ", " + 
+    "PasswordHash" + this.passwordHash;
   }
   
 }
