@@ -19,7 +19,6 @@ export default class Register extends React.Component {
     this.user = {
       id: null,
       login: '',
-      login: '',
       email: '',
       passwordHash: '',
     }
@@ -110,9 +109,8 @@ export default class Register extends React.Component {
   render() {
     return (
       <div className="register-page">
-        <h2 className="register-title">Register to chatter.</h2>
+        <h2 className="register-title">Register to chatter</h2>
         <form className="form">
-
           <label className="login">Login:</label>
           <input 
             className="login"
@@ -161,7 +159,7 @@ export default class Register extends React.Component {
             onClick={evt => this.handleRegister(evt)}>
           </input>
         </form>
-        <a href="/login">Or login instead.</a>
+        <a href="/login">Or login instead</a>
       </div>
     );
   }

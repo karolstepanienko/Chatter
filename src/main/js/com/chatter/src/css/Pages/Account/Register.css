@@ -4,6 +4,12 @@
   width: 30%;
   align-items: center;
   margin-left: 35%;
+  margin-top: 8%;
+  background-color: dodgerblue;
+  padding: 1%;
+  -webkit-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+  -moz-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+  box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
 }
 
 .register-page > input, label {
@@ -16,5 +22,20 @@
 
 .button {
   width: 100%;
-  margin-top: 2%
+  margin-top: 2%;
+  background-color: yellow;
+}
+.button:hover{
+  width: 100%;
+  margin-top: 2%;
+  background-color: yellow;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  
+}
+a{
+  color:rgb(9, 27, 109);
+}
+a:hover{
+  color: yellow;
+  
 }
