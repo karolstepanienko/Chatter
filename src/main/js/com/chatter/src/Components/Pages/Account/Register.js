@@ -11,8 +11,8 @@ const linkRegister = `${link}/account/register`;
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
-    this.loginTaken = false;
-    this.emailTaken = false;
+    this.loginFree = true;
+    this.emailFree = true;
     this.malformedLogin = false;
     this.passwordHash = '';
     this.passwordHashRepeat = '';
@@ -30,7 +30,7 @@ export default class Register extends React.Component {
       alert("Login and email already taken.");
     else if(this.checkLoginAvailable() == false) alert("Login is already taken.");
     else if(this.checkEmailAvailable() == false) alert("Email is already taken.");
-    else if(this.equalPasswordHashes() == false) alert("Passwords do not match.");
+    else if(this.equalPasswordHashes() == false) alert("Insufficient or unequal passwords.");
     else if(
       this.validateEmail() &&
       this.validateLogin() &&
@@ -51,14 +51,14 @@ export default class Register extends React.Component {
 
   checkLoginAvailable() {
     axios.post(`${linkRegister}/check/login`, this.user)
-    .then(res => { this.loginTaken = res.data });
-    return this.loginTaken==false;
+    .then(res => { this.loginFree = res.data });
+    return this.loginFree;
   }
 
   checkEmailAvailable() {
     axios.post(`${linkRegister}/check/email`, this.user)
-    .then(res => { this.emailTaken = res.data });
-    return this.emailTaken==false;
+    .then(res => { this.emailFree = res.data });
+    return this.emailFree;
   }
 
   checkLoginFormat() {

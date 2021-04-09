@@ -47,11 +47,12 @@ public class AccountController {
   @CrossOrigin
   @PostMapping("register/add/user")
   public void addUser(@RequestBody User user) {
-    System.out.println(user.toString());
-    System.out.println(this.acLogic.checkUserLoginAvailable(user, userRepository));
-    System.out.println(this.acLogic.checkUserEmailAvailable(user, userRepository));
+    // System.out.println(user.toString());
+    // System.out.println(this.acLogic.checkUserLoginAvailable(user, userRepository));
+    // System.out.println(this.acLogic.checkUserEmailAvailable(user, userRepository));
 
-    userRepository.save(user);
+    // System.out.println(this.acLogic.checkUserUnique(user, userRepository));
+    if (this.acLogic.checkUserUnique(user, userRepository)) userRepository.save(user);
   }
 
   ////

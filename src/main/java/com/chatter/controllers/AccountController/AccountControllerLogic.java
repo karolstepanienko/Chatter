@@ -13,13 +13,19 @@ public class AccountControllerLogic {
 
   public boolean checkUserLoginAvailable(User user, UserRepository userRepository) {
     // System.out.println(userRepository.getUserWithLogin(user.getLogin()).toString());
-    if (userRepository.getUserWithLogin(user.getLogin()) != null) return true;
+    if (userRepository.getUserWithLogin(user.getLogin()) == null) return true;
     else return false;
   }
 
   public boolean checkUserEmailAvailable(User user, UserRepository userRepository) {
     // System.out.println(userRepository.getUserWithEmail(user.getEmail()).toString());
-    if (userRepository.getUserWithEmail(user.getEmail()) != null) return true;
+    if (userRepository.getUserWithEmail(user.getEmail()) == null) return true;
+    else return false;
+  }
+
+  public boolean checkUserUnique(User user, UserRepository userRepository) {
+    if (checkUserLoginAvailable(user, userRepository) &&
+      checkUserEmailAvailable(user, userRepository) ) return true;
     else return false;
   }
 }
