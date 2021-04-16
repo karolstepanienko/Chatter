@@ -6,7 +6,7 @@ export const Home = (props) => (
   <div className="home">
     <h2 className="home-title">Home page</h2>
     <div className="content-1">
-    <form action="/register">
+    <form action="/addpost">
     <input className="button_home"type="submit" value="Add post" />
     </form>
     <form action="/register">
@@ -15,7 +15,6 @@ export const Home = (props) => (
     <form action="/register">
     <input className="button_home"type="submit" value="Profile" />
     </form>
-
       <p>Content 1</p>
       <p>Content 1</p>
       <p>Content 1</p>

@@ -1,0 +1,24 @@
+.add_post_page{
+  display: flex;
+  flex-flow: column wrap;
+  width: 80%;
+  align-items: center;
+  margin-left: 10%;
+  margin-top: 3%;
+  background-color: dodgerblue;
+  padding: 1%;
+  -webkit-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+  -moz-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+  box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+}
+#post_text{
+    width: 200%;
+    height: 90%;
+    margin-left: -50%;
+}
+#button_post{
+    width: 100%;
+    margin-top: 2%;
+    background-color: yellow;
+
+}
