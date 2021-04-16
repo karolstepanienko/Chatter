@@ -16,7 +16,9 @@ export default class Post extends React.Component {
     handleAddingPost(evt) {
         evt.preventDefault();
         axios.post(`${link}/addpost`, this.post);
-        }
+        alert("Post have been added");
+        document.forms["post_texti"].reset();
+    }
     handlePostChange(evt) {
         this.post.text = evt.target.value;
       }
@@ -24,7 +26,7 @@ export default class Post extends React.Component {
       return(
     <div className="add_post_page">
       <h2>Add post</h2>
-      <form>
+      <form id ='post_texti'>
         <textarea 
           id="post_text"
           type="text"
@@ -32,8 +34,12 @@ export default class Post extends React.Component {
           rows="5"
           minLength="1"
           maxLength="500"
+          name="post"
           onChange={evt => this.handlePostChange(evt)}>
         </textarea>
+      </form>
+      
+      <form>
         <input 
             id="button_post"
             type="submit"

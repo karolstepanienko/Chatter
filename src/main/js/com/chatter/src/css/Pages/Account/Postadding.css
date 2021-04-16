@@ -17,8 +17,9 @@
     margin-left: -50%;
 }
 #button_post{
-    width: 100%;
+    width: 200%;
     margin-top: 2%;
+    margin-left: -50%;
     background-color: yellow;
 
 }
