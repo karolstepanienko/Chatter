@@ -7,6 +7,7 @@ stages:
 
 default:
   before_script:
+    - pwd
     - su -
     - apt-get update
     - apt-get --assume-yes install sudo
@@ -19,14 +20,14 @@ default:
     - sudo tar -xzvf openjdk-16.0.1_linux-x64_bin.tar.gz
     - export JAVA_HOME=/usr/java/oracle/jdk-16.0.1
     - export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
-    - cd /builds/kstepani/testy
+    - cd /builds/pap_21l/z03/pap21l-z03
     - sudo mkdir -p /usr/maven
     - cd /usr/maven
     - wget https://ftp.man.poznan.pl/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
     - sudo tar -xzvf apache-maven-3.8.1-bin.tar.gz
     - export MAVEN_HOME=/usr/maven/apache-maven-3.8.1
     - export PATH=$PATH:$HOME/bin:$MAVEN_HOME/bin
-    - cd /builds/kstepani/testy
+    - cd /builds/pap_21l/z03/pap21l-z03
     - apt-get update && apt-get --assume-yes install mysql-server mysql-client libmysqlclient-dev
     - service mysql start
     - mysql -u root -e "SELECT User, Host, plugin FROM mysql.user;"
