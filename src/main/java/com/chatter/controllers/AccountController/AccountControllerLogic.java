@@ -1,7 +1,7 @@
 package com.chatter.controllers.AccountController;
 
 
-import com.chatter.classes.User.User;
+import com.chatter.model.User.User;
 import com.chatter.repositories.UserRepository;
 
 

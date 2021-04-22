@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.Model;
 
-// Project imports:
-import com.chatter.classes.User.User;
+import com.chatter.model.User.User;
 import com.chatter.repositories.UserRepository;
 
 @RestController

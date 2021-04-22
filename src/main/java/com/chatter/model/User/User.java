@@ -1,4 +1,4 @@
-package com.chatter.classes.User;
+package com.chatter.model.User;
 
 
 import javax.persistence.Entity;

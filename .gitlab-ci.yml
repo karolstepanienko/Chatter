@@ -1,13 +1,5 @@
 image: ubuntu:20.04
 
-variables:
-  MYSQL_DATABASE: $MYSQL_DB
-  MYSQL_USER: springuser
-  MYSQL_USER_PASSWORD: ThePassword
-  MYSQL_ROOT_PASSWORD: $MYSQL_PASS
-  MYSQL_ALLOW_EMPTY_PASSWORD: "1"
-  DB_HOST: mysql
-
 stages:
   - build
   - test
@@ -15,17 +7,34 @@ stages:
 
 default:
   before_script:
+    - su -
+    - apt-get update
+    - apt-get --assume-yes install sudo
+    - apt-get update
+    - apt-get --assume-yes install software-properties-common wget tar
+    - sudo apt-get update
+    - sudo mkdir -p /usr/java/oracle
+    - cd /usr/java/oracle
+    - wget https://download.java.net/java/GA/jdk16.0.1/7147401fd7354114ac51ef3e1328291f/9/GPL/openjdk-16.0.1_linux-x64_bin.tar.gz
+    - sudo tar -xzvf openjdk-16.0.1_linux-x64_bin.tar.gz
+    - export JAVA_HOME=/usr/java/oracle/jdk-16.0.1
+    - export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
+    - cd /builds/kstepani/testy
+    - sudo mkdir -p /usr/maven
+    - cd /usr/maven
+    - wget https://ftp.man.poznan.pl/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
+    - sudo tar -xzvf apache-maven-3.8.1-bin.tar.gz
+    - export MAVEN_HOME=/usr/maven/apache-maven-3.8.1
+    - export PATH=$PATH:$HOME/bin:$MAVEN_HOME/bin
+    - cd /builds/kstepani/testy
     - apt-get update && apt-get --assume-yes install mysql-server mysql-client libmysqlclient-dev
     - service mysql start
+    - mysql -u root -e "SELECT User, Host, plugin FROM mysql.user;"
     - mysql -u root -e "CREATE USER 'springuser'@'%' IDENTIFIED BY 'ThePassword';"
     - mysql -u root -e "CREATE DATABASE chatter;"
     - mysql -u root -e "GRANT ALL ON chatter.* TO 'springuser'@'%';"
     - mysql -u root -e "SET GLOBAL time_zone = '+02:00';"
     - mysql -u root -e "FLUSH PRIVILEGES"
-    - export DEBIAN_FRONTEND=noninteractive
-    - apt-get --assume-yes install default-jre
-    - java -version
-    - apt-get --assume-yes install maven    
 
 build-code-job1:
   stage: build
