@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 // Internal imports:
 import '../../../css/Pages/Account/Register.css';
@@ -159,7 +160,8 @@ export default class Register extends React.Component {
             onClick={evt => this.handleRegister(evt)}>
           </input>
         </form>
-        <a href="/login">Or login instead</a>
+        
+        <Link to={'/login'}>Or login instead.</Link>
       </div>
     );
   }

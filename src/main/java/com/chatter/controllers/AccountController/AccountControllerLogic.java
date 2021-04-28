@@ -4,7 +4,6 @@ package com.chatter.controllers.AccountController;
 import com.chatter.model.User.User;
 import com.chatter.repositories.UserRepository;
 
-
 public class AccountControllerLogic {
   public void deleteUser(User user, UserRepository userRepository) {
     user.setId(userRepository.getUserWithName(user.getName()).getId());

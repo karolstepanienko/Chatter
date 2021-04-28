@@ -29,6 +29,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+    <!-- tag::spring-security[] -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <!-- end::spring-security[] -->
+
 		<!-- tag::actuator[] -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+// Project imports
+import com.chatter.Login.ActiveUserStore;
+
 @SpringBootApplication
 public class Application {
 
@@ -17,8 +20,12 @@ public class Application {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-      System.out.println("Hello world!");
+      System.out.println("Chatter backend app started.");
 		};
 	}
 
+  @Bean
+  public ActiveUserStore activeUserStore(){
+    return new ActiveUserStore();
+  }
 }
