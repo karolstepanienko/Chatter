@@ -10,6 +10,7 @@ export default class Post extends React.Component {
         this.post = {
           id: null,
           creatorId: 1,
+          privacy: 0,
           text: '',
         }
       }
@@ -18,10 +19,20 @@ export default class Post extends React.Component {
         axios.post(`${link}/addpost`, this.post);
         alert("Post have been added");
         document.forms["post_texti"].reset();
+        this.post.text='';
+        this.post.privacy=0;
     }
     handlePostChange(evt) {
         this.post.text = evt.target.value;
-      }
+    }
+    handlePrivacyChange(evt){
+        if(evt.target.checked){
+          this.post.privacy = 1
+        }
+        else{
+          this.post.privacy = 0
+        }
+    }
     render() {
       return(
     <div className="add_post_page">
@@ -37,6 +48,8 @@ export default class Post extends React.Component {
           name="post"
           onChange={evt => this.handlePostChange(evt)}>
         </textarea>
+        <input type="checkbox" id="checkbox" name="privacy" ref="change" onChange={evt =>this.handlePrivacyChange(evt)}></input>
+        <label for="scales"> The post is private</label>
       </form>
       
       <form>

@@ -29,6 +29,12 @@ public class PostController {
     public void addUser(@RequestBody Post post) {
         System.out.println(post.toString());
         postRepository.save(post);
+    }
+
+    @GetMapping(path="/allposts")
+    public @ResponseBody Iterable<Post> getAllPosts() {
+    // This returns a JSON or XML with the posts
+    return postRepository.getPostWithPrivacy(0);
   }
   
     

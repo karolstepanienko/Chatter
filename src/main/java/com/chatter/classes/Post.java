@@ -14,12 +14,16 @@ public class Post {
   private Integer id;
   private Integer creatorId;
   private String text;
+  private Integer privacy;
 
   public Post() {}
 
-  public Post(Integer creatorId, String text) {
+  public Post(Integer creatorId, String text, Integer privacy) {
     this.creatorId = creatorId;
     this.text = text;
+    // 0 - post is public
+    // 1 - post is private
+    this.privacy = privacy;
   }
 
   // Getters
@@ -35,6 +39,10 @@ public class Post {
     return this.creatorId;
   }
 
+  public Integer getPrivacy() {
+    return this.privacy;
+  }
+
   // Setters
   public void setId(Integer id) {
     this.id = id;
@@ -48,9 +56,14 @@ public class Post {
     this.text = text;
   }
 
+  public void setPrivacy(Integer privacy) {
+    this.privacy = privacy;
+  }
+
   public String toString() {
     return "Id: " + this.id + ", " +
     "Cretor id: " + this.creatorId + ", " +
+    "Privacy: " + this.privacy + ", " +
     "Text: " + this.text;
   }
   

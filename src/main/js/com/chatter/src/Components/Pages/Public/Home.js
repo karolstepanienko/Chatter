@@ -1,6 +1,7 @@
 import React from 'react';
 
 import '../../../css/Pages/Public/Home.css';
+import PostsDisplay from '../Account/PostsDisplay';
 
 export const Home = (props) => (
   <div className="home">
@@ -22,33 +23,8 @@ export const Home = (props) => (
       <p>Content 1</p>
     </div>
     <div className="content-2">
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
-      <p>Content 2</p>
+    <PostsDisplay />
+     
     </div>
     <div className="content-3">
       <p>Content 3</p>
