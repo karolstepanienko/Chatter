@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 // Internal imports:
 import '../../../css/Pages/Account/Register.css';
-import { link, validEmailRegex }from '../../../Constants/Constants';
+import { link, validEmailRegex } from '../../../Constants/Constants';
 import { passwordHash } from './PasswordHash';
 
 const linkRegister = `${link}/account/register`;
@@ -12,36 +12,37 @@ const linkRegister = `${link}/account/register`;
 export default class Register extends React.Component {
   constructor(props) {
     super(props);
-    this.loginFree = true;
+    this.userNameFree = true;
     this.emailFree = true;
-    this.malformedLogin = false;
+    this.malformedUserName = false;
     this.passwordHash = '';
     this.passwordHashRepeat = '';
     this.user = {
       id: null,
-      login: '',
+      userName: '',
       email: '',
       passwordHash: '',
+      login: '',
     }
   }
 
   handleRegister(evt) {
     evt.preventDefault();
-    if(this.checkLoginAvailable() == false && this.checkEmailAvailable() == false)
-      alert("Login and email already taken.");
-    else if(this.checkLoginAvailable() == false) alert("Login is already taken.");
+    if(this.checkUserNameAvailable() == false && this.checkEmailAvailable() == false)
+      alert("Username and email already taken.");
+    else if(this.checkUserNameAvailable() == false) alert("Username is already taken.");
     else if(this.checkEmailAvailable() == false) alert("Email is already taken.");
     else if(this.equalPasswordHashes() == false) alert("Insufficient or unequal passwords.");
     else if(
       this.validateEmail() &&
-      this.validateLogin() &&
+      this.validateUserName() &&
       this.equalPasswordHashes()) {
         axios.post(`${linkRegister}/add/user`, this.user);
-    } else alert("Unknown error.")
+    } else alert("Unknown error.");
   }
 
-  validateLogin() {
-    if(this.checkLoginAvailable() && this.checkLoginFormat()) return true;
+  validateUserName() {
+    if(this.checkUserNameAvailable() && this.checkUserNameFormat()) return true;
     else return false;
   }
 
@@ -50,10 +51,10 @@ export default class Register extends React.Component {
     else return false;
   }
 
-  checkLoginAvailable() {
-    axios.post(`${linkRegister}/check/login`, this.user)
-    .then(res => { this.loginFree = res.data });
-    return this.loginFree;
+  checkUserNameAvailable() {
+    axios.post(`${linkRegister}/check/username`, this.user)
+    .then(res => { this.userNameFree = res.data });
+    return this.userNameFree;
   }
 
   checkEmailAvailable() {
@@ -62,10 +63,10 @@ export default class Register extends React.Component {
     return this.emailFree;
   }
 
-  checkLoginFormat() {
-    if(this.user.login.length > 3 && this.user.login.length < 20) this.malformedLogin = false;
-    else this.malformedLogin = true;
-    return this.malformedLogin==false;
+  checkUserNameFormat() {
+    if(this.user.userName.length > 3 && this.user.userName.length < 20) this.malformedUserName = false;
+    else this.malformedUserName = true;
+    return this.malformedUserName==false;
   }
 
   checkEmailFormat() {
@@ -74,11 +75,11 @@ export default class Register extends React.Component {
     return this.malformedEmail==false;
   }
 
-  handleLoginChange(evt) {
+  handleUserNameChange(evt) {
     evt.preventDefault();
-    this.user.login = evt.target.value;
-    this.checkLoginFormat();
-    if(this.malformedLogin==false) this.checkLoginAvailable();
+    this.user.userName = evt.target.value;
+    this.checkUserNameFormat();
+    if(this.malformedUserName==false) this.checkUserNameAvailable();
   }
 
   handleEmailChange(evt) {
@@ -112,15 +113,15 @@ export default class Register extends React.Component {
       <div className="register-page">
         <h2 className="register-title">Register to chatter</h2>
         <form className="form">
-          <label className="login">Login:</label>
+          <label className="UserName">Username:</label>
           <input 
-            className="login"
+            className="UserName"
             type="text"
-            name="login"
-            placeholder="Your login"
+            name="UserName"
+            placeholder="Your Username"
             minLength="3"
             maxLength="20"
-            onChange={evt => this.handleLoginChange(evt)}>
+            onChange={evt => this.handleUserNameChange(evt)}>
           </input>
 
           <label className="email">Email:</label>

@@ -1,14 +1,13 @@
 package com.chatter;
 
+// import com.chatter.Login.Previous.ActiveUserStore;
+// import com.chatter.Authentication.DatabaseUserDetailsService;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-// Project imports
-import com.chatter.Login.ActiveUserStore;
 
 @SpringBootApplication
 public class Application {
@@ -24,8 +23,13 @@ public class Application {
 		};
 	}
 
-  @Bean
-  public ActiveUserStore activeUserStore(){
-    return new ActiveUserStore();
-  }
+  // @Bean
+  // public ActiveUserStore activeUserStore(){
+  //   return new ActiveUserStore();
+  // }
+
+//   @Bean
+//   public UserDetailsService userDetailsService() {
+//     return new DatabaseUserDetailsService(); // (1)
+// }
 }

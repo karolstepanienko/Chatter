@@ -23,7 +23,7 @@ default:
     - cd /builds/pap_21l/z03/pap21l-z03
     - sudo mkdir -p /usr/maven
     - cd /usr/maven
-    - wget https://ftp.man.poznan.pl/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
+    - wget https://ftp.ps.pl/pub/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
     - sudo tar -xzvf apache-maven-3.8.1-bin.tar.gz
     - export MAVEN_HOME=/usr/maven/apache-maven-3.8.1
     - export PATH=$PATH:$HOME/bin:$MAVEN_HOME/bin

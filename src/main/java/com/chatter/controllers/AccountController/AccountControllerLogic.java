@@ -6,13 +6,13 @@ import com.chatter.repositories.UserRepository;
 
 public class AccountControllerLogic {
   public void deleteUser(User user, UserRepository userRepository) {
-    user.setId(userRepository.getUserWithName(user.getName()).getId());
+    user.setId(userRepository.getUserWithUserName(user.getUserName()).getId());
     userRepository.delete(user);
   }
 
-  public boolean checkUserLoginAvailable(User user, UserRepository userRepository) {
+  public boolean checkUserNameAvailable(User user, UserRepository userRepository) {
     // System.out.println(userRepository.getUserWithLogin(user.getLogin()).toString());
-    if (userRepository.getUserWithLogin(user.getLogin()) == null) return true;
+    if (userRepository.getUserWithUserName(user.getUserName()) == null) return true;
     else return false;
   }
 
@@ -23,7 +23,7 @@ public class AccountControllerLogic {
   }
 
   public boolean checkUserUnique(User user, UserRepository userRepository) {
-    if (checkUserLoginAvailable(user, userRepository) &&
+    if (checkUserNameAvailable(user, userRepository) &&
       checkUserEmailAvailable(user, userRepository) ) return true;
     else return false;
   }

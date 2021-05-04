@@ -16,18 +16,18 @@ import com.chatter.repositories.UserRepository;
 @RequestMapping("/api/account")
 public class AccountController {
 
+  @Autowired  
+  private UserRepository userRepository;
+
   private AccountControllerLogic acLogic;
   AccountController() {
     acLogic = new AccountControllerLogic();
   }
 
-  @Autowired  
-  private UserRepository userRepository;
-
   @CrossOrigin()
-  @PostMapping("/register/check/login")
-  public boolean checkUserLoginAvailable(@RequestBody User user) {
-    return this.acLogic.checkUserLoginAvailable(user, userRepository);
+  @PostMapping("/register/check/username")
+  public boolean checkUserUserNameAvailable(@RequestBody User user) {
+    return this.acLogic.checkUserNameAvailable(user, userRepository);
   }
 
   @CrossOrigin()

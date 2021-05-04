@@ -14,15 +14,16 @@ public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
-  private String name;
+  private String userName;
   private String login;
   private String email;
   private String passwordHash;
+  private String role;
 
   public User() {}
 
-  public User(String name, String login, String email, String passwordHash) {
-    this.name = name;
+  public User(String userName, String login, String email, String passwordHash) {
+    this.userName = userName;
     this.login = login;
     this.email = email;
     this.passwordHash = passwordHash;
@@ -33,8 +34,8 @@ public class User {
     return this.id;
   }
 
-  public String getName() {
-    return this.name;
+  public String getUserName() {
+    return this.userName;
   }
 
   public String getLogin() {
@@ -49,14 +50,18 @@ public class User {
     return this.passwordHash;
   }
 
+  public String getRole() {
+    return this.role;
+  }
+
 
   // Setters
   public void setId(Integer id) {
     this.id = id;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setName(String userName) {
+    this.userName = userName;
   }
 
   public void setLogin(String login) {
@@ -72,12 +77,17 @@ public class User {
     this.passwordHash = passwordHash;
   }
 
+  public void setRole(String role) {
+    this.role = role;
+  }
+
   public String toString() {
     return "Id: " + this.id + ", " +
-    "Name: " + this.name + ", " +
+    "Username: " + this.userName + ", " +
     "Login: " + this.login + ", " +
     "Email: " + this.email + ", " + 
-    "PasswordHash" + this.passwordHash;
+    "PasswordHash: " + this.passwordHash + ", " +
+    "Role: " + this.role;
   }
   
 }

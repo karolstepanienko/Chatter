@@ -9,7 +9,7 @@ import NavigationBar from '../NavBar/NavigationBar.js';
 import { Home } from '../Pages/Public/Home';
 import { About } from '../Pages/Public/About';
 import { NoMatch } from '../Pages/Public/NoMatch';
-import { Login } from '../Pages/Account/Login';
+import Login from '../Pages/Account/Login';
 import Register from '../Pages/Account/Register';
 
 export default class Navigation extends React.Component {
