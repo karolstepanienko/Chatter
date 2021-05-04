@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {Link} from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 // Project imports:
 import { link } from '../../../Constants/Constants';
