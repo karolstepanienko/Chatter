@@ -10,7 +10,7 @@ default:
     - pwd
     - su -
     - apt-get update
-    - apt-get --assume-yes install sudo
+    - apt-get --assume-yes install sudo curl
     - apt-get update
     - apt-get --assume-yes install software-properties-common wget tar
     - sudo apt-get update
