@@ -9,7 +9,7 @@ export default class Post extends React.Component {
         super(props);
         this.post = {
           id: null,
-          creatorId: 1,
+          creatorId: 101,
           privacy: 0,
           text: '',
         }

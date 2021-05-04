@@ -62,7 +62,7 @@ public class Post {
 
   public String toString() {
     return "Id: " + this.id + ", " +
-    "Cretor id: " + this.creatorId + ", " +
+    "Creator id: " + this.creatorId + ", " +
     "Privacy: " + this.privacy + ", " +
     "Text: " + this.text;
   }

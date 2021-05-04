@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
-import '../../../css/Pages/Account/Postadding.css';
+import '../../../css/Pages/Account/PostsDisplay.css';
 import { link }from '../../../Constants/Constants';
+
+
 
 export default class PostsDisplay extends React.Component {
     constructor(props) {
@@ -10,7 +12,8 @@ export default class PostsDisplay extends React.Component {
         this.state = {
           error: null,
           isLoaded: true,
-          items:[]
+          items:[],
+          login:[]
         };
       }
     
@@ -19,18 +22,32 @@ export default class PostsDisplay extends React.Component {
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
-        this.setState({ items: data, isLoaded: false });
+        this.setState({ items: data, isLoaded: false});
+         for (let i = 0; i < data.length; i++) {
+           this.getLogin(data[i].creatorId);
+         }
+
     }
 
-    display(array) {
-        return array.map(function (post) {
-            return (
+    async getLogin(id){
+      const response = await axios.get(`${link}account/getlogin?id=${id}`);
+      console.log(response.data);
+      var tab= this.state.login; 
+      tab.push(response.data)
+      this.setState({login: tab});
+    }
+
+    display(array,logins) {
+      var i =0;
+      return array.map(function (post) {
+          return (
                 <div className="post">
                     <div className="Creator">
-                        id autora: {post.creatorId}
+                        autor: {logins[i++]}
+                        
                     </div>
                     <div className="postText">
-                        {post.text}
+                        {(post.text)}
                     </div>
                     <br></br>
                     <br></br>
@@ -46,7 +63,7 @@ export default class PostsDisplay extends React.Component {
     
         return (
           <div>
-            {this.display(this.state.items)}
+            {this.display(this.state.items,this.state.login)}
           </div>
         );
       }
