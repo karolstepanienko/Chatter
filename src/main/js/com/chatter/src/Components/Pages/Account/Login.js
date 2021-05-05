@@ -1,10 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import '../../../css/Pages/Account/Register.css';
-import { passwordHash } from './PasswordHash';
+import { passwordHash } from '../../../Constants/PasswordHash';
 import { link } from '../../../Constants/Constants';
 import { login } from '../../../State/userSlice';
 
@@ -17,13 +17,19 @@ export const Login = () => {
 
   const dispatch = useDispatch();
 
+  let history = useHistory();
+
+  // abortController = new AbortController();
+
   const handleLoginSubmit = (e) => {
-    console.log(password);
     e.preventDefault();
     if (validatePassword()) {
       getVerifiedUser();
       if (verifiedUser != null) {
-        if (verifyCredentials()) dispatch(login(verifiedUser));
+        if (verifyCredentials()) {
+          dispatch(login(verifiedUser));
+          history.push('/');
+        }
         else alert("Password does not math.");
       } 
       else alert("User does not exist.");

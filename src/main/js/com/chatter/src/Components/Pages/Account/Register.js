@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 // Internal imports:
 import '../../../css/Pages/Account/Register.css';
 import { link, validEmailRegex } from '../../../Constants/Constants';
-import { passwordHash } from './PasswordHash';
+import { passwordHash } from '../../../Constants/PasswordHash';
 
 const linkRegister = `${link}/account/register`;
 
