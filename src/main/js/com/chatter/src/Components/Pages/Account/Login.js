@@ -1,118 +1,113 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import {Link} from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-// Project imports:
-import { link } from '../../../Constants/Constants';
-import { passwordHash } from './PasswordHash';
 import '../../../css/Pages/Account/Register.css';
+import { passwordHash } from './PasswordHash';
+import { link } from '../../../Constants/Constants';
+import { login } from '../../../State/userSlice';
 
 axios.defaults.baseURL = `${link}/account/login`;
 
-export default class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      verifiedUser: null,
-    }
-    this.user = {
-      id: null,
-      userName: '',
-      email: '',
-      passwordHash: '',
-      login: '',
-    };
+export const Login = () => {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifiedUser, setVerifiedUser] = useState("");
+
+  const dispatch = useDispatch();
+
+  const handleLoginSubmit = (e) => {
+    console.log(password);
+    e.preventDefault();
+    if (validatePassword()) {
+      getVerifiedUser();
+      if (verifiedUser != null) {
+        if (verifyCredentials()) dispatch(login(verifiedUser));
+        else alert("Password does not math.");
+      } 
+      else alert("User does not exist.");
+    } 
+    else alert("Malformed password.");
   }
 
-  handleUserNameChange(evt) {
-    this.user.userName = evt.target.value;
-    console.log(this.user.userName);
+  const verifyCredentials = () => {
+    if (userName == verifiedUser.userName &&
+      passwordHash(password) == verifiedUser.passwordHash)
+       return true;
+    else return false;
   }
 
-  handlePasswordChange(evt) {
-    if(this.validatePassword(evt.target.value)) this.user.passwordHash = passwordHash(evt.target.value);
-    else this.user.passwordHash = '';
-  }
-
-  validatePassword(password){
+  const validatePassword = () => {
     if(password.length >= 5) return true;
     else return false;
   }
 
-  async getVerifiedUser() {
-    await axios.post('/user/get', this.user).then(
+  const getUserFromCredentials = () => {
+    var user = {
+      id: null,
+      userName: userName,
+      email: '',
+      passwordHash: passwordHash(password),
+      login: '',
+      role: '',
+    }
+    return user;
+  }
+
+  const handleUserNameChange = (evt) => {
+    evt.preventDefault();
+    setUserName(evt.target.value);
+    getVerifiedUser();
+  }
+
+  const getVerifiedUser = () => {
+    axios.post('/user/get', getUserFromCredentials()).then(
       res => {
         if (res.data != "") {
-          localStorage.setItem('verifiedUser', res.data);
-          // This was executed after the change
-          this.setState({verifiedUser: res.data}, () => {this.afterGetUser()});
+          setVerifiedUser(res.data);
         }
-        else alert("User does not exist.");
+        else {
+          setVerifiedUser(null);
+        };
       }
-    );
+    ).catch(err => {console.log(err)});
   }
 
-  checkAndSetCredentials() {
-    if(this.state.verifiedUser.userName == this.user.userName && 
-      this.state.verifiedUser.passwordHash == this.user.passwordHash) {
-        this.user.id = this.state.verifiedUser.id;
-        this.user.email = this.state.verifiedUser.email;  
-      }
-    else alert("Bad login credentials.")
-  }
-
-  afterGetUser() {
-    this.checkAndSetCredentials();
-    // Redirect
-    this.props.history.push({
-      pathname: '',
-      user: this.user
-    });
-  }
-
-  handleLoginSubmit(evt) {
-    evt.preventDefault();
-    this.getVerifiedUser();
-    // Here user will not be updated
-  }
-
-  render() {
-    return (
-      <div className="login-page">
-        <h2>Login page</h2>
-        <form>
-          <label className="UserName">Username:</label>
-            <input 
-              className="UserName"
-              type="text"
-              name="login"
-              placeholder="Your login"
-              minLength="3"
-              maxLength="20"
-              onChange={evt => this.handleUserNameChange(evt)}>
-            </input>
-  
-          <label className="password">Password:</label>
-            <input
-              className="password"
-              type="password"
-              name="password"
-              placeholder="Your password"
-              minLength="5"
-              onChange={evt => this.handlePasswordChange(evt)}>
-            </input>
-  
-          <input
-            className="button"
-            type="submit"
-            value="Login"
-            onClick={evt => this.handleLoginSubmit(evt)}>
+  return (
+    <div className="login-page">
+      <h2>Login page</h2>
+      <form>
+        <label className="UserName">Username:</label>
+          <input 
+            className="UserName"
+            type="text"
+            name="login"
+            placeholder="Your login"
+            minLength="3"
+            maxLength="20"
+            onChange={evt => handleUserNameChange(evt)}>
           </input>
-        </form>
-  
-        <Link to={'/register'}>Do not have an account? Register here.</Link>
-      </div>
-    );
-  }
+
+        <label className="password">Password:</label>
+          <input
+            className="password"
+            type="password"
+            name="password"
+            placeholder="Your password"
+            minLength="5"
+            onChange={evt => setPassword(evt.target.value)}>
+          </input>
+
+        <input
+          className="button"
+          type="submit"
+          value="Login"
+          onClick={evt => handleLoginSubmit(evt)}>
+        </input>
+      </form>
+
+      <Link to={'/register'}>Do not have an account? Register here.</Link>
+    </div>
+  )
 }
