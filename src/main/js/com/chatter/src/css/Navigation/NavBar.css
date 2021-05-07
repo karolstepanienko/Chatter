@@ -21,10 +21,12 @@
   color: blue;
 }
 
+.link,
 .about-link,
 .login-link {
   font-size: 15em;
 }
+
 .navbar-light .navbar-nav .nav-link {
   color: yellow;
 }

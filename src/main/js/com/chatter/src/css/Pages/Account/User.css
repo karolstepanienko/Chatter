@@ -1,0 +1,13 @@
+.user-page {
+  display: flex;
+  flex-flow: column wrap;
+  width: 30%;
+  align-items: center;
+  margin-left: 35%;
+  margin-top: 8%;
+  background-color: dodgerblue;
+  padding: 1%;
+  -webkit-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+  -moz-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+  box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+}

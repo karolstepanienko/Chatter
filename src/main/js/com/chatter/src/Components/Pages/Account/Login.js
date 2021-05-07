@@ -19,8 +19,6 @@ export const Login = () => {
 
   let history = useHistory();
 
-  // abortController = new AbortController();
-
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     if (validatePassword()) {
@@ -67,6 +65,12 @@ export const Login = () => {
     getVerifiedUser();
   }
 
+  const handlePasswordChange = (evt) => {
+    evt.preventDefault();
+    setPassword(evt.target.value);
+    getVerifiedUser();
+  }
+
   const getVerifiedUser = () => {
     axios.post('/user/get', getUserFromCredentials()).then(
       res => {
@@ -74,6 +78,7 @@ export const Login = () => {
           setVerifiedUser(res.data);
         }
         else {
+          console.log("empty response");
           setVerifiedUser(null);
         };
       }
@@ -102,7 +107,7 @@ export const Login = () => {
             name="password"
             placeholder="Your password"
             minLength="5"
-            onChange={evt => setPassword(evt.target.value)}>
+            onChange={evt => handlePasswordChange(evt)}>
           </input>
 
         <input
