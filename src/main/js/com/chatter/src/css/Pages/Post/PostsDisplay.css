@@ -1,0 +1,7 @@
+.postText{
+  color: yellow;
+  background-color: dodgerblue;
+  height: auto;
+  padding: 2%;
+  white-space: pre-line;
+}

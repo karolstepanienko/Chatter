@@ -19,15 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  // @Autowired
-  // UserDetailsService userDetailsService;
-
-  // Authentication setup
-  // @Override
-  // protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-  //   auth.userDetailsService(userDetailsService);
-  // }
-
   // Authorization setup
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -45,11 +36,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       // .addFilter(new AuthorizationFilter(authenticationManager()))
       // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
-
-  // @Bean
-  // protected PasswordEncoder getPasswordEncoder() {
-  //   return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
-  // }
 
   @Bean
   CorsConfigurationSource corsConfigurationSource()
