@@ -10,10 +10,10 @@ export const Home = (props) => (
     <form action="/addpost">
     <input className="button_home"type="submit" value="Add post" />
     </form>
-    <form action="/register">
+    <form action="/friends">
     <input className="button_home"type="submit" value="Friends" />
     </form>
-    <form action="/register">
+    <form action="/profile">
     <input className="button_home"type="submit" value="Profile" />
     </form>
       <p>Content 1</p>

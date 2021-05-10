@@ -12,6 +12,9 @@ import { NoMatch } from './Components/Pages/Public/NoMatch';
 import { Login } from './Components/Pages/Account/Login';
 import  Post  from './Components/Pages/Account/Post';
 import Register from './Components/Pages/Account/Register';
+import Profile from './Components/Pages/Account/Profile';
+import Friends from './Components/Pages/Account/Friends';
+
 
 ReactDOM.render(
   <React.Fragment>
@@ -23,9 +26,12 @@ ReactDOM.render(
         <Route path="/register" component= {Register} />
         <Route path="/about" component={About} />
         <Route path="/addpost" component={Post} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/friends" component={Friends} />
         <Route component={NoMatch} />
       </Switch>
     </Router>
   </React.Fragment>,
   document.getElementById('root'),
+  
 );

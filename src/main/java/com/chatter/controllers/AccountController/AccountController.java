@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 // Project imports:
 import com.chatter.classes.User.User;
 import com.chatter.repositories.UserRepository;
+import com.chatter.classes.Change;
 
 @RestController
 @RequestMapping("/api/account")
@@ -51,7 +52,6 @@ public class AccountController {
     System.out.println(user.toString());
     System.out.println(this.acLogic.checkUserLoginAvailable(user, userRepository));
     System.out.println(this.acLogic.checkUserEmailAvailable(user, userRepository));
-
     userRepository.save(user);
   }
 
@@ -96,5 +96,11 @@ public class AccountController {
   @ResponseBody
   public String getLoginwithid(@RequestParam Integer id) {
     return userRepository.getUserWithId(id).getLogin();
+  }
+
+  @PostMapping(value = "/changelogin", consumes = "application/json", produces = "application/json")
+  public String changeLogin(@RequestBody Change change) {
+    userRepository.changeLogin(change.id, change.login);
+    return "account/changelogin";
   }
 }

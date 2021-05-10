@@ -30,7 +30,6 @@
   margin-top: 2%;
   background-color: yellow;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  
 }
 a{
   color:rgb(9, 27, 109);
@@ -38,4 +37,19 @@ a{
 a:hover{
   color: yellow;
   
+}
+
+.left{
+  margin-left: 0%;
+  float:left;
+}
+.right{
+  float:left;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profile_login{
+  width: 100%;
+  display: flex;
+  font-size: 30px;
 }
