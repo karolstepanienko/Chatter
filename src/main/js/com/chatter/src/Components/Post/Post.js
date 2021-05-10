@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import '../../../css/Pages/Account/Postadding.css';
+import '../../css/Pages/Post/Postadding.css';
 import { link }from '../../Constants/Constants';
 
 export default class Post extends React.Component {

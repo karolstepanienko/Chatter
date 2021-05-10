@@ -5,6 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import java.util.Set;
+
+// Project imports:
+import com.chatter.model.Post.Post;
 
 import lombok.Data;
 
@@ -22,6 +28,8 @@ public class User {
   private String email;
   private String passwordHash;
   private String role;
+  @OneToMany(targetEntity=Post.class)
+  private Set<Post> postList;
 
   public User() {}
 

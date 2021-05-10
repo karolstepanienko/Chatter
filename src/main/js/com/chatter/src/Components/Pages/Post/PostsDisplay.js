@@ -29,11 +29,12 @@ export default class PostsDisplay extends React.Component {
     }
 
     async getLogin(id){
-      const response = await axios.get(`${link}account/getlogin?id=${id}`);
+      const response = await axios.get(`${link}/account/getlogin?id=${id}`);
       console.log(response.data);
       var tab= this.state.login; 
-      tab.push(response.data)
-      this.setState({login: tab});
+      tab.push(response.data);
+      if (tab == "") this.setState({login: "unknown"});
+      else this.setState({login: tab});
     }
 
     display(array,logins) {

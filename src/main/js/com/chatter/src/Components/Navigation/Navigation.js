@@ -15,6 +15,8 @@ import { NoMatch } from '../Pages/Public/NoMatch';
 import { Login } from '../Pages/Account/Login';
 import Register from '../Pages/Account/Register';
 import UserRoute from '../Pages/User/UserRoute';
+import  Post  from '../Post/Post';
+
 
 const Navigation = () => {
   return(
@@ -28,6 +30,7 @@ const Navigation = () => {
             <Route path="/login" component={Login} />
             <Route path="/register" component= {Register} />
             <Route path="/about" component={About} />
+            <Route path="/addpost" component={Post} />
             <Route component={NoMatch} />
           </Switch>
         </BrowserRouter>

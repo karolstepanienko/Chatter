@@ -98,7 +98,9 @@ public class AccountController {
   @GetMapping("/getlogin")
   @ResponseBody
   public String getLoginwithid(@RequestParam Integer id) {
-    return userRepository.getUserWithId(id).getLogin();
+    User user = this.userRepository.getUserWithId(id);
+    if(user != null) return user.getUserName();
+    else return null;
   }
 
   @PostMapping(value = "/changelogin", consumes = "application/json", produces = "application/json")
