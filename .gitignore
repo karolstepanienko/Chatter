@@ -4,6 +4,8 @@
 .settings/
 ### Editor settings ###
 .vscode
+### Lombok project ###
+.factorypath
 ### Maven ###
 target/
 pom.xml.tag
