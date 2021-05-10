@@ -1,32 +1,27 @@
 package com.chatter.model.User;
 
+// Class DTO - User Data Transfer Object
+// Only difference from User is that
+// it has password in plain text
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class UserDTO {
 
-// This tells Hibernate to make a table in database out of this class
-// Hibernate automatically translates the entity into a table.
-@Entity
-public class User {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
   private String userName;
   private String login;
   private String email;
-  private String passwordHash;
+  private String password;
   private String role;
 
-  public User() {}
+  public UserDTO() {}
 
-  public User(String userName, String login, String email, String passwordHash) {
+  public UserDTO(Integer id, String userName, String login, String email, String password, String role) {
+    this.id = id;
     this.userName = userName;
     this.login = login;
     this.email = email;
-    this.passwordHash = passwordHash;
+    this.password = password;
+    this.role = role;
   }
 
   // Getters
@@ -46,8 +41,8 @@ public class User {
     return this.email;
   }
 
-  public String getPasswordHash() {
-    return this.passwordHash;
+  public String getPassword() {
+    return this.password;
   }
 
   public String getRole() {
@@ -60,7 +55,7 @@ public class User {
     this.id = id;
   }
 
-  public void setUserName(String userName) {
+  public void setName(String userName) {
     this.userName = userName;
   }
 
@@ -68,12 +63,13 @@ public class User {
     this.login= login;
   }
 
+
   public void setEmail(String email) {
     this.email = email;
   }
 
-  public void setPasswordHash(String passwordHash) {
-    this.passwordHash = passwordHash;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
   public void setRole(String role) {
@@ -85,7 +81,7 @@ public class User {
     "Username: " + this.userName + ", " +
     "Login: " + this.login + ", " +
     "Email: " + this.email + ", " + 
-    "PasswordHash: " + this.passwordHash + ", " +
+    "Password: " + this.password + ", " +
     "Role: " + this.role;
   }
   

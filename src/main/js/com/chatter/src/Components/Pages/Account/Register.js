@@ -1,11 +1,10 @@
 import React from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 // Internal imports:
 import '../../../css/Pages/Account/Register.css';
 import { link, validEmailRegex } from '../../../Constants/Constants';
-import { passwordHash } from '../../../Constants/PasswordHash';
 
 const linkRegister = `${link}/account/register`;
 
@@ -15,16 +14,16 @@ export default class Register extends React.Component {
     this.userNameFree = true;
     this.emailFree = true;
     this.malformedUserName = false;
-    this.passwordHash = '';
-    this.passwordHashRepeat = '';
+    this.password = '';
+    this.passwordRepeat = '';
     this.user = {
       id: null,
       userName: '',
-      email: '',
-      passwordHash: '',
       login: '',
+      email: '',
+      password: '',
     }
-  }
+  }  
 
   handleRegister(evt) {
     evt.preventDefault();
@@ -32,13 +31,23 @@ export default class Register extends React.Component {
       alert("Username and email already taken.");
     else if(this.checkUserNameAvailable() == false) alert("Username is already taken.");
     else if(this.checkEmailAvailable() == false) alert("Email is already taken.");
-    else if(this.equalPasswordHashes() == false) alert("Insufficient or unequal passwords.");
+    else if(this.equalPasswords() == false) alert("Insufficient or unequal passwords.");
     else if(
       this.validateEmail() &&
       this.validateUserName() &&
-      this.equalPasswordHashes()) {
-        axios.post(`${linkRegister}/add/user`, this.user);
+      this.equalPasswords()) {
+        this.registerUser();
     } else alert("Unknown error.");
+  }
+
+  registerUser() {
+    axios.post(`${linkRegister}/add/user`, this.user).catch(
+      e => {
+        console.log(e);
+        alert("User register unsuccessfull.");
+      }).then(
+        () => this.props.history.push("/login")
+      );
   }
 
   validateUserName() {
@@ -90,19 +99,19 @@ export default class Register extends React.Component {
   }
 
   handlePasswordChange(evt) {
-    this.passwordHash = passwordHash(evt.target.value);
+    this.password = evt.target.value;
   }
 
   handlePasswordRepeatChange(evt) {
-    this.passwordHashRepeat = passwordHash(evt.target.value);
+    this.passwordRepeat = evt.target.value;
   }
 
-  equalPasswordHashes() {
-    if(this.passwordHash == this.passwordHashRepeat &&
-      this.passwordHash != '' &&
-      this.passwordHashRepeat != ''
+  equalPasswords() {
+    if(this.password == this.passwordRepeat &&
+      this.password != '' &&
+      this.passwordRepeat != ''
       ) {
-        this.user.passwordHash = this.passwordHash;
+        this.user.password = this.password;
         return true;
       }
     else return false;

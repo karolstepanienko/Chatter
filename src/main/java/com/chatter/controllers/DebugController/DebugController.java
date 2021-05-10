@@ -1,4 +1,4 @@
-package com.chatter.controllers.Debug;
+package com.chatter.controllers.DebugController;
 
 // Project imports
 import com.chatter.model.User.User;

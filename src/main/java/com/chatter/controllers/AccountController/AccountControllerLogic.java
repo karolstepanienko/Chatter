@@ -2,9 +2,12 @@ package com.chatter.controllers.AccountController;
 
 
 import com.chatter.model.User.User;
+import com.chatter.model.User.UserDTO;
 import com.chatter.repositories.UserRepository;
 
+
 public class AccountControllerLogic {
+
   public void deleteUser(User user, UserRepository userRepository) {
     user.setId(userRepository.getUserWithUserName(user.getUserName()).getId());
     userRepository.delete(user);
@@ -26,5 +29,16 @@ public class AccountControllerLogic {
     if (checkUserNameAvailable(user, userRepository) &&
       checkUserEmailAvailable(user, userRepository) ) return true;
     else return false;
+  }
+
+  public User createUserFromUserDTO(UserDTO userDTO, String passwordHash) {
+    User user = new User();
+    user.setUserName(userDTO.getUserName());
+    user.setEmail(userDTO.getEmail());
+    user.setPasswordHash(passwordHash);
+    // TODO
+    // user.setRole();
+    return user;
+
   }
 }
