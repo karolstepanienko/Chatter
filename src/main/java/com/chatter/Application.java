@@ -29,9 +29,4 @@ public class Application {
   public PasswordEncoder encoder() {
       return new BCryptPasswordEncoder();
   }
-  
-//   @Bean
-//   public UserDetailsService userDetailsService() {
-//     return new DatabaseUserDetailsService(); // (1)
-// }
 }
