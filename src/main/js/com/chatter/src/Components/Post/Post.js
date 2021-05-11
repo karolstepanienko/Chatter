@@ -5,33 +5,33 @@ import '../../css/Pages/Post/Postadding.css';
 import { link }from '../../Constants/Constants';
 
 export default class Post extends React.Component {
-    constructor(props) {
-        super(props);
-        this.post = {
-          id: null,
-          creatorId: 101,
-          privacy: 0,
-          text: '',
+  constructor(props) {
+    super(props);
+    this.post = {
+      id: null,
+      creatorId: 119,
+      privacy: 0,
+      text: '',
         }
       }
     handleAddingPost(evt) {
-        evt.preventDefault();
-        axios.post(`${link}/addpost`, this.post);
-        alert("Post have been added");
-        document.forms["post_texti"].reset();
-        this.post.text='';
-        this.post.privacy=0;
+      evt.preventDefault();
+      axios.post(`${link}/addpost`, this.post);
+      alert("Post have been added");
+      document.forms["post_texti"].reset();
+      this.post.text='';
+      this.post.privacy=0;
     }
     handlePostChange(evt) {
-        this.post.text = evt.target.value;
+      this.post.text = evt.target.value;
     }
     handlePrivacyChange(evt){
-        if(evt.target.checked){
-          this.post.privacy = 1
-        }
-        else{
-          this.post.privacy = 0
-        }
+      if(evt.target.checked){
+        this.post.privacy = 1
+      }
+      else{
+        this.post.privacy = 0
+      }
     }
     render() {
       return(
