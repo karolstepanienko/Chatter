@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,13 @@ public class AccountController {
   }
 
   @CrossOrigin()
+  @PostMapping("/register/check/username/only")
+  public boolean checkUserNameAvailable(@RequestBody String userName) {
+    System.out.println(userName);
+    return this.userRepository.getUserWithUserName(userName) == null;
+  }
+
+  @CrossOrigin()
   @PostMapping("/register/check/email")
   public boolean checkUserEmailAvailable(@RequestBody User user) {
     return this.acLogic.checkUserEmailAvailable(user, userRepository);
@@ -65,36 +73,6 @@ public class AccountController {
     }
   }
 
-  @GetMapping("/register")
-  public String registerForm(Model model) {
-    model.addAttribute("register_user", new User());
-    return "account/register";
-  }
-
-  @PostMapping("/register")
-  public String registerSubmit(@ModelAttribute User user, Model model) {
-    model.addAttribute("register_user", user);
-    // Saves user in db
-    userRepository.save(user);
-    // Returns the result view
-    // Add @ ResponseBody before fuction return type to return String
-    return "account/register_result";
-  }
-
-  @GetMapping("/delete")
-  public String deleteForm(Model model) {
-    model.addAttribute("account_delete", new User());
-    return "account/delete";
-  }
-
-  @PostMapping("/delete")
-  public String deleteAccount(@ModelAttribute User user, Model model) {
-    model.addAttribute("account_delete", user);
-    // Finds the user ID and deletes the user
-    acLogic.deleteUser(user, userRepository);
-    return "account/delete_result";
-  }
-
   @GetMapping("/getlogin")
   @ResponseBody
   public String getLoginwithid(@RequestParam Integer id) {
@@ -107,5 +85,10 @@ public class AccountController {
   public String changeLogin(@RequestBody Change change) {
     userRepository.changeLogin(change.id, change.login);
     return "account/changelogin";
+  }
+
+  @DeleteMapping("user/delete")
+  public boolean deleteUser(@RequestParam Integer id) {
+    return true;
   }
 }

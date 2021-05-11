@@ -24,7 +24,17 @@
 .link,
 .about-link,
 .login-link {
-  font-size: 15em;
+  font: Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16em;
+  margin: 0.2em;
+  color: yellow;
+}
+
+.link:hover,
+.about-link:hover,
+.login-link:hover {
+  text-decoration: none;
 }
 
 .navbar-light .navbar-nav .nav-link {

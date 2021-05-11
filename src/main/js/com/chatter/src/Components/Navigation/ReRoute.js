@@ -2,16 +2,14 @@ import React from "react";
 import { Redirect } from "react-router";
 import { connect } from 'react-redux';
 
-import User from "./User";
 
-const UserRoute = (props) => {
+const ReRoute = (props) => {
   return ( props.id === null ? (
       <Redirect
-        push
-        to={{pathname:'/login'}}
+        to={{pathname: props.redirectPath}}
       />
     ) : (
-      <User/>
+      <props.component />
     )
   )
 }
@@ -20,4 +18,4 @@ const mapStateToProps = state => ({
   id: state.user.user.id
 });
 
-export default connect(mapStateToProps)(UserRoute);
+export default connect(mapStateToProps)(ReRoute);

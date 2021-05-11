@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
-import '../../../css/Pages/Account/PostsDisplay.css';
-import { link }from '../../Constants/Constants';
-
+import '../../../css/Pages/Post/PostsDisplay.css';
+import { link }from '../../../Constants/Constants';
 
 
 export default class Friends extends React.Component {

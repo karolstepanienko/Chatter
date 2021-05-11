@@ -14,8 +14,11 @@ import { About } from '../Pages/Public/About';
 import { NoMatch } from '../Pages/Public/NoMatch';
 import { Login } from '../Pages/Account/Login';
 import Register from '../Pages/Account/Register';
-import UserRoute from '../Pages/User/UserRoute';
+import ReRoute from '../Navigation/ReRoute';
+
+import User from '../Pages/User/User';
 import  Post  from '../Post/Post';
+import Friends from '../Pages/User/Friends';
 
 
 const Navigation = () => {
@@ -25,12 +28,21 @@ const Navigation = () => {
         <BrowserRouter>
           <NavigationBar />
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/user" component={UserRoute} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component= {Register} />
-            <Route path="/about" component={About} />
-            <Route path="/addpost" component={Post} />
+            {/* Public routes. */}
+            <Route exact path='/' component={Home} />
+            <Route path='/login' component={Login} />
+            <Route path='/register' component= {Register} />
+            <Route path='/about' component={About} />
+
+            {/* User registered routes. */}
+            <Route path='/user' render={ () => 
+              <ReRoute component={User} redirectPath='/login' />}/>
+            <Route path='/addpost' render={ () => 
+              <ReRoute component={Post} redirectPath='/login' />}/>
+            <Route path='/friends' render={ () =>
+                <ReRoute component={Friends} redirectPath='/login' />}/>
+
+            {/* Last, default route. */}
             <Route component={NoMatch} />
           </Switch>
         </BrowserRouter>
