@@ -1,5 +1,7 @@
 package com.chatter.Configuration.WebSecurity;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
 // import org.springframework.beans.factory.annotation.Autowired;
 
 // import com.chatter.Login.AuthenticationFilter;
@@ -23,7 +25,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-      .csrf().disable().cors()
+      .csrf().disable().cors().configurationSource(
+        request -> new CorsConfiguration().applyPermitDefaultValues()
+      )
         .and()
       .authorizeRequests()
         .antMatchers("/debug/**", "/api/**").permitAll()
@@ -44,4 +48,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     source.registerCorsConfiguration("/**",new CorsConfiguration().applyPermitDefaultValues());
     return source;
   }
+
 }

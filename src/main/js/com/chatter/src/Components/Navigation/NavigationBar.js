@@ -15,7 +15,7 @@ const NavigationBar = () => {
     </Form>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">
-        <Link to={'/user'} className="login-link">User</Link>
+        <Link to={'/profile'} className="login-link">Your profile</Link>
         <Link to={'/login'} className="login-link">Login</Link>
         <Link to={'/about'} className="about-link">About</Link>
       </Nav>

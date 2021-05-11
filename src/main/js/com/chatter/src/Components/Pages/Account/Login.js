@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -7,7 +7,7 @@ import '../../../css/Pages/Account/Register.css';
 import { link } from '../../../Constants/Constants';
 import { login } from '../../../State/userSlice';
 
-axios.defaults.baseURL = `${link}/account/login`;
+axios.defaults.baseURL = `${link}/account/user`;
 
 export const Login = () => {
   const [userName, setUserName] = useState("");
@@ -17,6 +17,10 @@ export const Login = () => {
 
   const dispatch = useDispatch();
 
+  // Gets called before the component is unmounted
+  // UseEffect waits for dispatch method to complete before unmounting
+  useEffect( () => {}, [dispatch]);
+
   let history = useHistory();
 
   const handleLoginSubmit = (e) => {
@@ -25,14 +29,14 @@ export const Login = () => {
       checkPassword();
       if (passwordVerified) {
         dispatch(login(verifiedUser));
-        history.push('/user');
+        history.push('/profile');
       } else alert("Password does not math.");
     } 
     else alert("Malformed password.");
   }
 
   const checkPassword = () => {
-    axios.post('/user/check/password', getUserFromCredentials()).then(
+    axios.post('/check/password', getUserDTOFromCredentials()).then(
       res => {
         setPasswordVerified(res.data);
       }
@@ -44,7 +48,7 @@ export const Login = () => {
     else return false;
   }
 
-  const getUserFromCredentials = () => {
+  const getUserDTOFromCredentials = () => {
     var user = {
       id: null,
       userName: userName,
@@ -70,7 +74,7 @@ export const Login = () => {
   }
 
   const getVerifiedUser = () => {
-    axios.post('/user/get', getUserFromCredentials()).then(
+    axios.post('/get', getUserDTOFromCredentials()).then(
       res => {
         if (res.data != "") {
           setVerifiedUser(res.data);

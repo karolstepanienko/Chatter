@@ -4,13 +4,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -73,9 +74,40 @@ public class TestAccountController {
         )
       .andExpect(status().isCreated());
   }
+  
+  @Test 
+  public void test_2_getUserId() throws Exception {
+    this.init();
+
+    MvcResult mvcResult = this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get/id/by/userName"))
+        .param("userName", this.testUser.getUserName())
+        )
+      .andExpect(status().isOk())
+      .andReturn();
+    
+    // Sets user ID
+    this.testUser.setId(Integer.valueOf(mvcResult.getResponse().getContentAsString()));
+  }
+  
+  @Test 
+  public void test_3_SetUserLogin() throws Exception {
+    this.init();
+    // Sets user ID
+    this.test_2_getUserId();
+    this.testUser.setLogin("newLogin");
+
+    this.mockMvc.perform(
+      post(String.join("", this.link, "/user/update/login"))
+      .content(asJsonString(this.testUser))
+      .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$", is(true)));
+  }
 
   @Test
-  public void test_2_CheckUserNameAvailableFalse() throws Exception {
+  public void test_4_CheckUserNameAvailableFalse() throws Exception {
     this.init();
 
     this.mockMvc.perform(
@@ -88,7 +120,7 @@ public class TestAccountController {
   }
 
   @Test
-  public void test_3_CheckUserNameAvailableTrue() throws Exception {
+  public void test_5_CheckUserNameAvailableTrue() throws Exception {
     this.init();
     String userName = "Thisusernamewlldefinitelybeavailable";
 
@@ -101,7 +133,7 @@ public class TestAccountController {
     .andExpect(jsonPath("$", is(true)));
   }
 
-  @Test void test_4_RemoveUserByUserName() throws Exception {
+  @Test void test_6_RemoveUserByUserName() throws Exception {
     this.init();
 
     this.mockMvc.perform(
@@ -111,5 +143,4 @@ public class TestAccountController {
       .andExpect(status().isOk())
       .andExpect(jsonPath("$", is(true)));
   }
-
 }

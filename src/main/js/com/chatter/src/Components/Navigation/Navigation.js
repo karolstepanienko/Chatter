@@ -19,6 +19,7 @@ import ReRoute from '../Navigation/ReRoute';
 import User from '../Pages/User/User';
 import  Post  from '../Post/Post';
 import Friends from '../Pages/User/Friends';
+import LoggedInUserProfile from '../Pages/User/Profile';
 
 
 const Navigation = () => {
@@ -35,6 +36,10 @@ const Navigation = () => {
             <Route path='/about' component={About} />
 
             {/* User registered routes. */}
+            <Route path='/profile' render={ () => 
+              <ReRoute component={LoggedInUserProfile} redirectPath='/login' />}/>
+
+                  {/* with params it will lead to sites ofother users */}
             <Route path='/user' render={ () => 
               <ReRoute component={User} redirectPath='/login' />}/>
             <Route path='/addpost' render={ () => 

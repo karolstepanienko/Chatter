@@ -5,12 +5,13 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {
-      id: '1',
-      userName: 'test',
+      id: null,
+      userName: '',
+      login: '',
       email: '',
       passwordHash: '',
-      login: '',
-      role: '',  
+      role: '',
+      postList: '', 
     }
   },
     // Actions - functions that set data in the state
@@ -22,21 +23,28 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = {
         user: {
-          id: '1',
-          userName: 'test',
+          id: null,
+          userName: '',
+          login: '',
           email: '',
           passwordHash: '',
-          login: '',
-          role: '',  
+          role: '',
+          postList: '', 
         }
       };
+    },
+    updateLogin: (state, action) => {
+      state.user.login = action.payload;
     }
   }
 })
 
 
 
-export const {login, logout} = userSlice.actions;
+export const {
+  login,
+  logout,
+  updateLogin} = userSlice.actions;
 
 // export const selectUser = (state) => {state};
 

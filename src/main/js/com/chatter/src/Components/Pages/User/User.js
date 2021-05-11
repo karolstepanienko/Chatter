@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import '../../../css/Pages/Account/User.css'
+import '../../../css/Pages/User/User.css'
 
 
 const User = (props) => {

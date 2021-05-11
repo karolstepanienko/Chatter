@@ -2,12 +2,19 @@
   display: flex;
   flex-flow: column wrap;
   width: 30%;
-  align-items: center;
+  align-items: left;
   margin-left: 35%;
   margin-top: 8%;
   background-color: dodgerblue;
+  font-size: 1.5em;
   padding: 1%;
   -webkit-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
   -moz-box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
   box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
+}
+
+.change-login {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 3em;
 }
