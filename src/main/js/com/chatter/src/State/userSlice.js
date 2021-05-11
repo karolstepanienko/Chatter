@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     user: {
-      id: '1',
+      id: null,
       userName: 'test',
       email: '',
       passwordHash: '',
@@ -22,7 +22,7 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = {
         user: {
-          id: '1',
+          id: null,
           userName: 'test',
           email: '',
           passwordHash: '',

@@ -41,7 +41,7 @@ export const Login = () => {
 
   const validatePassword = () => {
     if(password.length >= 5) return true;
-    else return false;
+    else {return false};
   }
 
   const getUserFromCredentials = () => {

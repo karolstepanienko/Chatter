@@ -41,9 +41,9 @@ public class LoginController {
   public @ResponseBody boolean checkUserPassword(@RequestBody UserDTO userDTO) {
     User verifiedUser = this.userRepository.getUserWithUserName(userDTO.getUserName());
     if (this.passwordEncoder.matches(userDTO.getPassword(), verifiedUser.getPasswordHash())) {
-      return true;
+      {return true;}
     }
-    else return false;
+    else {return false;}
   }
 
 }
