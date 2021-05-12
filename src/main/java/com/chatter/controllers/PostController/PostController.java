@@ -16,24 +16,37 @@ import org.springframework.ui.Model;
 
 import com.chatter.model.Post.Post;
 import com.chatter.repositories.PostRepository;
+import com.chatter.model.Post.Like;
 
 @RestController
 @RequestMapping("/api")
 public class PostController {
-    @Autowired  
-    private PostRepository postRepository;
+  @Autowired  
+  private PostRepository postRepository;
     
-    @CrossOrigin
-    @PostMapping("/addpost")
-    public void addUser(@RequestBody Post post) {
-        System.out.println(post.toString());
-        this.postRepository.save(post);
-    }
+  @CrossOrigin
+  @PostMapping("/addpost")
+  public void addUser(@RequestBody Post post) {
+      System.out.println(post.toString());
+      this.postRepository.save(post);
+  }
 
-    @GetMapping(path="/allposts")
-    public @ResponseBody Iterable<Post> getAllPosts() {
-    // This returns a JSON or XML with the posts
+  @GetMapping(path="/allposts")
+  public @ResponseBody Iterable<Post> getAllPosts() {
+  // This returns a JSON or XML with the posts
     return this.postRepository.getPostWithPrivacy(0);
+  }
+  @CrossOrigin
+  @PostMapping(value = "/like", consumes = "application/json", produces = "application/json")
+  public String changeLogin(@RequestBody Like like) {
+    Integer likesNr = postRepository.getPostWithId(like.post).getLikes();
+    if (like.status){
+      postRepository.changeLikes(like.post, likesNr+1);
+    }
+    else{
+      postRepository.changeLikes(like.post, likesNr-1);
+    }
+    return "like";
   }
   
     

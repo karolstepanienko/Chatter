@@ -23,14 +23,16 @@ public class Post {
   private Integer creatorId;
   private String text;
   private Integer privacy;
+  private Integer likes;
 
   public Post() {}
 
-  public Post(Integer creatorId, String text, Integer privacy) {
+  public Post(Integer creatorId, String text, Integer privacy, Integer likes) {
     this.creatorId = creatorId;
     this.text = text;
     // 0 - post is public
     // 1 - post is private
     this.privacy = privacy;
+    this.likes = likes;
   }  
 }

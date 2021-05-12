@@ -11,7 +11,8 @@ const Post = (props)=> {
   id: null,
   creatorId: props.id,
   privacy: 0,
-  text: ''}
+  text: '',
+  likes: 0}
     function handleAddingPost(evt) {
       evt.preventDefault();
       axios.post(`${link}/addpost`, post);
