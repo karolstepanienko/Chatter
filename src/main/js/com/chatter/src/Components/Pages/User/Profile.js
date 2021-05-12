@@ -5,7 +5,7 @@ import axios from 'axios';
 import '../../../css/Pages/User/User.css';
 import { link, validEmailRegex }from '../../../Constants/Constants';
 import { connect } from "react-redux";
-import { updateLogin } from '../../../State/userSlice';
+import { updateLogin, updateEmail } from '../../../State/userSlice';
 
 axios.defaults.baseURL = `${link}/account/user`;
 
@@ -30,6 +30,7 @@ export const LoggedInUserProfile = (props) => {
 
   return (
     <div className="user-page">
+      <span className="title"> Your profile page </span>
       <div className="user-userName">
         <span>Username:</span>
         <span>{props.userName}</span>
@@ -172,6 +173,20 @@ const EmailChangeTextBox = (props) => {
     clean();
   }
 
+  const submitNewEmail = async () => {
+    axios.post('/update/email', getUserDTO()).then(
+      res => {
+        if(res.data) updateEmailInState();
+      }
+    ).catch(
+      err => console.log(err)
+    );
+  }
+
+  const updateEmailInState = () => {
+    props.dispatch(updateEmail(newEmail));
+  }
+
   useEffect( () => {
     // Here the Email is set
     if(validateEmail() && submit) {
@@ -179,10 +194,9 @@ const EmailChangeTextBox = (props) => {
       console.log(validateEmail());
       console.log("this would be subbmitted");
       console.log(newEmail);
-      setEmailValid(false);
-      setEmailAvailable(false);
-      setSubmit(false);
-      setNewEmail("");
+
+      submitNewEmail();
+      clean();      
     }
 
   }, [checkEmailAvailable, handleEmailSubmit]);
