@@ -27,6 +27,7 @@ public class User {
   private String login;
   private String email;
   private String passwordHash;
+  private String accountPrivacy;
   private String role;
   @OneToMany(targetEntity=Post.class)
   private Set<Post> postList;

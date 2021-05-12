@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,13 +48,17 @@ public class UserController {
   }
 
   @CrossOrigin
-  @PostMapping("/get")
+  @GetMapping("/get")
   public @ResponseBody User getVerifiedUser(@RequestBody User unverifiedUser) {
     User verifiedUser = this.userRepository.getUserWithUserName(unverifiedUser.getUserName());
-    if (verifiedUser != null){
-      return verifiedUser;
-    }
-    else return null;
+    return verifiedUser;
+  }
+
+  @CrossOrigin
+  @GetMapping("/get/user/by/userName")
+  public @ResponseBody User getUserWithUserName(@RequestParam String userName) {
+    User user = this.userRepository.getUserWithUserName(userName);
+    return user;
   }
 
   @CrossOrigin
@@ -63,8 +66,6 @@ public class UserController {
   public @ResponseBody boolean checkUserPassword(@RequestBody UserDTO userDTO) {
     User verifiedUser = this.userRepository.getUserWithUserName(userDTO.getUserName());
     if (this.passwordEncoder.matches(userDTO.getPassword(), verifiedUser.getPasswordHash())) {
-      System.out.println(userDTO.toString());
-      System.out.println(verifiedUser.toString());  
       return true;
     }
     else return false;

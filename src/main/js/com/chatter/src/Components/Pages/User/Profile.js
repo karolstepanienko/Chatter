@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
-import '../../../css/Pages/User/User.css';
+import '../../../css/Pages/User/Profile.css';
 import { link, validEmailRegex }from '../../../Constants/Constants';
 import { connect } from "react-redux";
 import { updateLogin, updateEmail } from '../../../State/userSlice';

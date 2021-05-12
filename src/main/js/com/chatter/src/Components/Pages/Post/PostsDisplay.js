@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import '../../../css/Pages/Post/PostsDisplay.css';
 import { link }from '../../../Constants/Constants';
+import LinkButton from '../../LinkButton/LinkButton';
+import { login } from '../../../State/userSlice';
 
 
 export default class PostsDisplay extends React.Component {
@@ -52,7 +54,7 @@ export default class PostsDisplay extends React.Component {
         return (
           <div className="post">
             <div className="Creator">
-              autor: {logins[i++]}         
+              autor: {logins[i++]}   
             </div>
             <div className="postText">
               {(post.text)}

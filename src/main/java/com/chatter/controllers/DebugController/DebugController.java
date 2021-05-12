@@ -1,6 +1,7 @@
 package com.chatter.controllers.DebugController;
 
 // Project imports
+import com.chatter.model.Constants.Roles;
 import com.chatter.model.User.User;
 import com.chatter.repositories.UserRepository;
 
@@ -23,5 +24,13 @@ public class DebugController {
   public @ResponseBody Iterable<User> getAllUsers() {
     // This returns a JSON or XML with the users
     return userRepository.findAll();
+  }
+
+  @CrossOrigin
+  @GetMapping("/test")
+  public void testPrint() {
+    System.out.println(Roles.getUserRole());
+    System.out.println(Roles.getAdminRole());
+    System.out.println(Roles.getAllRoles());
   }
 }
