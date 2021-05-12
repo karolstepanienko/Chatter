@@ -6,6 +6,8 @@ import '../../../css/Pages/User/User.css';
 import { link, validEmailRegex }from '../../../Constants/Constants';
 import { connect } from "react-redux";
 import { updateLogin, updateEmail } from '../../../State/userSlice';
+import Expire from '../../DisappearingComponent/Expire';
+import {CSSTransition} from 'react-transition-group';
 
 axios.defaults.baseURL = `${link}/account/user`;
 
@@ -62,6 +64,10 @@ export const LoggedInUserProfile = (props) => {
 
 const LoginChangeTextBox = (props) => {
   const [newLogin, setNewLogin] = useState("");
+  const [confirmation, setConfirmation] = useState({visible: false,
+      value: "",
+      className: ""
+    });
 
   const handleLoginChange = (evt) => {
     evt.preventDefault();
@@ -84,16 +90,30 @@ const LoginChangeTextBox = (props) => {
     props.handleTextBoxVisibility();
     axios.post(`/update/login`, getUserDTO()).then(
       res => {
-        if(res.data) props.dispatch(updateLogin(newLogin));
+        if(res.data) {
+          props.dispatch(updateLogin(newLogin));
+          setConfirmation({visible: true,
+             value: "Login change successfull.",
+             className: "success"
+            });
+        }
+
       }
     ).catch(
       err => console.log(err)
     )
   }
 
+  const clean = () => {
+    setNewLogin("");
+    setConfirmation({visible: false,
+      value: "",
+      className: ""});
+  }
+
   const handleCancel = () => {
     props.handleTextBoxVisibility();
-    setNewLogin("");
+    clean();
   }
 
   return (
@@ -103,6 +123,8 @@ const LoginChangeTextBox = (props) => {
       textBoxValue={newLogin}
       handleTextChange={handleLoginChange}
       handleCancel={handleCancel}
+      confirmation={confirmation}
+      resetConfirmation={clean}
 
       initMessage="Change login"
       submitMessage="Submit login change"
@@ -118,6 +140,11 @@ const EmailChangeTextBox = (props) => {
   const [submit, setSubmit] = useState(false);
   const [emailAvailable, setEmailAvailable] = useState(false);
   const [emailValid, setEmailValid] = useState(false);
+  const [confirmation, setConfirmation] = useState({visible: false,
+     value: "",
+     className: ""
+    });
+
 
   const handleEmailChange = (evt) => {
     evt.preventDefault();
@@ -137,7 +164,7 @@ const EmailChangeTextBox = (props) => {
 
   const checkEmailAvailable = async () => {
     axios.get(`/check/email?email=${newEmail}`)
-    .then(res => { setEmailAvailable(res.data) })
+    .then(res => {setEmailAvailable(res.data) })
     .catch(
       err => console.log(err)
     )
@@ -159,6 +186,8 @@ const EmailChangeTextBox = (props) => {
     checkEmailFormat();
     checkEmailAvailable();
     setSubmit(true);
+    // Failure will be overwritten by success
+    showFailure();
   }
 
   const clean = () => {
@@ -166,6 +195,10 @@ const EmailChangeTextBox = (props) => {
     setSubmit(false);
     setEmailAvailable(false);
     setEmailValid(false);
+    setConfirmation({visible: false,
+      value: "",
+      className: ""
+    });
   }
 
   const handleCancel = () => {
@@ -173,10 +206,23 @@ const EmailChangeTextBox = (props) => {
     clean();
   }
 
+  const showFailure = () => {
+    setConfirmation({visible: true,
+      value: "Email change not successfull.",
+      className: "failure"
+     });
+  }
+
   const submitNewEmail = async () => {
     axios.post('/update/email', getUserDTO()).then(
       res => {
-        if(res.data) updateEmailInState();
+        if(res.data) {
+          updateEmailInState();
+          setConfirmation({visible: true,
+             value: "Email change successfull.",
+             className: "success"
+            });
+        } else showFailure();
       }
     ).catch(
       err => console.log(err)
@@ -194,26 +240,29 @@ const EmailChangeTextBox = (props) => {
       console.log(validateEmail());
       console.log("this would be subbmitted");
       console.log(newEmail);
-
       submitNewEmail();
-      clean();      
+      clean();
     }
 
   }, [checkEmailAvailable, handleEmailSubmit]);
 
   return (
-    <ButtonActivatedTextBox
-      textBoxVisible={props.isChanging}
-      elementClassName="change-email"
-      textBoxValue={newEmail}
-      handleTextChange={handleEmailChange}
-      handleCancel={handleCancel}
+    <div>
+      <ButtonActivatedTextBox
+        textBoxVisible={props.isChanging}
+        elementClassName="change-email"
+        textBoxValue={newEmail}
+        handleTextChange={handleEmailChange}
+        handleCancel={handleCancel}
+        confirmation={confirmation}
+        resetConfirmation={clean}
 
-      initMessage="Change email"
-      submitMessage="Submit email change"
-      handleSubmit={handleEmailSubmit}
-      {...props}
-    />
+        initMessage="Change email"
+        submitMessage="Submit email change"
+        handleSubmit={handleEmailSubmit}
+        {...props}
+      />
+    </div>
   )
 }
 
@@ -225,6 +274,24 @@ export const ButtonActivatedTextBox = (props) => {
   const chooseRenderObject = () => {
     if (props.textBoxVisible) return textBoxAndSubmitButton();
     else return changeInitButton();
+  }
+
+  const chooseConfirmation = () => {
+    return (
+      <CSSTransition
+        in={props.confirmation.visible}
+        // How long the element is appearing
+        timeout={300}
+        classNames="display"
+        unmountOnExit>
+          <Expire
+          reset={props.resetConfirmation}
+          visible={props.confirmation.visible}
+          className={props.confirmation.className} 
+          delay="3000" 
+          children={props.confirmation.value}/>
+      </CSSTransition>
+    )
   }
 
   const textBoxAndSubmitButton = () => {
@@ -259,7 +326,10 @@ export const ButtonActivatedTextBox = (props) => {
   }
 
   return (
-    chooseRenderObject()
+    <div>
+      {chooseRenderObject()}
+      {chooseConfirmation()}
+    </div>
   )
 }
 
