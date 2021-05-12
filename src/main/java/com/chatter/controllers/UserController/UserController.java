@@ -1,5 +1,6 @@
 package com.chatter.controllers.UserController;
 
+import com.chatter.controllers.AccountController.AccountControllerLogic;
 // Project imports
 import com.chatter.model.User.User;
 import com.chatter.model.User.UserDTO;
@@ -26,6 +27,12 @@ public class UserController {
 
   @Autowired
   private PasswordEncoder passwordEncoder;
+
+  private AccountControllerLogic acLogic;
+  
+  UserController() {
+    acLogic = new AccountControllerLogic();
+  }
 
   @CrossOrigin
   @GetMapping("/check/username")
@@ -75,10 +82,21 @@ public class UserController {
   @CrossOrigin
   @PostMapping("/update/login")
   public boolean updateUserLogin(@RequestBody UserDTO userDTO) {
-    System.out.println(userDTO.toString());
     User user = this.userRepository.getUserWithId(userDTO.getId());
     if (user != null) {
       user.setLogin(userDTO.getLogin());
+      this.userRepository.save(user);
+      return true;
+    } else return false;
+  }
+
+  @CrossOrigin
+  @PostMapping("/update/email")
+  public boolean updateUserEmail(@RequestBody UserDTO userDTO) {
+    User user = this.userRepository.getUserWithId(userDTO.getId());
+    user.setEmail(userDTO.getEmail());
+    if (user != null &&
+    this.acLogic.checkUserEmailAvailable(user, userRepository)) {
       this.userRepository.save(user);
       return true;
     } else return false;

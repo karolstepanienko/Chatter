@@ -90,12 +90,18 @@ const LoginChangeTextBox = (props) => {
     )
   }
 
+  const handleCancel = () => {
+    props.handleTextBoxVisibility();
+    setNewLogin("");
+  }
+
   return (
     <ButtonActivatedTextBox
       textBoxVisible={props.isChanging}
       elementClassName="change-login"
       textBoxValue={newLogin}
       handleTextChange={handleLoginChange}
+      handleCancel={handleCancel}
 
       initMessage="Change login"
       submitMessage="Submit login change"
@@ -154,6 +160,18 @@ const EmailChangeTextBox = (props) => {
     setSubmit(true);
   }
 
+  const clean = () => {
+    setNewEmail("");
+    setSubmit(false);
+    setEmailAvailable(false);
+    setEmailValid(false);
+  }
+
+  const handleCancel = () => {
+    props.handleTextBoxVisibility();
+    clean();
+  }
+
   useEffect( () => {
     // Here the Email is set
     if(validateEmail() && submit) {
@@ -175,14 +193,17 @@ const EmailChangeTextBox = (props) => {
       elementClassName="change-email"
       textBoxValue={newEmail}
       handleTextChange={handleEmailChange}
+      handleCancel={handleCancel}
 
       initMessage="Change email"
       submitMessage="Submit email change"
       handleSubmit={handleEmailSubmit}
       {...props}
     />
-)
+  )
+}
 
+const UserNameChangeTextBox = (props) => {
 
 }
 
@@ -203,6 +224,10 @@ export const ButtonActivatedTextBox = (props) => {
           type="submit"
           value={props.submitMessage}
           onClick={props.handleSubmit}/>
+        <input
+          type="submit"
+          value="Cancel"
+          onClick={props.handleCancel}/>
       </div>
     )
   }
@@ -236,81 +261,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(LoggedInUserProfile);
-
-
-// export default class Profile extends React.Component{
-
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       id: 101,
-//       login: [""],
-//       logChange:0,
-//       newlogin:"",
-//       response:""
-//     };
-//   }
-
-//   Change(){
-//     this.setState({logChange:1});
-//   }
-//   handleLoginChange(evt) {
-//     evt.preventDefault();
-//     this.state.newlogin = evt.target.value;
-//   }
-//   handleChange(evt){
-//     console.log(this.state.newlogin);
-    
-//         // Simple POST request with a JSON body using axios
-//         const change = { id: this.state.id, login: this.state.newlogin };
-//         axios.post(`${link}account/changelogin`, change)
-//             .then(response => this.setState({ response: response.data }));
-//     console.log(this.state.response);
-//     alert("Nazwa zmieniona")
-//   }
-
-
-//   render() {
-//     this.getLogin()
-//     if (this.state.logChange){
-//         return <div className="login-page">
-//         <div >
-//         <input 
-//         className="login"
-//         type="text"
-//         name="login"
-//         placeholder="Your new login"
-//         minLength="3"
-//         maxLength="20"
-//         onChange={evt => this.handleLoginChange(evt)}>
-//         </input>
-//         <input 
-//         className="button"
-//         type="submit"
-//         value="Change"
-//         onClick={evt => this.handleChange(evt)}>
-//         </input>
-//         </div>
-//       </div>
-//     }
-//     else{
-//     return (
-//     <div className="login-page">
-//       <div className="profile_login" >
-//         <div className ="left">Login: </div><div className ="right"> {(this.state.login[0])}</div>
-//       </div>
-//       <div className="profile_login" >
-//         <div className ="left">Login: </div><div className ="right"> {(this.state.login[0])+"sdksajhdskjdhsjdhsjhd"}</div>
-//       </div>
-//       <input 
-//         className="button"
-//         type="submit"
-//         value="Change Login"
-//         onClick={evt => this.Change(evt)}>
-//       </input>
-      
-//     </div>
-//     );
-    
-//   }
-// }
