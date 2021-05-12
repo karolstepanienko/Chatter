@@ -15,8 +15,6 @@ class  PostsDisplay extends React.Component {
       login:[],
       id:this.props.id
       };
-      console.log("-----------------------")
-      console.log(this.state.id)
     }
     handleLike(evt,i){
         console.log("like")
@@ -31,6 +29,7 @@ class  PostsDisplay extends React.Component {
       const url=`${link}/allposts`;
       const response = await fetch(url);
       const data = await response.json();
+      console.log(data);
       this.setState({ items: data, isLoaded: false});
       var tab1=[]
       for (let i = 0; i < data.length; i++){

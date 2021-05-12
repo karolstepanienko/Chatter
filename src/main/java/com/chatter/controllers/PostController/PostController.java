@@ -1,5 +1,6 @@
 package com.chatter.controllers.PostController;
 
+import java.util.Set;
 // Spring-boot imports:
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,13 +17,18 @@ import org.springframework.ui.Model;
 
 import com.chatter.model.Post.Post;
 import com.chatter.repositories.PostRepository;
+import com.chatter.repositories.UserRepository;
 import com.chatter.model.Post.Like;
+import com.chatter.model.User.User;
 
 @RestController
 @RequestMapping("/api")
 public class PostController {
   @Autowired  
   private PostRepository postRepository;
+
+  @Autowired  
+  private UserRepository userRepository;
     
   @CrossOrigin
   @PostMapping("/addpost")
@@ -40,14 +46,19 @@ public class PostController {
   @PostMapping(value = "/like", consumes = "application/json", produces = "application/json")
   public String changeLogin(@RequestBody Like like) {
     Integer likesNr = postRepository.getPostWithId(like.post).getLikes();
+    postRepository.getPostWithId(like.post).addUser(userRepository.getUserWithId(like.user));
     if (like.status){
+      postRepository.getPostWithId(like.post).addUser(userRepository.getUserWithId(like.user));
       postRepository.changeLikes(like.post, likesNr+1);
     }
     else{
+      postRepository.getPostWithId(like.post).deleteUser(userRepository.getUserWithId(like.user));
       postRepository.changeLikes(like.post, likesNr-1);
     }
     return "like";
   }
+
+  
   
     
 }
