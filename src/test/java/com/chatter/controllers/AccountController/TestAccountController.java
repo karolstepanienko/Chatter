@@ -109,10 +109,11 @@ public class TestAccountController {
   @Test
   public void test_4_CheckUserNameAvailableFalse() throws Exception {
     this.init();
+    
 
     this.mockMvc.perform(
-      post(String.join("", this.link, "/register/check/username/only"))
-      .content(this.testUser.getUserName())
+      get(String.join("", this.link, "/user/check/username"))
+      .param("userName", this.testUser.getUserName())
       )
     .andExpect(status().isOk())
     // Root of json https://goessner.net/articles/JsonPath/
@@ -125,8 +126,8 @@ public class TestAccountController {
     String userName = "Thisusernamewlldefinitelybeavailable";
 
     this.mockMvc.perform(
-      post(String.join("", this.link, "/register/check/username/only"))
-      .content(userName)
+      get(String.join("", this.link, "/user/check/username"))
+      .param("userName", userName)
       )
     .andExpect(status().isOk())
     // Root of json https://goessner.net/articles/JsonPath/

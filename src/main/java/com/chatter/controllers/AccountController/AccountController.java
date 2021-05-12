@@ -47,12 +47,6 @@ public class AccountController {
   }
 
   @CrossOrigin()
-  @PostMapping("/register/check/username/only")
-  public boolean checkUserNameAvailable(@RequestBody String userName) {
-    return this.userRepository.getUserWithUserName(userName) == null;
-  }
-
-  @CrossOrigin()
   @PostMapping("/register/check/email")
   public boolean checkUserEmailAvailable(@RequestBody User user) {
     return this.acLogic.checkUserEmailAvailable(user, userRepository);

@@ -13,7 +13,8 @@
   box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
 }
 
-.change-login {
+.change-login,
+.change-email {
   display: flex;
   flex-flow: column wrap;
   margin-top: 3em;

@@ -3,16 +3,17 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import '../../../css/Pages/User/User.css';
-import { link }from '../../../Constants/Constants';
+import { link, validEmailRegex }from '../../../Constants/Constants';
 import { connect } from "react-redux";
 import { updateLogin } from '../../../State/userSlice';
 
 axios.defaults.baseURL = `${link}/account/user`;
-// axios.defaults.headers.common["Access-Control-Allow-Origin"] = 'true';
 
 
 export const LoggedInUserProfile = (props) => {
   const [isChangingLogin, setIsChangingLogin] = useState(false);
+  const [isChangingEmail, setIsChangingEmail] = useState(false);
+
 
   const dispatch = useDispatch();
   useEffect( () => {}, [dispatch]);
@@ -20,6 +21,10 @@ export const LoggedInUserProfile = (props) => {
 
   const handleLoginChangeTextBoxVisibility = () => {
     setIsChangingLogin(!isChangingLogin);
+  }
+
+  const handleEmailChangeTextBoxVisibility = () => {
+    setIsChangingEmail(!isChangingEmail);
   }
 
 
@@ -39,10 +44,16 @@ export const LoggedInUserProfile = (props) => {
       </div>
       <div className="change-login">
         <LoginChangeTextBox
-          isChangingLogin={isChangingLogin}
+          isChanging={isChangingLogin}
           dispatch={dispatch}
-          handleLoginChangeTextBoxVisibility={handleLoginChangeTextBoxVisibility}
+          handleTextBoxVisibility={handleLoginChangeTextBoxVisibility}
          {...props}/>
+
+         <EmailChangeTextBox
+          isChanging={isChangingEmail}
+          dispatch={dispatch}
+          handleTextBoxVisibility={handleEmailChangeTextBoxVisibility}
+          {...props}/>
       </div>
     </div>
   )
@@ -68,48 +79,143 @@ const LoginChangeTextBox = (props) => {
     return user;
   }
 
-  const handleUserLoginSubmit = () => {
-    props.handleLoginChangeTextBoxVisibility();
-    console.log(getUserDTO());
+  const handleLoginSubmit = () => {
+    props.handleTextBoxVisibility();
     axios.post(`/update/login`, getUserDTO()).then(
       res => {
-        console.log(res.data);
-        props.dispatch(updateLogin(newLogin));
+        if(res.data) props.dispatch(updateLogin(newLogin));
       }
     ).catch(
       err => console.log(err)
     )
   }
 
+  return (
+    <ButtonActivatedTextBox
+      textBoxVisible={props.isChanging}
+      elementClassName="change-login"
+      textBoxValue={newLogin}
+      handleTextChange={handleLoginChange}
+
+      initMessage="Change login"
+      submitMessage="Submit login change"
+      handleSubmit={handleLoginSubmit}
+      {...props}
+    />
+    
+  )
+}
+
+const EmailChangeTextBox = (props) => {
+  const [newEmail, setNewEmail] = useState("");
+  const [submit, setSubmit] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState(false);
+  const [emailValid, setEmailValid] = useState(false);
+
+  const handleEmailChange = (evt) => {
+    evt.preventDefault();
+    setNewEmail(evt.target.value);
+    validateEmail();
+  }
+
+  const validateEmail = () => {
+    if(emailAvailable && emailValid) return true;
+    else return false;
+  }
+
+  const checkEmailFormat = () => {
+    if(validEmailRegex.test(newEmail)) setEmailValid(true);
+    else setEmailValid(false);
+  }
+
+  const checkEmailAvailable = async () => {
+    axios.get(`/check/email?email=${newEmail}`)
+    .then(res => { setEmailAvailable(res.data) })
+    .catch(
+      err => console.log(err)
+    )
+  }
+
+  const getUserDTO = () => {
+    var user = {
+      id: props.id,
+      userName: props.userName,
+      login: props.login,
+      email: newEmail,
+      password: props.passwordHash,
+      role: '',
+    }
+    return user;
+  }
+  const handleEmailSubmit = () => {
+    props.handleTextBoxVisibility();
+    checkEmailFormat();
+    checkEmailAvailable();
+    setSubmit(true);
+  }
+
+  useEffect( () => {
+    // Here the Email is set
+    if(validateEmail() && submit) {
+      console.log("submitted:")
+      console.log(validateEmail());
+      console.log("this would be subbmitted");
+      console.log(newEmail);
+      setEmailValid(false);
+      setEmailAvailable(false);
+      setSubmit(false);
+      setNewEmail("");
+    }
+
+  }, [checkEmailAvailable, handleEmailSubmit]);
+
+  return (
+    <ButtonActivatedTextBox
+      textBoxVisible={props.isChanging}
+      elementClassName="change-email"
+      textBoxValue={newEmail}
+      handleTextChange={handleEmailChange}
+
+      initMessage="Change email"
+      submitMessage="Submit email change"
+      handleSubmit={handleEmailSubmit}
+      {...props}
+    />
+)
+
+
+}
+
+export const ButtonActivatedTextBox = (props) => {
   const chooseRenderObject = () => {
-    if (props.isChangingLogin) return textBoxAndSubmitButton();
-    else return changeLoginButton();
+    if (props.textBoxVisible) return textBoxAndSubmitButton();
+    else return changeInitButton();
   }
 
   const textBoxAndSubmitButton = () => {
     return(
-      <div className="text-box-submit-button">
+      <div className={props.elementClassName}>
         <input 
           type="text"
-          value={newLogin}
-          onChange={(evt) => handleLoginChange(evt)}/>
+          value={props.textBoxValue}
+          onChange={(evt) => props.handleTextChange(evt)}/>
         <input
           type="submit"
-          value="Submit login change"
-          onClick={handleUserLoginSubmit}/>
+          value={props.submitMessage}
+          onClick={props.handleSubmit}/>
       </div>
     )
   }
 
-  const changeLoginButton = () => {
+  const changeInitButton = () => {
     return(
-      <button 
-        type="button"
-        className="change-login-button"
-        value="Change Login"
-        onClick={props.handleLoginChangeTextBoxVisibility}>
-          Change login
-      </button>
+      <div className={props.elementClassName}>
+        <button 
+          type="button"
+          onClick={props.handleTextBoxVisibility}>
+            {props.initMessage}
+        </button>
+      </div>
     )
   }
 

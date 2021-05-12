@@ -27,6 +27,19 @@ public class UserController {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+  @CrossOrigin
+  @GetMapping("/check/username")
+  public boolean checkUserNameUnique(@RequestParam String userName) {
+    return this.userRepository.getUserWithUserName(userName) == null;
+  }
+
+  @CrossOrigin
+  @GetMapping("/check/email")
+  public boolean checkEmailUnique(@RequestParam String email) {
+    System.out.println(email);
+    System.out.println(this.userRepository.getUserWithEmail(email) == null);
+    return this.userRepository.getUserWithEmail(email) == null;
+  }
 
   @CrossOrigin
   @PostMapping("/get")
