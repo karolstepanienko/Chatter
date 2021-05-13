@@ -34,16 +34,16 @@ export const LoggedInUserProfile = (props) => {
     <div className="user-page">
       <span className="title"> Your profile page </span>
       <div className="user-userName">
-        <span>Username:</span>
-        <span>{props.userName}</span>
+      <div className="key">Username:</div>
+      <div className = "value">{props.userName}</div>
       </div>
       <div className="user-email">
-        <span>Email:</span>
-        <span>{props.email}</span>
+      <div className="key">Email:</div>
+      <div className = "value">{props.email}</div>
       </div>
       <div className="user-login">
-        <span>Login:</span>
-        <span>{props.login}</span>    
+      <div className="key">Login:</div>
+      <div className = "value">{props.login}</div>   
       </div>
       <div className="change-login">
         <LoginChangeTextBox

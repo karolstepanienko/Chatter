@@ -1,0 +1,13 @@
+.value{
+    color: yellow;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    
+}
+.key{
+    float: left;
+    text-align: center;
+    width: 30%;
+}
+

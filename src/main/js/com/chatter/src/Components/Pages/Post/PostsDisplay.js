@@ -6,7 +6,6 @@ import { link }from '../../../Constants/Constants';
 import LinkButton from '../../LinkButton/LinkButton';
 import { login } from '../../../State/userSlice';
 
-
 export default class PostsDisplay extends React.Component {
   constructor(props) {
     super(props);
@@ -51,10 +50,11 @@ export default class PostsDisplay extends React.Component {
     display(array,logins) {
       var i =0;
       return array.map(function (post) {
+        var link1 =`/user/${(logins[i])}`;
         return (
           <div className="post">
             <div className="Creator">
-              autor: {logins[i++]}   
+            <a href={link1}>autor: {logins[i++]}</a>
             </div>
             <div className="postText">
               {(post.text)}

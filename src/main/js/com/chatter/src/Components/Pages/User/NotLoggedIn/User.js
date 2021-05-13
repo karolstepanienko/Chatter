@@ -49,16 +49,16 @@ const User = () => {
     return (
       <div className="user-page">
         <div className="user-userName">
-          <span>Username:</span>
-          <span>{user.userName}</span>
+        <div className="key">Username:</div>
+         <div className = "value">{user.userName}</div>
         </div>
         <div className="user-login">
-          <span>Login:</span>
-          <span>{user.login}</span>
+        <div className="key">Login:  </div>
+        <div className = "value">{user.login}</div>
         </div>
         <div className="user-email">
-          <span>Email:</span>
-          <span>{user.email}</span>
+          <div className="key">Email: </div>
+          <div className = "value">{user.email}</div>
         </div>
       </div>
     )
