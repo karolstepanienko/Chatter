@@ -13,17 +13,31 @@ class  PostsDisplay extends React.Component {
       isLoaded: true,
       items:[],
       login:[],
-      id:this.props.id
+      liked:[],
+      id:this.props.id,
+      init:true
+      
       };
     }
-    handleLike(evt,i){
-        console.log("like")
-        console.log("dislike")
-        console.log(evt.target.checked);
-        console.log(i);
-      var like={status:evt.target.checked, user:this.state.id, post:this.state.items[i].id}
+    handleLike(evt,i,id){
+        if(evt.target.checked){
+          this.state.liked.push(id);
+        }
+        else{
+         for( var j = 0; j < this.state.liked.length; j++){ 
+    
+          if ( this.state.liked[j] === id) { 
+      
+            this.state.liked.splice(j, 1); 
+          }
+      
+      }
+        }
+        console.log(this.state.liked);
+      var like={status:evt.target.checked, user:this.state.id, post:id}
       axios.post(`${link}/like`, like)
       .then((response) => {this.componentDidMount()})
+      this.componentDidMount()
   }
     async componentDidMount() {
       const url=`${link}/allposts`;
@@ -39,8 +53,22 @@ class  PostsDisplay extends React.Component {
       for (let i = 0; i < data.length; i++) {
         this.getLogin(data[i].creatorId,i);
       }
+      if (this.state.init){
+        this.setState({init:false});
+        this.liked();
+      }
     }
-
+    liked(){
+      if (this.state.id!=null){
+        axios.get(`${link}/likedposts?id=${this.state.id}`) 
+        .then((response2) => {
+          if (response2.data != ""){this.setState({liked: response2.data});}
+        {console.log(response2.data);}
+        }, (error) => {
+          console.log(error);
+        });
+      }
+    } 
     getLogin(id,i){
       if (id!=null){
       var tab = this.state.login;
@@ -57,7 +85,15 @@ class  PostsDisplay extends React.Component {
     display(array,logins) {
       let i = 0;
       const val= array.map((post)=> {
-        var a = i
+        var a = i;
+        if (this.state.id==null)
+        {var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)}  disabled></input> }
+        else if(this.state.liked.includes(post.id)){
+          var input = <input type="checkbox" key={i} checked={true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>
+        }
+        else {
+          var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>
+        }
         return (
           <div className="post">
             <div className="Creator">
@@ -66,7 +102,8 @@ class  PostsDisplay extends React.Component {
             <div className="postText">
               {(post.text)}
             </div>
-            <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a)}></input>
+            {/* <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a)}></input> */}
+            {input}
             <label>{post.likes}</label>
             {/* checked="true" */}
             <br></br>
@@ -77,7 +114,6 @@ class  PostsDisplay extends React.Component {
         })
         return val;
     }
-  
     render() {
       if (this.state.isLoaded) {
         return <div>loading...</div>;

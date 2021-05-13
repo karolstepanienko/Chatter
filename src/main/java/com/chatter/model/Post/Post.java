@@ -51,6 +51,9 @@ public class Post implements Serializable {
   public Integer getLikes() {
     return this.likes;
   }
+  public Integer getPrivacy(){
+    return this.privacy;
+  }
 
   public String getText() {
     return this.text;
@@ -58,6 +61,9 @@ public class Post implements Serializable {
 
   public Integer getCreatorId() {
     return this.creatorId;
+  }
+  public Set<User> getUsers() {
+    return this.users;
   }
 
   // Setters
@@ -75,11 +81,15 @@ public class Post implements Serializable {
   public void setLikes(Integer likes) {
     this.likes = likes;
   }
+  public void setPrivacy(Integer privacy){
+    this.privacy = privacy;
+  }
 
 
   public String toString() {
     return "Id: " + this.id + ", " +
-    "Cretor id: " + this.creatorId + ", " +
+    "Creator id: " + this.creatorId + ", " +
+    "Privacy: " + this.privacy + ", " +
     "Text: " + this.text;
   }
   

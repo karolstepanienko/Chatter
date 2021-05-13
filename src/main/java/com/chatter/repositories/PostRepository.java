@@ -23,6 +23,10 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     @Query(value = "SELECT * FROM post WHERE id = :id",
     nativeQuery = true)
     Post getPostWithId(@Param("id") Integer id);
+
+    @Query(value = "SELECT posts_id FROM post_users WHERE users_id = :users_id",
+    nativeQuery = true)
+    Iterable<Integer> getLikedPost(@Param("users_id") Integer users_id);
     
     @Modifying
     @Transactional

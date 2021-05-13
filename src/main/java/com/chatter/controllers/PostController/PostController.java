@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.Model;
@@ -40,7 +40,7 @@ public class PostController {
   @GetMapping(path="/allposts")
   public @ResponseBody Iterable<Post> getAllPosts() {
   // This returns a JSON or XML with the posts
-    return this.postRepository.getPostWithPrivacy(0);
+    return this.postRepository.getPostWithPrivacy(0) ;
   }
   @CrossOrigin
   @PostMapping(value = "/like", consumes = "application/json", produces = "application/json")
@@ -57,8 +57,12 @@ public class PostController {
     }
     return "like";
   }
-
-  
-  
     
+  
+  @CrossOrigin
+  @GetMapping(path="/likedposts")
+  @ResponseBody
+  public Iterable<Integer> likedPosts(@RequestParam Integer id) {
+    return postRepository.getLikedPost(id);
+  }
 }
