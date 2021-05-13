@@ -22,7 +22,6 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.user = {
-        user: {
           id: null,
           userName: '',
           login: '',
@@ -30,7 +29,6 @@ export const userSlice = createSlice({
           passwordHash: '',
           role: '',
           postList: '', 
-        }
       };
     },
     updateLogin: (state, action) => {

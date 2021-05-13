@@ -4,48 +4,56 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import '../../../css/Pages/Account/Register.css';
+import '../../../css/Expire/Expire.css'
+
 import { link } from '../../../Constants/Constants';
 import { login } from '../../../State/userSlice';
+import Expire from '../../DisappearingComponent/Expire';
 
 axios.defaults.baseURL = `${link}/account/user`;
 
 export const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordVerified, setPasswordVerified] = useState(false);
   const [verifiedUser, setVerifiedUser] = useState("");
+  const [badUsernameOrPassword, setBadUsernameOrPassword] = useState(false);
 
   const dispatch = useDispatch();
-
-  // Gets called before the component is unmounted
-  // UseEffect waits for dispatch method to complete before unmounting
-  useEffect( () => {}, [dispatch]);
 
   let history = useHistory();
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    if (validatePassword()) {
-      checkPassword();
-      if (passwordVerified) {
-        dispatch(login(verifiedUser));
-        history.push('/profile');
-      } else alert("Password does not math.");
-    } 
-    else alert("Malformed password.");
+    getVerifiedUser();
   }
 
-  const checkPassword = () => {
-    axios.post('/check/password', getUserDTOFromCredentials()).then(
+  const handleUserNameChange = (evt) => {
+    evt.preventDefault();
+    setUserName(evt.target.value);
+  }
+
+  const handlePasswordChange = (evt) => {
+    evt.preventDefault();
+    setPassword(evt.target.value);
+  }
+
+  const getVerifiedUser = () => {
+    axios.post('/get', getUserDTOFromCredentials()).then(
       res => {
-        setPasswordVerified(res.data);
+        if (res.data != "") {
+          setVerifiedUser(res.data);
+          console.log(res.data);
+        }
+        else {
+          setBadUsernameOrPassword(true);
+        }
       }
-    );
+    ).catch(err => {console.log(err)});
   }
 
-  const validatePassword = () => {
-    if(password.length >= 5) return true;
-    else return false;
+  const logUserIn = () => {
+    dispatch(login(verifiedUser));
+    history.push('/profile');
   }
 
   const getUserDTOFromCredentials = () => {
@@ -60,37 +68,20 @@ export const Login = () => {
     return user;
   }
 
-  const handleUserNameChange = (evt) => {
-    evt.preventDefault();
-    setUserName(evt.target.value);
-    getVerifiedUser();
+  const clean = () => {
+    setUserName("");
+    setPassword("");
+    setVerifiedUser("");
+    setPasswordValidated(false);
   }
 
-  const handlePasswordChange = (evt) => {
-    evt.preventDefault();
-    setPassword(evt.target.value);
-    getVerifiedUser();
-    checkPassword();
-  }
-
-  const getVerifiedUser = () => {
-    axios.get('/get', getUserDTOFromCredentials()).then(
-      res => {
-        if (res.data != "") {
-          setVerifiedUser(res.data);
-        }
-        else {
-          console.log("empty response");
-          setVerifiedUser(null);
-        };
-      }
-    ).catch(err => {console.log(err)});
-  }
+  useEffect( () => {
+    if (verifiedUser != "") logUserIn();
+  }, [getVerifiedUser, setBadUsernameOrPassword, handleLoginSubmit])
 
   return (
     <div className="login-page">
       <h2>Login page</h2>
-      <form>
         <label className="UserName">Username:</label>
           <input 
             className="UserName"
@@ -118,9 +109,25 @@ export const Login = () => {
           value="Login"
           onClick={evt => handleLoginSubmit(evt)}>
         </input>
-      </form>
+
+        <ExpireWrapper
+            className="failure"
+            visible={badUsernameOrPassword}
+            reset={setBadUsernameOrPassword}
+          />
 
       <Link to={'/register'}>Do not have an account? Register here.</Link>
     </div>
+  )
+}
+
+const ExpireWrapper = (props) => {
+  return (
+    <Expire
+    visible={props.badUsernameOrPassword}
+    delay="3000"
+    reset={props.reset}
+    children="Bad user name or password."
+    {...props}/>
   )
 }

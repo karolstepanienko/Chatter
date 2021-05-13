@@ -4,7 +4,8 @@ import axios from 'axios';
 import '../../../css/Pages/Post/PostsDisplay.css';
 import { link }from '../../../Constants/Constants';
 import LinkButton from '../../LinkButton/LinkButton';
-import { login } from '../../../State/userSlice';
+import User from '../User/NotLoggedIn/User';
+import { Link } from 'react-router-dom';
 
 export default class PostsDisplay extends React.Component {
   constructor(props) {
@@ -54,7 +55,8 @@ export default class PostsDisplay extends React.Component {
         return (
           <div className="post">
             <div className="Creator">
-            <a href={link1}>autor: {logins[i++]}</a>
+              <span>Autor: </span>
+              <Link to={link1} userName={logins[i]}>{logins[i]}</Link>
             </div>
             <div className="postText">
               {(post.text)}

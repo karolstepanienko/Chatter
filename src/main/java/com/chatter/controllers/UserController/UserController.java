@@ -48,10 +48,12 @@ public class UserController {
   }
 
   @CrossOrigin
-  @GetMapping("/get")
-  public @ResponseBody User getVerifiedUser(@RequestBody User unverifiedUser) {
-    User verifiedUser = this.userRepository.getUserWithUserName(unverifiedUser.getUserName());
-    return verifiedUser;
+  @PostMapping("/get")
+  public @ResponseBody User getVerifiedUser(@RequestBody UserDTO userDTO) {
+    User user = this.userRepository.getUserWithUserName(userDTO.getUserName());
+    if (user != null && this.passwordEncoder.matches(userDTO.getPassword(), user.getPasswordHash())) {
+      return user;
+    } else return null;
   }
 
   @CrossOrigin
@@ -65,10 +67,9 @@ public class UserController {
   @PostMapping("/check/password")
   public @ResponseBody boolean checkUserPassword(@RequestBody UserDTO userDTO) {
     User verifiedUser = this.userRepository.getUserWithUserName(userDTO.getUserName());
-    if (this.passwordEncoder.matches(userDTO.getPassword(), verifiedUser.getPasswordHash())) {
+    if (verifiedUser != null && this.passwordEncoder.matches(userDTO.getPassword(), verifiedUser.getPasswordHash())) {
       return true;
-    }
-    else return false;
+    } else return false;
   }
 
   @CrossOrigin

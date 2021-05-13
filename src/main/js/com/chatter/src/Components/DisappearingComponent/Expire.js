@@ -9,9 +9,9 @@ const Expire = props => {
     setVisible(props.visible);
     setTimeout(() => {
       setVisible(false);
-      props.reset();
+      props.reset(false);
     }, props.delay);
-  }, [props.delay]);
+  }, [props.delay, props]);
 
   return visible ? <div 
     className={props.className}

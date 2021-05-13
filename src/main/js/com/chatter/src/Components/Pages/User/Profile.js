@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import '../../../css/Pages/User/Profile.css';
 import { link, validEmailRegex }from '../../../Constants/Constants';
 import { connect } from "react-redux";
-import { updateLogin, updateEmail } from '../../../State/userSlice';
+import { updateLogin, updateEmail, logout } from '../../../State/userSlice';
 import Expire from '../../DisappearingComponent/Expire';
 import {CSSTransition} from 'react-transition-group';
 
@@ -16,10 +17,8 @@ export const LoggedInUserProfile = (props) => {
   const [isChangingLogin, setIsChangingLogin] = useState(false);
   const [isChangingEmail, setIsChangingEmail] = useState(false);
 
-
   const dispatch = useDispatch();
-  useEffect( () => {}, [dispatch]);
-
+  let history = useHistory();
 
   const handleLoginChangeTextBoxVisibility = () => {
     setIsChangingLogin(!isChangingLogin);
@@ -29,6 +28,12 @@ export const LoggedInUserProfile = (props) => {
     setIsChangingEmail(!isChangingEmail);
   }
 
+  const handleLogout = () => {
+    dispatch(logout());
+    history.push('/');
+  }
+
+  useEffect( () => {}, [dispatch]);
 
   return (
     <div className="user-page">
@@ -57,6 +62,10 @@ export const LoggedInUserProfile = (props) => {
           dispatch={dispatch}
           handleTextBoxVisibility={handleEmailChangeTextBoxVisibility}
           {...props}/>
+
+          <button
+            onClick={handleLogout}
+          >Logout</button>
       </div>
     </div>
   )
@@ -104,7 +113,7 @@ const LoginChangeTextBox = (props) => {
     )
   }
 
-  const clean = () => {
+  const clean = (props) => {
     setNewLogin("");
     setConfirmation({visible: false,
       value: "",
@@ -190,7 +199,7 @@ const EmailChangeTextBox = (props) => {
     showFailure();
   }
 
-  const clean = () => {
+  const clean = (props) => {
     setNewEmail("");
     setSubmit(false);
     setEmailAvailable(false);

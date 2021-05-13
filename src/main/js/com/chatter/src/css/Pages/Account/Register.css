@@ -1,6 +1,7 @@
 .register-page, .login-page {
   display: flex;
   flex-flow: column wrap;
+  font-size: 1.1em;
   width: 30%;
   align-items: center;
   margin-left: 35%;

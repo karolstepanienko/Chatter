@@ -14,6 +14,7 @@ export default class Post extends React.Component {
       text: '',
         }
       }
+
     handleAddingPost(evt) {
       evt.preventDefault();
       axios.post(`${link}/addpost`, this.post);
@@ -22,9 +23,11 @@ export default class Post extends React.Component {
       this.post.text='';
       this.post.privacy=0;
     }
+
     handlePostChange(evt) {
       this.post.text = evt.target.value;
     }
+
     handlePrivacyChange(evt){
       if(evt.target.checked){
         this.post.privacy = 1
@@ -33,6 +36,7 @@ export default class Post extends React.Component {
         this.post.privacy = 0
       }
     }
+    
     render() {
       return(
     <div className="add_post_page">
