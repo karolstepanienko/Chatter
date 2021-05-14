@@ -19,7 +19,7 @@ import ReRoute from '../Navigation/ReRoute';
 import User from '../Pages/User/NotLoggedIn/User';
 import  Post  from '../Post/Post';
 import Friends from '../Pages/User/Friends';
-import LoggedInUserProfile from '../Pages/User/Profile';
+import LoggedInUserProfile from '../Pages/User/Profile/Profile';
 
 
 const Navigation = () => {

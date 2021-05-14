@@ -29,7 +29,7 @@ const User = () => {
         res =>{
           if(res.data !== "") {
             setUser(res.data);
-            setUserExists(true);
+            setUserExists(true);      
           }
           else setUserExists(false);
         }
