@@ -7,23 +7,27 @@ import { link }from '../../Constants/Constants';
 
 
 const Post = (props)=> {
+  
   var post = {
   id: null,
   creatorId: props.id,
   privacy: 0,
   text: '',
   likes: 0}
+
     function handleAddingPost(evt) {
       evt.preventDefault();
-      axios.post(`${link}/addpost`, post);
+      axios.post(`${link}/post/addpost`, post);
       alert("Post have been added");
       document.forms["post_texti"].reset();
       post.text='';
       post.privacy=0;
     }
+
     function handlePostChange(evt) {
       post.text = evt.target.value;
     }
+
     function handlePrivacyChange(evt){
       if(evt.target.checked){
         post.privacy = 1
@@ -32,9 +36,8 @@ const Post = (props)=> {
         post.privacy = 0
       }
     }
-    console.log(props.id)
-      return(
-      
+
+    return(
     <div className="add_post_page">
       <h2>Add post</h2>
       <form id ='post_texti'>
@@ -62,8 +65,8 @@ const Post = (props)=> {
       </form>
     </div>
     )
-
 }
+
 const mapStateToProps = state => ({
   id: state.user.user.id,
   userName: state.user.user.userName,
@@ -72,4 +75,5 @@ const mapStateToProps = state => ({
   login: state.user.user.login,
   role: state.user.user.role,
 });
+
 export default connect(mapStateToProps)(Post);

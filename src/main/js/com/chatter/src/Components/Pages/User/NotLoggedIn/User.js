@@ -1,7 +1,7 @@
 import '../../../../css/Pages/User/NotLoggedIn/User.css';
 import axios from 'axios';
 import { useEffect, useState } from "react";
-import { link, roles } from '../../../../Constants/Constants';
+import { link, accountPrivacies } from '../../../../Constants/Constants';
 import { useParams } from 'react-router';
 
 axios.defaults.baseURL = `${link}/account/user`;
@@ -48,18 +48,13 @@ const User = () => {
   const getUserInfo = () => {
     return (
       <div className="user-page">
-        <div className="user-userName">
-        <div className="key">Username:</div>
-         <div className = "value">{user.userName}</div>
-        </div>
-        <div className="user-login">
-        <div className="key">Login:  </div>
-        <div className = "value">{user.login}</div>
-        </div>
-        <div className="user-email">
+        <h3 className="title">User page</h3>
+          <div className="key">Username:</div>
+          <div className = "value">{user.userName}</div>
+          <div className="key">Login:</div>
+          <div className = "value">{user.login}</div>
           <div className="key">Email: </div>
           <div className = "value">{user.email}</div>
-        </div>
       </div>
     )
   }
@@ -80,10 +75,22 @@ const User = () => {
     )
   }
 
+  const getAccountPrivate = () => {
+    return (
+      <div className="user-page">
+        <div className="account-private">
+          This account is private.
+        </div>
+      </div>
+    )
+  }
+
   const display = () => {
     if (userExists) {
-      if (isLoaded) return getUserInfo();
-      else return getLoading();
+      if (isLoaded) {
+        if (user.accountPrivacy === accountPrivacies.publicAccess) return getUserInfo();
+        else return getAccountPrivate();
+      } else return getLoading();
     } else return getUserDoesNotExist();
   }
 

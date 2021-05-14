@@ -22,7 +22,7 @@ import com.chatter.model.Post.Like;
 import com.chatter.model.User.User;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/post")
 public class PostController {
   @Autowired  
   private PostRepository postRepository;
@@ -32,8 +32,7 @@ public class PostController {
     
   @CrossOrigin
   @PostMapping("/addpost")
-  public void addUser(@RequestBody Post post) {
-      System.out.println(post.toString());
+  public void addPost(@RequestBody Post post) {
       this.postRepository.save(post);
   }
 
@@ -42,6 +41,7 @@ public class PostController {
   // This returns a JSON or XML with the posts
     return this.postRepository.getPostWithPrivacy(0) ;
   }
+
   @CrossOrigin
   @PostMapping(value = "/like", consumes = "application/json", produces = "application/json")
   public String changeLogin(@RequestBody Like like) {
@@ -57,8 +57,7 @@ public class PostController {
     }
     return "like";
   }
-    
-  
+
   @CrossOrigin
   @GetMapping(path="/likedposts")
   @ResponseBody

@@ -67,9 +67,9 @@ public class AccountController {
   }
 
   @CrossOrigin
-  @GetMapping("/getlogin")
+  @GetMapping("/getUserName")
   @ResponseBody
-  public String getLoginwithid(@RequestParam Integer id) {
+  public String getUserNameWithId(@RequestParam Integer id) {
     User user = this.userRepository.getUserWithId(id);
     if(user != null) return user.getUserName();
     else return null;

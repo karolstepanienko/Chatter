@@ -6,6 +6,7 @@ import '../../../css/Pages/Post/PostsDisplay.css';
 import { link }from '../../../Constants/Constants';
 import {connect} from 'react-redux';
 
+
 class  PostsDisplay extends React.Component {
   constructor(props) {
     super(props);
@@ -17,9 +18,9 @@ class  PostsDisplay extends React.Component {
       liked:[],
       id:this.props.id,
       init:true
-      
       };
     }
+
     handleLike(evt,i,id){
         if(evt.target.checked){
           this.state.liked.push(id);
@@ -30,18 +31,18 @@ class  PostsDisplay extends React.Component {
           if ( this.state.liked[j] === id) { 
       
             this.state.liked.splice(j, 1); 
-          }
-      
+          }  
       }
         }
         console.log(this.state.liked);
       var like={status:evt.target.checked, user:this.state.id, post:id}
-      axios.post(`${link}/like`, like)
+      axios.post(`${link}/post/like`, like)
       .then((response) => {this.componentDidMount()})
       this.componentDidMount()
   }
+
     async componentDidMount() {
-      const url=`${link}/allposts`;
+      const url=`${link}/post/allposts`;
       const response = await fetch(url);
       const data = await response.json();
       console.log(data);
@@ -54,14 +55,15 @@ class  PostsDisplay extends React.Component {
       for (let i = 0; i < data.length; i++) {
         this.getLogin(data[i].creatorId,i);
       }
-      if (this.state.init){
+      if (this.state.init) {
         this.setState({init:false});
         this.liked();
       }
     }
+  
     liked(){
       if (this.state.id!=null){
-        axios.get(`${link}/likedposts?id=${this.state.id}`) 
+        axios.get(`${link}/post/likedposts?id=${this.state.id}`) 
         .then((response2) => {
           if (response2.data != ""){this.setState({liked: response2.data});}
         {console.log(response2.data);}
@@ -69,12 +71,13 @@ class  PostsDisplay extends React.Component {
           console.log(error);
         });
       }
-    } 
+    }
+
     getLogin(id,i){
       if (id!=null){
       var tab = this.state.login;
       console.log(this.state.login);
-      axios.get(`${link}/account/getlogin?id=${id}`) 
+      axios.get(`${link}/account/getUserName?id=${id}`) 
       .then((response) => {
         if (response.data != ""){tab[i]=(response.data)}
       {this.setState({login: tab});}
@@ -83,6 +86,7 @@ class  PostsDisplay extends React.Component {
       });
     }
     }
+
     display(array,logins) {
       let i = 0;
       const val= array.map((post)=> {
@@ -123,11 +127,12 @@ class  PostsDisplay extends React.Component {
       }
       return (
         <div>
-          {this.display(this.state.items,this.state.login)}
+          {this.display(this.state.items, this.state.login)}
         </div>
       );
       }
     }
+
 const mapStateToProps = state => ({
   id: state.user.user.id,
   userName: state.user.user.userName,
@@ -136,4 +141,5 @@ const mapStateToProps = state => ({
   login: state.user.user.login,
    role: state.user.user.role,
     });
+
 export default connect(mapStateToProps)(PostsDisplay)
