@@ -53,13 +53,11 @@ const ButtonActivatedTextBox = (props) => {
 
   const changeInitButton = () => {
     return(
-      <div className={props.elementClassName}>
-        <button 
-          type="button"
-          onClick={props.handleTextBoxVisibility}>
-            {props.initMessage}
-        </button>
-      </div>
+      <button className={props.elementClassName}
+        type="button"
+        onClick={props.handleTextBoxVisibility}>
+          {props.initMessage}
+      </button>
     )
   }
 

@@ -8,6 +8,7 @@ import { logout } from '../../../../State/userSlice';
 import ChangePrivacy from '../../../Dropdown/ChangePrivacy';
 import EmailChangeTextBox from './EmailChangeTextBox';
 import LoginChangeTextBox from './LoginChangeTextBox';
+import DisplayLogin from './DisplayLogin';
 
 
 export const LoggedInUserProfile = (props) => {
@@ -67,7 +68,7 @@ export const LoggedInUserProfile = (props) => {
             {...props}/>
         </div>
 
-        <ChangePrivacy className="changePrivacy"/>
+          <ChangePrivacy className="changePrivacy"/>
 
         <button className="logout"
           onClick={handleLogout}>
@@ -80,19 +81,6 @@ export const LoggedInUserProfile = (props) => {
 
 const UserNameChangeTextBox = (props) => {
 
-}
-
-const DisplayLogin = (props) => {
-  const [loginEmpty, setLoginEmpty] = useState(true);
-
-  const checkLoginEmpty = () => {
-    if (props.login === "") setLoginEmpty(true);
-    else setLoginEmpty(false);
-  }
-
-  useEffect( () => checkLoginEmpty(), [props]);
-
-  return (loginEmpty ? <div>No login set.</div> : <div>{props.login}</div>)
 }
 
 const mapStateToProps = state => ({
