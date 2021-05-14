@@ -102,7 +102,6 @@ public class AccountController {
     if (user != null) {
       userRepository.delete(user);
       return true;
-    }
-    else return false;
+    } else return false;
   }
 }

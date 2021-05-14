@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { propTypes } from 'react-bootstrap/esm/Image';
 
 const ChangePrivacy = (props) => {
   const [show, setShow] = useState(false);
@@ -10,7 +9,8 @@ const ChangePrivacy = (props) => {
 
   return (
     <div className={props.className}>
-      <button 
+      <button
+        className={props.className}
         onClick={handleChangePrivacyClick}
       >Change privacy</button>
       {

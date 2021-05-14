@@ -1,6 +1,8 @@
 package com.chatter.controllers.AccountController;
 
 
+import com.chatter.model.Constants.AccountPrivacies;
+import com.chatter.model.Constants.Roles;
 import com.chatter.model.User.User;
 import com.chatter.model.User.UserDTO;
 import com.chatter.repositories.UserRepository;
@@ -36,8 +38,8 @@ public class AccountControllerLogic {
     user.setUserName(userDTO.getUserName());
     user.setEmail(userDTO.getEmail());
     user.setPasswordHash(passwordHash);
-    // TODO
-    // user.setRole();
+    user.setRole(Roles.getUserRole());
+    user.setAccountPrivacy(AccountPrivacies.getPrivateAccess());
     return user;
 
   }

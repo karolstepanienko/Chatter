@@ -1,9 +1,7 @@
 .user-page {
-  display: flex;
-  flex-flow: column wrap;
-  width: 30%;
-  align-items: left;
-  margin-left: 35%;
+  width: 80%;
+  align-items: center;
+  margin-left: 10%;
   margin-top: 8%;
   background-color: dodgerblue;
   font-size: 1.5em;
@@ -13,19 +11,47 @@
   box-shadow: 15px 16px 34px 5px rgba(21,98,214,1);
 }
 
-.title {  
-  align-self: center;
-  margin: 2%;
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.title {
+  size: 10%;
+  margin-left: 40%;
   font-weight: 700;
   color: yellow;
 }
 
-.change-login,
-.change-email,
-.changePrivacy,
+.key {
+  width: 50%;
+}
+.value {
+  width: 50%;
+}
+
+.user-userName {
+  width: 100%;
+}
+.user-userEmail,
+.user-login {
+  width: 50%;
+}
+
+.changePrivacy {
+  display: block;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+}
+
 .logout {
-  display: flex;
-  flex-flow: column wrap;
-  margin-top: 2%;
-  margin-block-end: 2%;
+  display: block;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+  background-color: yellow;
 }

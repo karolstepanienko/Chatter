@@ -37,45 +37,41 @@ export const LoggedInUserProfile = (props) => {
       <span className="title"> Your profile page </span>
       <div className="flex-container">
 
-      <div className="user-userName">
-        <div className="key">Username:</div>
-        <div className = "value">{props.userName}</div>
-      </div>
-      <div className="change-userName"></div>
+        <div className="user-userName">
+          <div className="key">Username:</div>
+          <div className = "value">{props.userName}</div>
+        </div>
+        <div className="change-userName"></div>
 
-      <div className="user-login">
-        <div className="key">Login:</div>
-        <div className = "value">{props.login}</div>   
-      </div>
-      <div className="change-login">
-        <LoginChangeTextBox
-          isChanging={isChangingLogin}
-          dispatch={dispatch}
-          handleTextBoxVisibility={handleLoginChangeTextBoxVisibility}
-         {...props}/>
-      </div>
-
-      <div className="user-email">
-        <div className="key">Email:</div>
-        <div className = "value">{props.email}</div>
-      </div>
-      <div className="change-email">
-        <EmailChangeTextBox
-          isChanging={isChangingEmail}
-          dispatch={dispatch}
-          handleTextBoxVisibility={handleEmailChangeTextBoxVisibility}
+        <div className="user-login">
+          <div className="key">Login:</div>
+          <div className="value"><DisplayLogin login={props.login} /></div>   
+        </div>
+        <div className="change-login">
+          <LoginChangeTextBox
+            isChanging={isChangingLogin}
+            dispatch={dispatch}
+            handleTextBoxVisibility={handleLoginChangeTextBoxVisibility}
           {...props}/>
-      </div>
+        </div>
 
-      <div className="changePrivacy">
+        <div className="user-userEmail">
+          <div className="key">Email:</div>
+          <div className = "value">{props.email}</div>
+        </div>
+        <div className="change-email">
+          <EmailChangeTextBox
+            isChanging={isChangingEmail}
+            dispatch={dispatch}
+            handleTextBoxVisibility={handleEmailChangeTextBoxVisibility}
+            {...props}/>
+        </div>
+
         <ChangePrivacy className="changePrivacy"/>
-      </div>
 
-      <div className="logout">
-        <button
+        <button className="logout"
           onClick={handleLogout}>
         Logout</button>
-      </div>
 
       </div>
     </div>
@@ -84,6 +80,19 @@ export const LoggedInUserProfile = (props) => {
 
 const UserNameChangeTextBox = (props) => {
 
+}
+
+const DisplayLogin = (props) => {
+  const [loginEmpty, setLoginEmpty] = useState(true);
+
+  const checkLoginEmpty = () => {
+    if (props.login === "") setLoginEmpty(true);
+    else setLoginEmpty(false);
+  }
+
+  useEffect( () => checkLoginEmpty(), [props]);
+
+  return (loginEmpty ? <div>No login set.</div> : <div>{props.login}</div>)
 }
 
 const mapStateToProps = state => ({
