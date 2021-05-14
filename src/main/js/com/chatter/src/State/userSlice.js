@@ -6,7 +6,13 @@ export const userSlice = createSlice({
   initialState: {
     user: {
       id: null,
+<<<<<<< HEAD
       userName: '',
+=======
+      userName: 'test',
+      email: '',
+      passwordHash: '',
+>>>>>>> kamil
       login: '',
       email: '',
       accountPrivacy: '',

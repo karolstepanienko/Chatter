@@ -1,11 +1,14 @@
 package com.chatter.model.User;
 
-
+import javax.persistence.JoinColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Column;
+
 
 import java.util.Set;
 
@@ -22,15 +25,17 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(nullable=false)
   private Integer id;
+  private Post post;
   private String userName;
   private String login;
   private String email;
   private String passwordHash;
   private String accountPrivacy;
   private String role;
-  @OneToMany(targetEntity=Post.class)
-  private Set<Post> postList;
+  @ManyToMany(mappedBy = "users")
+  private Set<Post> posts;
 
   public User() {}
 
