@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* Background pattern from Toptal Subtle Patterns */
-  background-image: url("bush.png");
+  background-image: url("./Static/bush.png");
 }
 
 code {
