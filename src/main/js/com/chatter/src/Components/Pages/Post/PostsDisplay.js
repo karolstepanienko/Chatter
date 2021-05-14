@@ -17,7 +17,7 @@ class  PostsDisplay extends React.Component {
       login:[],
       liked:[],
       id:this.props.id,
-      init:true
+      init:false
       };
     }
 
@@ -98,7 +98,7 @@ class  PostsDisplay extends React.Component {
           var input = <input type="checkbox" key={i} checked={true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>
         }
         else {
-          var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>
+          var input = <input type="checkbox" checked = {false} key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>
         }
         return (
           <div className="post">
@@ -123,7 +123,7 @@ class  PostsDisplay extends React.Component {
     }
     render() {
       if (this.state.isLoaded) {
-        return <div>loading...</div>;
+        return <div>Loading...</div>;
       }
       return (
         <div>
@@ -134,12 +134,7 @@ class  PostsDisplay extends React.Component {
     }
 
 const mapStateToProps = state => ({
-  id: state.user.user.id,
-  userName: state.user.user.userName,
-  email: state.user.user.email,
-  passwordHash: state.user.user.passwordHash,
-  login: state.user.user.login,
-   role: state.user.user.role,
-    });
+  id: state.user.user.id
+});
 
 export default connect(mapStateToProps)(PostsDisplay)

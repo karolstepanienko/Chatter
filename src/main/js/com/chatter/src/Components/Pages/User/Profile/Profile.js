@@ -9,6 +9,7 @@ import ChangePrivacy from '../../../Dropdown/ChangePrivacy';
 import EmailChangeTextBox from './EmailChangeTextBox';
 import LoginChangeTextBox from './LoginChangeTextBox';
 import DisplayLogin from './DisplayLogin';
+import DisplayUserPosts from '../../Post/DisplayUserPosts';
 
 
 export const LoggedInUserProfile = (props) => {
@@ -82,9 +83,14 @@ export const LoggedInUserProfile = (props) => {
             {...props}/>
         </div>
 
-        <button className="logout"
-          onClick={handleLogout}>
-        Logout</button>
+        <div className="logout-div">
+          <button className="logout"
+            onClick={handleLogout}>
+          Logout</button>
+        </div>
+        <div className="posts-div">
+          <DisplayUserPosts {...props}/>
+        </div>
 
       </div>
     </div>

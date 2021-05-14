@@ -12,9 +12,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface PostRepository extends CrudRepository<Post, Integer> {
-    @Query(value = "SELECT * FROM post WHERE creatorId = :creatorId",
+    @Query(value = "SELECT * FROM post WHERE creator_id = :creator_id",
     nativeQuery = true)
-    Post getPostWithCreatorId(@Param("creatorId") Integer creatorId);
+    Iterable<Post> getPostWithCreatorId(@Param("creator_id") Integer creator_id);
 
     @Query(value = "SELECT * FROM post WHERE privacy = :privacy ORDER BY likes DESC",
     nativeQuery = true)
@@ -24,9 +24,9 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     nativeQuery = true)
     Post getPostWithId(@Param("id") Integer id);
 
-    @Query(value = "SELECT posts_id FROM post_users WHERE users_id = :users_id",
+    @Query(value = "SELECT post_id FROM user_post WHERE user_id = :user_id",
     nativeQuery = true)
-    Iterable<Integer> getLikedPost(@Param("users_id") Integer users_id);
+    Iterable<Integer> getLikedPost(@Param("user_id") Integer user_id);
     
     @Modifying
     @Transactional

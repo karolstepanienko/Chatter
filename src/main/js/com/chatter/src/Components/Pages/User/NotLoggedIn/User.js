@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import { link, accountPrivacies } from '../../../../Constants/Constants';
 import { useParams } from 'react-router';
 
-axios.defaults.baseURL = `${link}/account/user`;
-
 
 const User = () => {
   const [user, setUser] = useState("");
@@ -24,7 +22,7 @@ const User = () => {
 
   const getUserWithUserName = async () => {
     if (user === "") {
-      axios.get(`/get/user/by/userName?userName=${params.userName}`)
+      axios.get(`${link}/account/user/get/user/by/userName?userName=${params.userName}`)
       .then(
         res =>{
           if(res.data !== "") {

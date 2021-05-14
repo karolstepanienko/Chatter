@@ -80,13 +80,6 @@ export const Login = () => {
     return user;
   }
 
-  const clean = () => {
-    setUserName("");
-    setPassword("");
-    setVerifiedUser("");
-    setPasswordValidated(false);
-  }
-
   useEffect( () => {
     if (verifiedUser != "") logUserIn();
   }, [getVerifiedUser, setBadUsernameOrPassword, handleLoginSubmit])

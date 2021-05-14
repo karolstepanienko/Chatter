@@ -32,8 +32,14 @@ public class PostController {
     
   @CrossOrigin
   @PostMapping("/addpost")
-  public void addPost(@RequestBody Post post) {
+  public boolean addPost(@RequestBody Post post) {
+    User user = this.userRepository.getUserWithId(post.getCreatorId());
+    if (user != null) {
+      user.addPost(post);
+      post.addUser(user);  
       this.postRepository.save(post);
+      return true;
+    } else return false;
   }
 
   @GetMapping(path="/allposts")
@@ -52,7 +58,7 @@ public class PostController {
       postRepository.changeLikes(like.post, likesNr+1);
     }
     else{
-      postRepository.getPostWithId(like.post).deleteUser(userRepository.getUserWithId(like.user));
+      postRepository.getPostWithId(like.post).removeUser(userRepository.getUserWithId(like.user));
       postRepository.changeLikes(like.post, likesNr-1);
     }
     return "like";
@@ -63,5 +69,11 @@ public class PostController {
   @ResponseBody
   public Iterable<Integer> likedPosts(@RequestParam Integer id) {
     return postRepository.getLikedPost(id);
+  }
+
+  @CrossOrigin
+  @GetMapping("/get/posts/with/creatorId")
+  public @ResponseBody Iterable<Post> getPostsWithCreatorId(@RequestParam Integer creatorId) {
+    return this.postRepository.getPostWithCreatorId(creatorId);
   }
 }

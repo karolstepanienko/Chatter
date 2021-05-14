@@ -27,14 +27,22 @@ public class Post implements Serializable {
   private String text;
   private Integer privacy;
   private Integer likes;
-  @ManyToMany
+  // Users that liked this post
+  @ManyToMany(mappedBy = "posts")
   @JsonIgnore
   private Set<User> users;
 
   public Post() {}
 
-  public void addUser(User user){users.add(user);}
-  public void deleteUser(User user){users.remove(user);}
+  public void addUser(User user) {
+    if (this.users == null) this.users = new HashSet<User>();
+    this.users.add(user);
+  }
+  
+  public void removeUser(User user){
+    this.users.remove(user);
+  }
+
   public Post(Integer creatorId, String text, Integer privacy, Integer likes ) {
     this.creatorId = creatorId;
     this.text = text;
@@ -42,7 +50,6 @@ public class Post implements Serializable {
     // 1 - post is private
     this.privacy = privacy;
     this.likes = likes;
-
   }  
    // Getters
    public Integer getId() {
