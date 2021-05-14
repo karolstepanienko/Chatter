@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
+import { Link } from 'react-router-dom';
 import '../../../css/Pages/Post/PostsDisplay.css';
 import { link }from '../../../Constants/Constants';
-import {connect} from 'react-redux' 
+import {connect} from 'react-redux';
 
 class  PostsDisplay extends React.Component {
   constructor(props) {
@@ -86,6 +87,7 @@ class  PostsDisplay extends React.Component {
       let i = 0;
       const val= array.map((post)=> {
         var a = i;
+        var linkUserPage =`/user/${(logins[i])}`;
         if (this.state.id==null)
         {var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)}  disabled></input> }
         else if(this.state.liked.includes(post.id)){
@@ -98,7 +100,7 @@ class  PostsDisplay extends React.Component {
           <div className="post">
             <div className="Creator">
               <span>Autor: </span>
-              <Link to={link1} userName={logins[i]}>{logins[i]}</Link>
+              <Link to={linkUserPage} userName={logins[i]}>{logins[i]}</Link>
             </div>
             <div className="postText">
               {(post.text)}
