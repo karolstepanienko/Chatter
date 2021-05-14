@@ -1,6 +1,8 @@
 package com.chatter.model.Constants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
@@ -31,5 +33,11 @@ public class AccountPrivacies {
     return map;
   }
 
-  
+  public static List<String> getAllList() {
+    List<String> list = new ArrayList<String>();
+    list.add(publicAccess);
+    list.add(friendOnlyAccess);
+    list.add(privateAccess);
+    return list;
+  }
 }

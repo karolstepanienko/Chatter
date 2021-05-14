@@ -22,7 +22,7 @@ const LoginChangeTextBox = (props) => {
   }
 
   const getUserDTO = () => {
-    var user = {
+    var userDTO = {
       id: props.id,
       userName: props.userName,
       login: newLogin,
@@ -30,7 +30,7 @@ const LoginChangeTextBox = (props) => {
       password: props.passwordHash,
       role: '',
     }
-    return user;
+    return userDTO;
   }
 
   const handleLoginSubmit = () => {

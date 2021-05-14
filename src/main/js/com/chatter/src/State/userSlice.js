@@ -9,7 +9,7 @@ export const userSlice = createSlice({
       userName: '',
       login: '',
       email: '',
-      passwordHash: '',
+      accountPrivacy: '',
       role: '',
       postList: '', 
     }
@@ -26,7 +26,7 @@ export const userSlice = createSlice({
           userName: '',
           login: '',
           email: '',
-          passwordHash: '',
+          accountPrivacy: '',
           role: '',
           postList: '', 
       };
@@ -36,6 +36,9 @@ export const userSlice = createSlice({
     },
     updateEmail: (state, action) => {
       state.user.email = action.payload;
+    },
+    updateAccountPrivacyStore: (state, action) => {
+      state.user.accountPrivacy = action.payload;
     }
   }
 })
@@ -46,7 +49,8 @@ export const {
   login,
   logout,
   updateLogin,
-  updateEmail} = userSlice.actions;
+  updateEmail,
+  updateAccountPrivacyStore} = userSlice.actions;
 
 // export const selectUser = (state) => {state};
 

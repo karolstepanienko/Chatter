@@ -1,9 +1,11 @@
 package com.chatter.controllers.UserController;
 
 import com.chatter.controllers.AccountController.AccountControllerLogic;
+import com.chatter.model.Constants.AccountPrivacies;
 // Project imports
 import com.chatter.model.User.User;
 import com.chatter.model.User.UserDTO;
+import com.chatter.model.User.UserINFO;
 import com.chatter.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +103,18 @@ public class UserController {
     this.acLogic.checkUserEmailAvailable(user, userRepository)) {
       this.userRepository.save(user);
       return true;
+    } else return false;
+  }
+
+  @CrossOrigin
+  @PostMapping("/update/privacy")
+  public boolean updateUserPrivacy(@RequestBody UserINFO userINFO) {
+    User user = this.userRepository.getUserWithId(userINFO.getId());
+    if (user != null &&
+      AccountPrivacies.getAllList().contains(userINFO.getAccountPrivacy())) {
+        user.setAccountPrivacy(userINFO.getAccountPrivacy());
+        this.userRepository.save(user);
+        return true;
     } else return false;
   }
 }

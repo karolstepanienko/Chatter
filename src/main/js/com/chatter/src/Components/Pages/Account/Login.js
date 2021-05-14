@@ -42,7 +42,6 @@ export const Login = () => {
       res => {
         if (res.data != "") {
           setVerifiedUser(res.data);
-          console.log(res.data);
         }
         else {
           setBadUsernameOrPassword(true);
@@ -51,8 +50,21 @@ export const Login = () => {
     ).catch(err => {console.log(err)});
   }
 
+  const getStateUserFromUser = () => {
+    var stateUser = {
+      id: verifiedUser.id,
+      userName: verifiedUser.userName,
+      login: verifiedUser.login,
+      email: verifiedUser.email,
+      accountPrivacy: verifiedUser.accountPrivacy,
+      role: verifiedUser.role,
+      postList: verifiedUser.postList
+    }
+    return stateUser;
+  }
+
   const logUserIn = () => {
-    dispatch(login(verifiedUser));
+    dispatch(login(getStateUserFromUser()));
     history.push('/profile');
   }
 

@@ -12,6 +12,8 @@ public class UserINFO {
   private String accountPrivacy;
   private String role;
 
+  public UserINFO() {}
+
   public UserINFO(UserDTO userDTO) {
     this.id = userDTO.getId();
     this.userName = userDTO.getUserName();

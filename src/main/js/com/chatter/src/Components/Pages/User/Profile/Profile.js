@@ -20,6 +20,7 @@ export const LoggedInUserProfile = (props) => {
 
   const handleLoginChangeTextBoxVisibility = () => {
     setIsChangingLogin(!isChangingLogin);
+    console.log(props.accountPrivacy)
   }
 
   const handleEmailChangeTextBoxVisibility = () => {
@@ -50,6 +51,7 @@ export const LoggedInUserProfile = (props) => {
         </div>
         <div className="change-login">
           <LoginChangeTextBox
+            className="change-login"
             isChanging={isChangingLogin}
             dispatch={dispatch}
             handleTextBoxVisibility={handleLoginChangeTextBoxVisibility}
@@ -62,13 +64,23 @@ export const LoggedInUserProfile = (props) => {
         </div>
         <div className="change-email">
           <EmailChangeTextBox
+            className="change-email"
             isChanging={isChangingEmail}
             dispatch={dispatch}
             handleTextBoxVisibility={handleEmailChangeTextBoxVisibility}
             {...props}/>
         </div>
-
-          <ChangePrivacy className="changePrivacy"/>
+        
+        <div className="user-accountPrivacy">
+          <div className="key">Privacy setting:</div>
+          <div className = "value">{props.accountPrivacy}</div>
+        </div>
+        <div className="change-privacy">
+          <ChangePrivacy
+            className="change-privacy"
+            dispatch={dispatch}
+            {...props}/>
+        </div>
 
         <button className="logout"
           onClick={handleLogout}>
@@ -86,9 +98,9 @@ const UserNameChangeTextBox = (props) => {
 const mapStateToProps = state => ({
   id: state.user.user.id,
   userName: state.user.user.userName,
-  email: state.user.user.email,
-  passwordHash: state.user.user.passwordHash,
   login: state.user.user.login,
+  email: state.user.user.email,
+  accountPrivacy: state.user.user.accountPrivacy,
   role: state.user.user.role,
   postList: state.user.user.postList,
 });
