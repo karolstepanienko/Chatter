@@ -79,7 +79,6 @@ public class PostController {
       if (post.getPrivacy().equals(AccountPrivacies.getPublicAccess())) {
         post.setPrivacy(AccountPrivacies.getPrivateAccess());
       } else post.setPrivacy(AccountPrivacies.getPublicAccess());
-      System.out.println(post.toString());
       this.postRepository.save(post);
       return true;  
     } else return false;

@@ -14,11 +14,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
   /**
    * Web security configuration.
    */
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  protected void configure(final HttpSecurity http) throws Exception {
     http
       .csrf().disable().cors()
         .and()
@@ -27,18 +28,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
       .formLogin();
   }
+
   /**
    * Enables CORS - Cross-origin resource sharing for whole project.
    * @return CorsConfiguration
    */
   @Bean
-  CorsConfigurationSource corsConfigurationSource()
-  {
+  CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000/**", "http://localhost:3000"));
-		// configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));
+    configuration.setAllowedOrigins(Arrays.asList(
+    "http://localhost:3000/**", "http://localhost:3000"));
     configuration.applyPermitDefaultValues();
-    final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    final UrlBasedCorsConfigurationSource source = new
+     UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;
   }
