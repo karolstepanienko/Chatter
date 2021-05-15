@@ -1,5 +1,7 @@
 package com.chatter.Configuration.WebSecurity;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,25 +14,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-  // Authorization setup
+  /**
+   * Web security configuration.
+   */
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-      .csrf().disable().cors().configurationSource(
-        request -> new CorsConfiguration().applyPermitDefaultValues()
-      )
+      .csrf().disable().cors()
         .and()
       .authorizeRequests()
         .antMatchers("/debug/**", "/api/**").permitAll()
-        // .antMatchers("/user").hasAnyRole("USER", "ADMIN")
-        // .antMatchers("/admin").hasAnyRole("ADMIN")
         .and()
       .formLogin();
-      // .anyRequest().authenticated();
-      // .addFilter(new AuthenticationFilter(authenticationManager()))
-      // .addFilter(new AuthorizationFilter(authenticationManager()))
-      // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
   /**
    * Enables CORS - Cross-origin resource sharing for whole project.
@@ -39,8 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Bean
   CorsConfigurationSource corsConfigurationSource()
   {
+    CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+		configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE"));
     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**",new CorsConfiguration().applyPermitDefaultValues());
+    source.registerCorsConfiguration("/**", configuration);
     return source;
   }
 }
