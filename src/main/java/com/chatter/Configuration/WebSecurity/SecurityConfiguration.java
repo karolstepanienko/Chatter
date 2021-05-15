@@ -1,15 +1,7 @@
 package com.chatter.Configuration.WebSecurity;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-
-// import org.springframework.beans.factory.annotation.Autowired;
-
-// import com.chatter.Login.AuthenticationFilter;
-// import com.chatter.Login.AuthorizationFilter;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -40,7 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
       // .addFilter(new AuthorizationFilter(authenticationManager()))
       // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
-
+  /**
+   * Enables CORS - Cross-origin resource sharing for whole project.
+   * @return CorsConfiguration
+   */
   @Bean
   CorsConfigurationSource corsConfigurationSource()
   {
@@ -48,5 +43,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     source.registerCorsConfiguration("/**",new CorsConfiguration().applyPermitDefaultValues());
     return source;
   }
-
 }

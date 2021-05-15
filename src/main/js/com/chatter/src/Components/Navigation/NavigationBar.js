@@ -5,6 +5,8 @@ import '../../css/Navigation/NavBar.css';
 import { Link } from 'react-router-dom';
 import { Nav, Navbar, Form, FormControl } from 'react-bootstrap';
 
+import ProfileLink from '../ProfileLink/ProfileLink';
+
 const NavigationBar = () => {
   return(
     <Navbar expand="lg">
@@ -15,7 +17,7 @@ const NavigationBar = () => {
     </Form>
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">
-        <Link to={'/profile'} className="login-link">Your profile</Link>
+        <ProfileLink component={Link} message="Profile"/>
         <Link to={'/login'} className="login-link">Login</Link>
         <Link to={'/about'} className="about-link">About</Link>
       </Nav>

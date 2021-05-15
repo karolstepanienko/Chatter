@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Link, useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 // Internal imports:
 import '../../../css/Pages/Account/Register.css';

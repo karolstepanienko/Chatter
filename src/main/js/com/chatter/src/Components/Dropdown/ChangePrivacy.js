@@ -6,9 +6,6 @@ import Expire from '../DisappearingComponent/Expire';
 import { updateAccountPrivacyStore } from '../../State/userSlice';
 
 
-axios.defaults.baseURL = `${link}/account/user`;
-
-
 const ChangePrivacy = (props) => {
   const [show, setShow] = useState(false);
   const [newPrivacy, setNewPrivacy] = useState("");
@@ -35,7 +32,7 @@ const ChangePrivacy = (props) => {
 
   const updateAccountPrivacyDatabase = () => {
     if (!checkIfEmpty() && !privacyUpdated) {
-      axios.post('/update/privacy', getUserINFO()).then(
+      axios.post(`${link}/account/user/update/privacy`, getUserINFO()).then(
         res => setPrivacyUpdated(res.data)
       ).catch(
         err => console.log(err)

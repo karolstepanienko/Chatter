@@ -5,7 +5,6 @@ import { link, accountPrivacies } from '../../../Constants/Constants';
 
 import '../../../css/Pages/Post/PostsDisplay.css';
 
-axios.defaults.baseURL = `${link}/post`;
 
 const DisplayUserPosts = (props) => {
   const [userExists, setUserExists] = useState(false);
@@ -19,7 +18,7 @@ const DisplayUserPosts = (props) => {
 
   const fetchPosts = () => {
     if (userExists){
-      axios.get(`/get/posts/with/creatorId?creatorId=${props.id}`).then(
+      axios.get(`${link}/post/get/posts/with/creatorId?creatorId=${props.id}`).then(
         res => setUserPosts(res.data)
       ).catch( err => console.log(err) )
     }

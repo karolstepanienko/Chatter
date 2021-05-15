@@ -10,7 +10,6 @@ import { link } from '../../../Constants/Constants';
 import { login } from '../../../State/userSlice';
 import Expire from '../../DisappearingComponent/Expire';
 
-axios.defaults.baseURL = `${link}/account/user`;
 
 export const Login = () => {
   const [userName, setUserName] = useState("");
@@ -38,7 +37,7 @@ export const Login = () => {
   }
 
   const getVerifiedUser = () => {
-    axios.post('/get', getUserDTOFromCredentials()).then(
+    axios.post(`${link}/account/user/get`, getUserDTOFromCredentials()).then(
       res => {
         if (res.data != "") {
           setVerifiedUser(res.data);
