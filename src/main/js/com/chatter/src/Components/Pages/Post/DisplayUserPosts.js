@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { link, accountPrivacies } from '../../../Constants/Constants';
 
-import '../../../css/Pages/Post/PostsDisplay.css';
+import '../../../css/Pages/Post/DisplayUserPosts.css';
 
 
 const DisplayUserPosts = (props) => {
@@ -56,14 +56,10 @@ const DisplayUserPosts = (props) => {
 
   const display = () => {
     if (userExists) return getPosts();
-    else getUserNotExists();
+    else return getUserNotExists();
   }
 
-  return (
-    <div className="user-posts">
-      {display()}
-    </div>
-  )
+  return (display())
 }
 
 const DisplayPost = (props, post) => {
@@ -75,11 +71,11 @@ const DisplayPost = (props, post) => {
 
   return (
     <div className="post">
-      <div className="Creator">
+      <div className="creator">
         <span>Autor: </span>
         <Link to={getLink()} userName={props.userName}>{props.userName}</Link>
       </div>
-      <div className="postText">
+      <div className="post-text">
         {(post.text)}
       </div>
       <butoon className="delete-button">

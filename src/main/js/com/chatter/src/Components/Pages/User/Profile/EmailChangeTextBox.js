@@ -124,7 +124,7 @@ const EmailChangeTextBox = (props) => {
     <div>
       <ButtonActivatedTextBox
         textBoxVisible={props.isChanging}
-        elementClassName="change-email"
+        elementClassName={props.className}
         textBoxValue={newEmail}
         handleTextChange={handleEmailChange}
         handleCancel={handleCancel}

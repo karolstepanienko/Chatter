@@ -88,10 +88,7 @@ export const LoggedInUserProfile = (props) => {
             onClick={handleLogout}>
           Logout</button>
         </div>
-        <div className="posts-div">
-          <DisplayUserPosts {...props}/>
-        </div>
-
+        <DisplayUserPosts {...props}/>
       </div>
     </div>
   )

@@ -3,7 +3,7 @@ import Expire from '../../../DisappearingComponent/Expire';
 import {CSSTransition} from 'react-transition-group';
 
 import { link } from '../../../../Constants/Constants';
-
+import '../../../../css/Pages/User/ButtonActivatedTextBox.css'
 
 axios.defaults.baseURL = `${link}/account/user`;
 
@@ -35,15 +35,15 @@ const ButtonActivatedTextBox = (props) => {
   const textBoxAndSubmitButton = () => {
     return(
       <div className={props.elementClassName}>
-        <input 
+        <input
           type="text"
           value={props.textBoxValue}
           onChange={(evt) => props.handleTextChange(evt)}/>
         <input
-          type="submit"
+          type="submit" className="button-change"
           value={props.submitMessage}
           onClick={props.handleSubmit}/>
-        <input
+        <input className="button-cancel"
           type="submit"
           value="Cancel"
           onClick={props.handleCancel}/>
