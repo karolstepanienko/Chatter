@@ -20,7 +20,7 @@
 
 	<properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- <java.version>16</java.version> -->
+		<java.version>16</java.version>
 	</properties>
 
   <repositories>
@@ -74,13 +74,6 @@
 		</dependency>
 		<!-- end::tests[] -->
 
-    <!-- tag::thymeleaf -->
-    <!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency> -->
-    <!-- end::thymeleaf -->
-
     <!-- tag::jpa[] -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -95,7 +88,6 @@
 			<scope>runtime</scope>
 		</dependency>
     <!-- end::mysql[] -->
-
   </dependencies>
 
   <build>
@@ -144,26 +136,43 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-
-
-        <!-- 
+        <!-- tag::checkstyle[] -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.9</version>
-          <executions>
-            <execution>
-              <id>build-classpath</id>
-              <phase>generate-sources</phase>
-              <goals>
-                <goal>build-classpath</goal>
-              </goals>
-              <configuration>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin> -->
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>3.1.2</version>
+          <dependencies>
+            <dependency>
+              <groupId>com.puppycrawl.tools</groupId>
+              <artifactId>checkstyle</artifactId>
+              <version>8.42</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <!-- end::checkstyle[] -->
         
+        <!-- tag::package-info[] -->
+        <plugin>
+          <groupId>com.github.bohnman</groupId>
+          <artifactId>package-info-maven-plugin</artifactId>
+          <version>1.1.0</version>
+          <configuration>
+              <packages>
+                  <package>
+                      <pattern>**</pattern>
+                      <template>${project.basedir}/package-info.java</template>
+                  </package>
+              </packages>
+          </configuration>
+          <executions>
+              <execution>
+                  <goals>
+                      <goal>generate</goal>
+                  </goals>
+              </execution>
+           </executions>
+        </plugin>
+        <!-- end::package-info[] -->
       </plugins>
     </pluginManagement>
   </build>
