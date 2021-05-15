@@ -4,13 +4,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 import com.chatter.model.User.User;
 
 import java.util.Set;
-import lombok.Data;
-import java.util.*;
+import java.util.HashSet;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,7 +23,7 @@ public class Post implements Serializable {
   private Integer id;
   private Integer creatorId;
   private String text;
-  private Integer privacy;
+  private String privacy;
   private Integer likes;
   // Users that liked this post
   @ManyToMany(mappedBy = "posts")
@@ -43,7 +41,7 @@ public class Post implements Serializable {
     this.users.remove(user);
   }
 
-  public Post(Integer creatorId, String text, Integer privacy, Integer likes ) {
+  public Post(Integer creatorId, String text, String privacy, Integer likes ) {
     this.creatorId = creatorId;
     this.text = text;
     // 0 - post is public
@@ -58,7 +56,7 @@ public class Post implements Serializable {
   public Integer getLikes() {
     return this.likes;
   }
-  public Integer getPrivacy(){
+  public String getPrivacy(){
     return this.privacy;
   }
 
@@ -88,7 +86,7 @@ public class Post implements Serializable {
   public void setLikes(Integer likes) {
     this.likes = likes;
   }
-  public void setPrivacy(Integer privacy){
+  public void setPrivacy(String privacy){
     this.privacy = privacy;
   }
 

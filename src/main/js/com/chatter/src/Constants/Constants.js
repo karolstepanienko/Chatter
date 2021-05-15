@@ -7,7 +7,7 @@ export const roles = {
   adminRole: "ADMIN"
 }
 
-export const accountPrivacies = {
+export const Privacies = {
   publicAccess: "PUBLIC",
   friendOnlyAccess: "FRIEND_ONLY",
   privateAccess: "PRIVATE"

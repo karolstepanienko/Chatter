@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { accountPrivacies, link } from '../../Constants/Constants';
+import { Privacies, link } from '../../Constants/Constants';
 import Expire from '../DisappearingComponent/Expire';
 import { updateAccountPrivacyStore } from '../../State/userSlice';
 
@@ -21,12 +21,12 @@ const ChangePrivacy = (props) => {
   }
 
   const handleSetPublic = () => {
-    setNewPrivacy(accountPrivacies.publicAccess);
+    setNewPrivacy(Privacies.publicAccess);
     setShow(!show);
   }
 
   const handleSetPrivate = () => {
-    setNewPrivacy(accountPrivacies.privateAccess);
+    setNewPrivacy(Privacies.privateAccess);
     setShow(!show);
   }
 

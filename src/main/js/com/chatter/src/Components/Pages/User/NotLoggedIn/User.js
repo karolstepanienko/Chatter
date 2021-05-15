@@ -1,7 +1,7 @@
 import '../../../../css/Pages/User/NotLoggedIn/User.css';
 import axios from 'axios';
 import { useEffect, useState } from "react";
-import { link, accountPrivacies } from '../../../../Constants/Constants';
+import { link, Privacies } from '../../../../Constants/Constants';
 import { useParams } from 'react-router';
 
 
@@ -86,7 +86,7 @@ const User = () => {
   const display = () => {
     if (userExists) {
       if (isLoaded) {
-        if (user.accountPrivacy === accountPrivacies.publicAccess) return getUserInfo();
+        if (user.accountPrivacy === Privacies.publicAccess) return getUserInfo();
         else return getAccountPrivate();
       } else return getLoading();
     } else return getUserDoesNotExist();

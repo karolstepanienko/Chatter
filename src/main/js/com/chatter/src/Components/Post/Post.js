@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from "react-redux";
 
 import '../../css/Pages/Post/Postadding.css';
-import { link }from '../../Constants/Constants';
+import { link, Privacies }from '../../Constants/Constants';
 
 
 const Post = (props)=> {
@@ -11,7 +11,7 @@ const Post = (props)=> {
   var post = {
   id: null,
   creatorId: props.id,
-  privacy: 0,
+  privacy: Privacies.publicAccess,
   text: '',
   likes: 0}
 
@@ -21,7 +21,7 @@ const Post = (props)=> {
       alert("Post have been added");
       document.forms["post_texti"].reset();
       post.text='';
-      post.privacy=0;
+      post.privacy=Privacies.publicAccess;
     }
 
     function handlePostChange(evt) {
@@ -30,10 +30,10 @@ const Post = (props)=> {
 
     function handlePrivacyChange(evt){
       if(evt.target.checked){
-        post.privacy = 1
+        post.privacy = Privacies.privateAccess
       }
       else{
-        post.privacy = 0
+        post.privacy = Privacies.publicAccess
       }
     }
 
@@ -51,7 +51,8 @@ const Post = (props)=> {
           name="post"
           onChange={evt => handlePostChange(evt)}>
         </textarea>
-        <input type="checkbox" id="checkbox" name="privacy"  onChange={evt =>handlePrivacyChange(evt)}></input>
+        <input type="checkbox" id="checkbox" name="privacy"  
+          onChange={evt =>handlePrivacyChange(evt)}></input>
         <label for="scales"> The post is private</label>
       </form>
       

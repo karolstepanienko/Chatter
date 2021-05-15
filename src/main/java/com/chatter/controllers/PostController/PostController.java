@@ -2,6 +2,7 @@ package com.chatter.controllers.PostController;
 
 // Spring-boot imports:
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.ui.Model;
 
 import com.chatter.model.Post.Post;
 import com.chatter.repositories.PostRepository;
 import com.chatter.repositories.UserRepository;
+import com.chatter.model.Constants.AccountPrivacies;
 import com.chatter.model.Post.Like;
-import com.chatter.model.User.User;
 
 @RestController
 @RequestMapping("/api/post")
@@ -69,6 +69,20 @@ public class PostController {
   @GetMapping("/get/posts/with/creatorId")
   public @ResponseBody Iterable<Post> getPostsWithCreatorId(@RequestParam Integer creatorId) {
     return this.postRepository.getPostWithCreatorId(creatorId);
+  }
+
+  @CrossOrigin
+  @PostMapping("/update/privacy/{postId}")
+  public @ResponseBody boolean updatePostPrivacy(@PathVariable Integer postId) {
+    Post post = this.postRepository.getPostWithId(postId);
+    if (post != null) {
+      if (post.getPrivacy().equals(AccountPrivacies.getPublicAccess())) {
+        post.setPrivacy(AccountPrivacies.getPrivateAccess());
+      } else post.setPrivacy(AccountPrivacies.getPublicAccess());
+      System.out.println(post.toString());
+      this.postRepository.save(post);
+      return true;  
+    } else return false;
   }
 
   @CrossOrigin

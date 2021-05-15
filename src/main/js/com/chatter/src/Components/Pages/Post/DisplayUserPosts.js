@@ -94,6 +94,12 @@ const DisplayPost = (props) => {
     }
   }
 
+  const handlePrivacyChange = () => {
+    axios.post(`${link}/post/update/privacy/${props.post.id}`).then(
+      res => alert("Post privacy setting changed.")
+    ).catch(err => console.log(err))
+  }
+
   return (
     <div className="post">
       <span className="post-title">Post:</span>
@@ -104,13 +110,14 @@ const DisplayPost = (props) => {
       <div className="post-text">
         {(props.post.text)}
       </div>
-      {/* <button className="button-changePrivacy">
+      <button className="button-changePrivacy"
+        onClick={handlePrivacyChange}>
           Change post privacy
-      </button> */}
-      <butoon className="button-delete"
+      </button>
+      <button className="button-delete"
         onClick={handlePostDelete}>
         Delete post
-      </butoon>
+      </button>
     </div>
   )
 }
