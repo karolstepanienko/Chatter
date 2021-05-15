@@ -40,4 +40,15 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     nativeQuery = true)
     void changeUserList(@Param("id") Integer id, @Param("val") Set<User> userList);
 
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM user_post WHERE post_id = :postId",
+    nativeQuery= true)
+    void deletePostLikes(@Param("postId") Integer postId);
+    
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM user_post WHERE user_id = :userId",
+    nativeQuery=true)
+    void deleteUserLikes(@Param("userId") Integer userId);
   }

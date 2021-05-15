@@ -1,12 +1,11 @@
 package com.chatter.controllers.PostController;
 
-import java.util.Set;
 // Spring-boot imports:
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-// import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,13 +32,8 @@ public class PostController {
   @CrossOrigin
   @PostMapping("/addpost")
   public boolean addPost(@RequestBody Post post) {
-    User user = this.userRepository.getUserWithId(post.getCreatorId());
-    if (user != null) {
-      user.addPost(post);
-      post.addUser(user);  
-      this.postRepository.save(post);
-      return true;
-    } else return false;
+    this.postRepository.save(post);
+    return true;
   }
 
   @GetMapping(path="/allposts")
@@ -75,5 +69,16 @@ public class PostController {
   @GetMapping("/get/posts/with/creatorId")
   public @ResponseBody Iterable<Post> getPostsWithCreatorId(@RequestParam Integer creatorId) {
     return this.postRepository.getPostWithCreatorId(creatorId);
+  }
+
+  @CrossOrigin
+  @PostMapping("/delete/by/Id/{postId}")
+  public @ResponseBody boolean deletePost(@PathVariable Integer postId) {
+    Post post = this.postRepository.getPostWithId(postId);
+    if (post != null) {
+      this.postRepository.deletePostLikes(postId);
+      this.postRepository.delete(post);
+      return true;
+    } return false;
   }
 }

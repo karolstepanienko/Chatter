@@ -1,6 +1,5 @@
 package com.chatter.repositories;
 
-
 import com.chatter.model.User.User;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -32,5 +31,4 @@ public interface UserRepository extends CrudRepository<User, Integer> {
   @Query(value = "UPDATE user SET login = :val WHERE id = :id",
   nativeQuery = true)
   void changeLogin(@Param("id") Integer id, @Param("val") String val );
-
 }

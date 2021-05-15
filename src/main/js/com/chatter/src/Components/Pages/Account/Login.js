@@ -37,7 +37,7 @@ export const Login = () => {
   }
 
   const getVerifiedUser = () => {
-    axios.post(`${link}/account/user/get`, getUserDTOFromCredentials()).then(
+    axios.get(`${link}/account/user/get?userName=${userName}&password=${password}`).then(
       res => {
         if (res.data != "") {
           setVerifiedUser(res.data);

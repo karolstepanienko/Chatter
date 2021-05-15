@@ -2,17 +2,21 @@
   width: 100%;
   text-align: center;
   align-items: center;
-  /* display: flex;
-  flex-wrap: column wrap;
-  justify-content: space-between; */
 }
 
 .creator,
-.post-text {
+.post-text,
+.post-title {
   width: 100%;
 }
 
-.delete-button {
+.post-title {
+  color: yellow;
+  font-weight: 600;
+}
+
+.button-delete,
+.button-changePrivacy {
   background-color: yellow;
   display: block;
   margin-left: auto;

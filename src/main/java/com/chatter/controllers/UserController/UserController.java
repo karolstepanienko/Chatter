@@ -44,16 +44,14 @@ public class UserController {
   @CrossOrigin
   @GetMapping("/check/email")
   public boolean checkEmailUnique(@RequestParam String email) {
-    System.out.println(email);
-    System.out.println(this.userRepository.getUserWithEmail(email) == null);
     return this.userRepository.getUserWithEmail(email) == null;
   }
 
   @CrossOrigin
-  @PostMapping("/get")
-  public @ResponseBody User getVerifiedUser(@RequestBody UserDTO userDTO) {
-    User user = this.userRepository.getUserWithUserName(userDTO.getUserName());
-    if (user != null && this.passwordEncoder.matches(userDTO.getPassword(), user.getPasswordHash())) {
+  @GetMapping("/get")
+  public @ResponseBody User getVerifiedUser(@RequestParam String userName, @RequestParam String password) {
+    User user = this.userRepository.getUserWithUserName(userName);
+    if (user != null && this.passwordEncoder.matches(password, user.getPasswordHash())) {
       return user;
     } else return null;
   }
@@ -77,7 +75,6 @@ public class UserController {
   @CrossOrigin
   @GetMapping("/get/id/by/userName")
   public @ResponseBody Integer getUserId(@RequestParam String userName) {
-    System.out.println(userName);
     User user = this.userRepository.getUserWithUserName(userName);
     if(user != null) return user.getId();
     else return null;
