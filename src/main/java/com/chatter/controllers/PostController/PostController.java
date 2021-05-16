@@ -74,7 +74,7 @@ public class PostController {
     produces = "application/json")
   public boolean updateLikeStatus(@RequestBody final Like like) {
     Integer likesNr = postRepository.getPostWithId(like.getPost()).getLikes();
-    if (like.status) {
+    if (like.getStatus()) {
         userRepository.getUserWithId(like.getUser()).addPost(
           postRepository.getPostWithId(like.getPost()));
       postRepository.changeLikes(like.getPost(), likesNr + 1);

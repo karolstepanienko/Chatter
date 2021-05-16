@@ -14,7 +14,11 @@ public class Like {
    * if status = true - post is liked.
    * if status = false - post is unliked.
    */
-  public boolean status;
+  private boolean status;
+  
+  public boolean getStatus(){
+    return this.status;
+  }
 
   /**
    * user - id of user who makes changes.
