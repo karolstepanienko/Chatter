@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { link } from '../../../Constants/Constants';
-import DisplayUserPost from './DisplayUserPost';
 import '../../../css/Pages/Post/DisplayUserPosts.css';
 
 
@@ -16,6 +15,7 @@ const DisplayUserPosts = (props) => {
   }
 
   const fetchPosts = () => {
+    console.log(props);
     if (userExists){
       axios.get(`${link}/post/get/posts/with/creatorId?creatorId=${props.id}`).then(
         res => setUserPosts(res.data)
@@ -49,7 +49,7 @@ const DisplayUserPosts = (props) => {
   const getPosts = () => {
     var rows = [];
     for (var i = 0; i < userPosts.length; i++) {
-      rows.push(<DisplayUserPost
+      rows.push(<props.display
         post = {userPosts[i]}
         handlePostRemove={handlePostRemove}
         {...props}/>);

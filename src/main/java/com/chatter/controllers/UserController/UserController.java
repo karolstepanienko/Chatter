@@ -203,6 +203,11 @@ public class UserController {
     }
   }
 
+  /**
+   * Delete user account, all his posts and likes.
+   * @param userId ID of a user who will be deleted.
+   * @return True if delete operation was successfull. False otherwise.
+   */
   @CrossOrigin
   @PostMapping("/delete")
   public boolean deleteUserAndAllHisPosts(@RequestParam final Integer userId) {

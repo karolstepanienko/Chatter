@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { link } from '../../../Constants/Constants';
 
 
-const DisplayUserPost = (props) => {
+const DisplayLoggedInUserPost = (props) => {
 
   const getLink = () => {
     var link_to_user = `/user/${props.userName}`
@@ -48,4 +48,4 @@ const DisplayUserPost = (props) => {
   )
 }
 
-export default DisplayUserPost;
+export default DisplayLoggedInUserPost;

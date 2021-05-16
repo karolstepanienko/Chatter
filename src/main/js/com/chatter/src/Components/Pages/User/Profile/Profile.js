@@ -12,7 +12,7 @@ import LoginChangeTextBox from './LoginChangeTextBox';
 import DisplayLogin from './DisplayLogin';
 import DisplayUserPosts from '../../Post/DisplayUserPosts';
 import { link } from '../../../../Constants/Constants';
-
+import DisplayLoggedInUserPost from '../../Post/DisplayLoggedInUserPost';
 
 
 export const LoggedInUserProfile = (props) => {
@@ -24,7 +24,6 @@ export const LoggedInUserProfile = (props) => {
 
   const handleLoginChangeTextBoxVisibility = () => {
     setIsChangingLogin(!isChangingLogin);
-    console.log(props.accountPrivacy)
   }
 
   const handleEmailChangeTextBoxVisibility = () => {
@@ -109,7 +108,7 @@ export const LoggedInUserProfile = (props) => {
             onClick={handleLogout}>
           Logout</button>
         </div>
-        <DisplayUserPosts {...props}/>
+        <DisplayUserPosts display={DisplayLoggedInUserPost} {...props}/>
       </div>
     </div>
   )

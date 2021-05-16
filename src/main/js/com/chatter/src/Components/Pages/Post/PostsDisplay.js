@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../../../css/Pages/Post/PostsDisplay.css';
 import { link }from '../../../Constants/Constants';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 
 class  PostsDisplay extends React.Component {
@@ -103,7 +103,7 @@ class  PostsDisplay extends React.Component {
           <div className="post">
             <div className="Creator">
               <span>Autor: </span>
-              <Link to={linkUserPage} userName={logins[i]}>{logins[i]}</Link>
+              <Link to={linkUserPage} userName={logins[i]}>{logins[i++]}</Link>
             </div>
             <div className="postText">
               {(post.text)}
