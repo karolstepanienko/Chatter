@@ -89,4 +89,14 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
   @Query(value = "DELETE FROM user_post WHERE user_id = :userId",
   nativeQuery = true)
   void deleteUserLikes(@Param("userId") Integer userId);
+
+  /**
+   * Deletes all posts of agiven user.
+   * @param creatorId User who's posts will be deleted.
+   */
+  @Modifying
+  @Transactional
+  @Query(value = "DELETE FROM post WHERE creator_id = :creatorId",
+  nativeQuery = true)
+  void deleteUserPosts(@Param("creatorId") Integer creatorId);
 }

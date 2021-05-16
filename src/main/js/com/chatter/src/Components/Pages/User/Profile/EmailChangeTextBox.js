@@ -6,8 +6,6 @@ import { validEmailRegex } from '../../../../Constants/Constants';
 import { link } from '../../../../Constants/Constants';
 import ButtonActivatedTextBox from './ButtonActivatedTextBox';
 
-axios.defaults.baseURL = `${link}/account/user`;
-
 
 const EmailChangeTextBox = (props) => {
   const [newEmail, setNewEmail] = useState("");
@@ -37,7 +35,7 @@ const EmailChangeTextBox = (props) => {
   }
 
   const checkEmailAvailable = async () => {
-    axios.get(`/check/email?email=${newEmail}`)
+    axios.get(`${link}/account/user/check/email?email=${newEmail}`)
     .then(res => {setEmailAvailable(res.data) })
     .catch(
       err => console.log(err)
@@ -88,7 +86,7 @@ const EmailChangeTextBox = (props) => {
   }
 
   const submitNewEmail = async () => {
-    axios.post('/update/email', getUserDTO()).then(
+    axios.post(`${link}/account/user/update/email`, getUserDTO()).then(
       res => {
         if(res.data) {
           updateEmailInState();
