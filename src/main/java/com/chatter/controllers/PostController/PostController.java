@@ -65,27 +65,23 @@ public class PostController {
    * @HTTPRequestMethod POST
    * Updates like status for given post.
    * @param like Post and like data.
-   * @return ???String???
+   * @return True if changing number of likes was successfull.
    */
   @CrossOrigin
   @PostMapping(
     value = "/like",
     consumes = "application/json",
     produces = "application/json")
-  public String updateLikeStatus(@RequestBody final Like like) {
-    Integer likesNr = postRepository.getPostWithId(like.post).getLikes();
-    postRepository.getPostWithId(like.post).addUser(
-      userRepository.getUserWithId(like.user));
+  public boolean updateLikeStatus(@RequestBody final Like like) {
+    Integer likesNr = postRepository.getPostWithId(like.getPost()).getLikes();
     if (like.status) {
-      postRepository.getPostWithId(like.post).addUser(
-        userRepository.getUserWithId(like.user));
-      postRepository.changeLikes(like.post, likesNr + 1);
+        userRepository.getUserWithId(like.getUser()).addPost(postRepository.getPostWithId(like.getPost()));
+      postRepository.changeLikes(like.getPost(), likesNr + 1);
     } else {
-      postRepository.getPostWithId(like.post).removeUser(
-        userRepository.getUserWithId(like.user));
-      postRepository.changeLikes(like.post, likesNr - 1);
+        userRepository.getUserWithId(like.getUser()).removePost(postRepository.getPostWithId(like.getPost()));
+      postRepository.changeLikes(like.getPost(), likesNr - 1);
     }
-    return "like";
+    return true;
   }
 
   /**

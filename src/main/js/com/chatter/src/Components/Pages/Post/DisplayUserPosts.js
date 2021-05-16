@@ -56,7 +56,7 @@ const DisplayUserPosts = (props) => {
     }
     return rows;
   }
-
+ 
   useEffect(() => {
     checkUserId();
   }, [])
