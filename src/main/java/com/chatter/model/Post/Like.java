@@ -15,8 +15,12 @@ public class Like {
    * if status = false - post is unliked.
    */
   private boolean status;
-  
-  public boolean getStatus(){
+
+  /**
+   * Status getter.
+   * @return Like status.
+   */
+  public boolean getStatus() {
     return this.status;
   }
 
