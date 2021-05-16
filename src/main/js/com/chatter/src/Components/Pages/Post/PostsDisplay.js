@@ -17,7 +17,7 @@ class  PostsDisplay extends React.Component {
       login:[],
       liked:[],
       id:this.props.id,
-      init:false
+      init:true
       };
     }
 
@@ -34,7 +34,6 @@ class  PostsDisplay extends React.Component {
           }  
       }
         }
-        console.log(this.state.liked);
       var like={status:evt.target.checked, user:this.state.id, post:id}
       axios.post(`${link}/post/like`, like)
       .then((response) => {this.componentDidMount()})
@@ -45,7 +44,6 @@ class  PostsDisplay extends React.Component {
       const url=`${link}/post/allposts`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
       this.setState({ items: data, isLoaded: false});
       var tab1=[]
       for (let i = 0; i < data.length; i++){
@@ -63,7 +61,7 @@ class  PostsDisplay extends React.Component {
   
     liked(){
       if (this.state.id!=null){
-        axios.get(`${link}/post/likedposts?id=${this.state.id}`) 
+        axios.get(`${link}/post/likedposts?userId=${this.state.id}`) 
         .then((response2) => {
           if (response2.data != ""){this.setState({liked: response2.data});}
         {console.log(response2.data);}
@@ -94,7 +92,7 @@ class  PostsDisplay extends React.Component {
         if (this.state.id==null)
         {var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)}  disabled></input> }
         else if(this.state.liked.includes(post.id)){
-          var input = <input type="checkbox" key={i} checked={true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>
+          var input = <input type="checkbox" key={i} checked = {true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>
         }
         else {
           var input = <input type="checkbox" checked = {false} key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>
@@ -108,10 +106,8 @@ class  PostsDisplay extends React.Component {
             <div className="postText">
               {(post.text)}
             </div>
-            {/* <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a)}></input> */}
             {input}
             <label>{post.likes}</label>
-            {/* checked="true" */}
             <br></br>
             <br></br>
             <br></br>

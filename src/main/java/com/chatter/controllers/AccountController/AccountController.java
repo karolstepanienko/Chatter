@@ -111,19 +111,7 @@ public final class AccountController {
     }
   }
 
-  // /** ???
-  //  * @HTTPRequestMethod POST
-  //  * Used to change userLogin.
-  //  * @param change
-  //  */
-  // @CrossOrigin
-  // @PostMapping(value = "/changelogin", consumes = "application/json",
-  // produces = "application/json")
-  // public String changeLogin(@RequestBody Change change) {
-  //   userRepository.changeLogin(change.id, change.login);
-  //   return "account/changelogin";
-  // }
-
+  
   /**
    * @HTTPRequestMethod POST
    * Deletes user with a provided ID.
