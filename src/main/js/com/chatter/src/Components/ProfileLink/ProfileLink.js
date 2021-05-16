@@ -6,7 +6,7 @@ const ProfileLink = (props) => {
     return ( props.id === null ?
       (null)
       :
-      (<props.component to={'/profile'} className="login-link">
+      (<props.component to={'/profile'} className={props.className}>
         {props.message}
       </props.component>)
     )
