@@ -81,20 +81,20 @@ public class Post implements Serializable {
 
   /**
    * Constructor.
-   * @param creatorId
-   * @param text
-   * @param privacy
-   * @param likes
+   * @param newCreatorId
+   * @param newText
+   * @param newPrivacy
+   * @param newLikes
    */
   public Post(
-      final Integer creatorId,
-      final String text,
-      final String privacy,
-      final Integer likes) {
-    this.creatorId = creatorId;
-    this.text = text;
-    this.privacy = privacy;
-    this.likes = likes;
+      final Integer newCreatorId,
+      final String newText,
+      final String newPrivacy,
+      final Integer newLikes) {
+    this.creatorId = newCreatorId;
+    this.text = newText;
+    this.privacy = newPrivacy;
+    this.likes = newLikes;
   }
 
   // Getters
@@ -151,42 +151,42 @@ public class Post implements Serializable {
 
   /**
    * Post ID setter.
-   * @param id New post ID.
+   * @param newId New post ID.
    */
-  public void setId(final Integer id) {
-    this.id = id;
+  public void setId(final Integer newId) {
+    this.id = newId;
   }
 
   /**
    * Post creator ID setter.
-   * @param creatorId New post creator ID.
+   * @param newCreatorId New post creator ID.
    */
-  public void setCreatorId(final Integer creatorId) {
-    this.creatorId = creatorId;
+  public void setCreatorId(final Integer newCreatorId) {
+    this.creatorId = newCreatorId;
   }
 
   /**
    * Post content setter.
-   * @param text New post content.
+   * @param newText New post content.
    */
-  public void setText(final String text) {
-    this.text = text;
+  public void setText(final String newText) {
+    this.text = newText;
   }
 
   /**
    * Post privacy setter.
-   * @param privacy New post privacy.
+   * @param newPrivacy New post privacy.
    */
-  public void setPrivacy(final String privacy) {
-    this.privacy = privacy;
+  public void setPrivacy(final String newPrivacy) {
+    this.privacy = newPrivacy;
   }
 
   /**
    * Post like amount setter.
-   * @param likes New post likes amount.
+   * @param newLikes New post likes amount.
    */
-  public void setLikes(final Integer likes) {
-    this.likes = likes;
+  public void setLikes(final Integer newLikes) {
+    this.likes = newLikes;
   }
 
   /**

@@ -112,7 +112,6 @@ public final class AccountController {
     }
   }
 
-  
   /**
    * @HTTPRequestMethod POST
    * Deletes user with a provided ID.

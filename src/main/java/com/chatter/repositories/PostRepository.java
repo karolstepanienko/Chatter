@@ -15,12 +15,12 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
 
   /**
    * Gets all posts created by user with provided ID.
-   * @param creator_id Post author ID.
+   * @param creatorId Post author ID.
    * @return All posts created by this user.
    */
-  @Query(value = "SELECT * FROM post WHERE creator_id = :creator_id",
+  @Query(value = "SELECT * FROM post WHERE creator_id = :creatorId",
   nativeQuery = true)
-  Iterable<Post> getPostWithCreatorId(@Param("creator_id") Integer creator_id);
+  Iterable<Post> getPostWithCreatorId(@Param("creatorId") Integer creatorId);
 
   /**
    * @param privacy
@@ -40,12 +40,12 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
   Post getPostWithId(@Param("id") Integer id);
 
   /**
-   * @param user_id Provided user ID.
+   * @param userId Provided user ID.
    * @return All posts that user liked.
    */
-  @Query(value = "SELECT post_id FROM user_post WHERE user_id = :user_id",
+  @Query(value = "SELECT post_id FROM user_post WHERE user_id = :userId",
   nativeQuery = true)
-  Iterable<Integer> getLikedPost(@Param("user_id") Integer user_id);
+  Iterable<Integer> getLikedPost(@Param("userId") Integer userId);
 
   /**
    * Updates number of likes.

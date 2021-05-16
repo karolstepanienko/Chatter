@@ -48,25 +48,25 @@ public class UserDTO {
 
   /**
    * Constructor.
-   * @param id User ID.
-   * @param userName User userName.
-   * @param login User login.
-   * @param email User email.
-   * @param password User password.
-   * @param role User role.
+   * @param newId User ID.
+   * @param newUserName User userName.
+   * @param newLogin User login.
+   * @param newEmail User email.
+   * @param newPassword User password.
+   * @param newRole User role.
    */
   public UserDTO(
-    final Integer id,
-    final String userName,
-    final String login,
-    final String email,
-    final String password,
-    final String role) {
-    this.id = id;
-    this.userName = userName;
-    this.login = login;
-    this.email = email;
-    this.password = password;
-    this.role = role;
+    final Integer newId,
+    final String newUserName,
+    final String newLogin,
+    final String newEmail,
+    final String newPassword,
+    final String newRole) {
+    this.id = newId;
+    this.userName = newUserName;
+    this.login = newLogin;
+    this.email = newEmail;
+    this.password = newPassword;
+    this.role = newRole;
   }
 }

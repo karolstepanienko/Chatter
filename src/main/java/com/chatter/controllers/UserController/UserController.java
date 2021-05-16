@@ -57,7 +57,7 @@ public class UserController {
   }
 
   /**
-   * @HTTPRequestMethod 
+   * @HTTPRequestMethod
    * @Tested
    * Checks against the database if provided userName is available.
    * @param userName Provided userName.
@@ -119,7 +119,7 @@ public class UserController {
   }
 
   /**
-   * @HTTPRequestMethod 
+   * @HTTPRequestMethod
    * @Tested
    * @param userName Provided userName.
    * @return User's ID whose userName was provided.

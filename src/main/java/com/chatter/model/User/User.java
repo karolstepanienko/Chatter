@@ -84,20 +84,20 @@ public class User {
 
   /**
    * Constructor with arguments.
-   * @param userName User userName.
-   * @param login User login.
-   * @param email User email.
-   * @param passwordHash User password hash.
+   * @param newUserName User userName.
+   * @param newLogin User login.
+   * @param newEmail User email.
+   * @param newPasswordHash User password hash.
    */
   public User(
-    final String userName,
-    final String login,
-    final String email,
-    final String passwordHash) {
-    this.userName = userName;
-    this.login = login;
-    this.email = email;
-    this.passwordHash = passwordHash;
+    final String newUserName,
+    final String newLogin,
+    final String newEmail,
+    final String newPasswordHash) {
+    this.userName = newUserName;
+    this.login = newLogin;
+    this.email = newEmail;
+    this.passwordHash = newPasswordHash;
   }
 
   /**

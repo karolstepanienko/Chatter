@@ -75,10 +75,12 @@ public class PostController {
   public boolean updateLikeStatus(@RequestBody final Like like) {
     Integer likesNr = postRepository.getPostWithId(like.getPost()).getLikes();
     if (like.status) {
-        userRepository.getUserWithId(like.getUser()).addPost(postRepository.getPostWithId(like.getPost()));
+        userRepository.getUserWithId(like.getUser()).addPost(
+          postRepository.getPostWithId(like.getPost()));
       postRepository.changeLikes(like.getPost(), likesNr + 1);
     } else {
-        userRepository.getUserWithId(like.getUser()).removePost(postRepository.getPostWithId(like.getPost()));
+        userRepository.getUserWithId(like.getUser()).removePost(
+          postRepository.getPostWithId(like.getPost()));
       postRepository.changeLikes(like.getPost(), likesNr - 1);
     }
     return true;

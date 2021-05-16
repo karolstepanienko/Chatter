@@ -12,12 +12,12 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
   /**
    * Returns user found by provided userName.
-   * @param user_name Provided userName.
+   * @param userName Provided userName.
    * @return User object.
    */
-  @Query(value = "SELECT * FROM user WHERE user_name = :user_name",
+  @Query(value = "SELECT * FROM user WHERE user_name = :userName",
   nativeQuery = true)
-  User getUserWithUserName(@Param("user_name") String user_name);
+  User getUserWithUserName(@Param("userName") String userName);
 
   /**
    * Returns user found by provided login.
