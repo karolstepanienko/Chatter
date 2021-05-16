@@ -12,7 +12,6 @@ const DisplayLogin = (props) => {
 
   useEffect( () => checkLoginEmpty(), [props])
 
-
   return (loginEmpty ? <div>No login set.</div> : <div>{props.login}</div>)
 }
 

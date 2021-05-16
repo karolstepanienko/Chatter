@@ -67,18 +67,6 @@ export const Login = () => {
     history.push('/profile');
   }
 
-  const getUserDTOFromCredentials = () => {
-    var user = {
-      id: null,
-      userName: userName,
-      login: '',
-      email: '',
-      password: password,
-      role: '',
-    }
-    return user;
-  }
-
   useEffect( () => {
     if (verifiedUser != "") logUserIn();
   }, [getVerifiedUser, setBadUsernameOrPassword, handleLoginSubmit])

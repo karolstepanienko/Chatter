@@ -6,6 +6,7 @@ import com.chatter.model.Constants.AccountPrivacies;
 import com.chatter.model.User.User;
 import com.chatter.model.User.UserDTO;
 import com.chatter.model.User.UserINFO;
+import com.chatter.repositories.PostRepository;
 import com.chatter.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,13 @@ public class UserController {
    * */
   @Autowired
   private UserRepository userRepository;
+
+  /**
+   * Post repository used to communicate with database.
+   * Makes post related changes.
+   */
+  @Autowired
+  private PostRepository postRepository;
 
   /**
    * Password encoder used to create password
@@ -190,6 +198,25 @@ public class UserController {
         user.setAccountPrivacy(userINFO.getAccountPrivacy());
         this.userRepository.save(user);
         return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Delete user account, all his posts and likes.
+   * @param userId ID of a user who will be deleted.
+   * @return True if delete operation was successfull. False otherwise.
+   */
+  @CrossOrigin
+  @PostMapping("/delete")
+  public boolean deleteUserAndAllHisPosts(@RequestParam final Integer userId) {
+    User user = this.userRepository.getUserWithId(userId);
+    if (user != null) {
+      this.postRepository.deleteUserLikes(userId);
+      this.postRepository.deleteUserPosts(userId);
+      this.userRepository.delete(user);
+      return true;
     } else {
       return false;
     }

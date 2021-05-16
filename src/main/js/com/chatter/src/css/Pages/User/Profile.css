@@ -18,7 +18,6 @@
 }
 
 .title {
-  size: 10%;
   margin-left: 40%;
   font-weight: 700;
   color: yellow;
@@ -51,7 +50,7 @@
   margin-left: auto;
   border-radius: 30em;
 }
-
+.div-delete-account,
 .logout-div {
   margin: 1%;
   width: 100%;
@@ -61,6 +60,7 @@
   align-self: center;
 }
 
+.button-delete-account,
 .logout {
   display: block;
   width: 30%;

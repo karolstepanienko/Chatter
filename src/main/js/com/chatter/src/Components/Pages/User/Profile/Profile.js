@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -10,6 +11,8 @@ import EmailChangeTextBox from './EmailChangeTextBox';
 import LoginChangeTextBox from './LoginChangeTextBox';
 import DisplayLogin from './DisplayLogin';
 import DisplayUserPosts from '../../Post/DisplayUserPosts';
+import { link } from '../../../../Constants/Constants';
+import DisplayLoggedInUserPost from '../../Post/DisplayLoggedInUserPost';
 
 
 export const LoggedInUserProfile = (props) => {
@@ -21,7 +24,6 @@ export const LoggedInUserProfile = (props) => {
 
   const handleLoginChangeTextBoxVisibility = () => {
     setIsChangingLogin(!isChangingLogin);
-    console.log(props.accountPrivacy)
   }
 
   const handleEmailChangeTextBoxVisibility = () => {
@@ -31,6 +33,19 @@ export const LoggedInUserProfile = (props) => {
   const handleLogout = () => {
     dispatch(logout());
     history.push('/');
+  }
+
+  const handleAccountDelete = () => {
+    if (window.confirm("Are you sure, you want to delete this account?\n"
+    + "All user posts will be also deleted.")) {
+      axios.post(`${link}/account/user/delete?userId=${props.id}`).then(
+        res => {
+          if (res.data) {
+            handleLogout();
+          }
+        }
+      ).catch(err => console.log(err))  
+    }
   }
 
   useEffect( () => {}, [dispatch]);
@@ -82,20 +97,21 @@ export const LoggedInUserProfile = (props) => {
             dispatch={dispatch}
             {...props}/>
         </div>
-
+        <div className="div-delete-account">
+          <button className="button-delete-account"
+            onClick={handleAccountDelete}>
+              Delete account
+          </button>
+        </div>
         <div className="logout-div">
           <button className="logout"
             onClick={handleLogout}>
           Logout</button>
         </div>
-        <DisplayUserPosts {...props}/>
+        <DisplayUserPosts display={DisplayLoggedInUserPost} {...props}/>
       </div>
     </div>
   )
-}
-
-const UserNameChangeTextBox = (props) => {
-
 }
 
 const mapStateToProps = state => ({

@@ -1,16 +1,28 @@
 import '../../../../css/Pages/User/NotLoggedIn/User.css';
 import axios from 'axios';
 import { useEffect, useState } from "react";
+import { connect } from 'react-redux';
+import { useParams, useHistory } from 'react-router';
+
 import { link, Privacies } from '../../../../Constants/Constants';
-import { useParams } from 'react-router';
+import DisplayUserPosts from '../../Post/DisplayUserPosts';
+import DisplayNotLoggedInUserPost from '../../Post/DisplayNotLoggedInUserPost';
+import DisplayLogin from '../Profile/DisplayLogin';
 
 
-const User = () => {
+const User = (props) => {
   const [user, setUser] = useState("");
   const [userExists, setUserExists] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   let params = useParams();
+  let history = useHistory();
+
+  const checkUserLoggedIn = () => {
+    if (props.userName === params.userName) {
+      history.push('/profile');
+    }
+  }
 
   const checkInputData = () => {
     if (params.userName === undefined) {
@@ -38,6 +50,7 @@ const User = () => {
   }
 
   const main = () => {
+    checkUserLoggedIn();
     if(checkInputData()) {
       getUserWithUserName();
     }
@@ -50,9 +63,15 @@ const User = () => {
           <div className="key">Username:</div>
           <div className = "value">{user.userName}</div>
           <div className="key">Login:</div>
-          <div className = "value">{user.login}</div>
+          <div className = "value">
+            <DisplayLogin login={user.login}/>
+          </div>
           <div className="key">Email: </div>
           <div className = "value">{user.email}</div>
+          <DisplayUserPosts 
+            display={DisplayNotLoggedInUserPost}
+            id={user.id}
+            userName={user.userName}/>
       </div>
     )
   }
@@ -105,4 +124,9 @@ const User = () => {
   return (display())
 }
 
-export default User;
+const mapStateToProps = state => ({
+  id: state.user.user.id,
+  userName: state.user.user.userName
+});
+
+export default connect(mapStateToProps)(User);
