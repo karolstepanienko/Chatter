@@ -160,7 +160,7 @@
               <packages>
                   <package>
                       <pattern>**</pattern>
-                      <template>${project.basedir}/package-info.java</template>
+                      <template>${project.basedir}/src/main/java/com/chatter/package-info.java</template>
                   </package>
               </packages>
           </configuration>

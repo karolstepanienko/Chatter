@@ -2,10 +2,8 @@ package com.chatter.controllers.PostController;
 
 // Spring-boot imports:
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+// Project imports
 import com.chatter.model.Post.Post;
 import com.chatter.repositories.PostRepository;
 import com.chatter.repositories.UserRepository;
@@ -23,75 +22,135 @@ import com.chatter.model.Post.Like;
 @RestController
 @RequestMapping("/api/post")
 public class PostController {
-  @Autowired  
+
+  /**
+   * User repository used to communicate with database.
+   * Makes user related changes.
+   * */
+  @Autowired
+  private UserRepository userRepository;
+
+  /**
+   * Post repository used to communicate with database.
+   * Makes post related changes.
+   */
+  @Autowired
   private PostRepository postRepository;
 
-  @Autowired  
-  private UserRepository userRepository;
-    
+  /**
+   * @HTTPRequestMethod POST
+   * Adds provided post to database.
+   * @param post Provided post data.
+   * @return True if post saving was successfull.
+   */
   @CrossOrigin
   @PostMapping("/addpost")
-  public boolean addPost(@RequestBody Post post) {
+  public boolean addPost(@RequestBody final Post post) {
     this.postRepository.save(post);
     return true;
   }
 
-  @GetMapping(path="/allposts")
-  public @ResponseBody Iterable<Post> getAllPosts() {
-  // This returns a JSON or XML with the posts
-    return this.postRepository.getPostWithPrivacy(0) ;
+  /**
+   * @HTTPRequestMethod GET
+   * Returns all public posts to display them.
+   * @return JSON with all public posts.
+   */
+  @GetMapping(path = "/allposts")
+  public @ResponseBody Iterable<Post> getAllPublicPosts() {
+    return this.postRepository.getPostWithPrivacy(
+      AccountPrivacies.getPublicAccess());
   }
 
+  /**
+   * @HTTPRequestMethod POST
+   * Updates like status for given post.
+   * @param like Post and like data.
+   * @return ???String???
+   */
   @CrossOrigin
-  @PostMapping(value = "/like", consumes = "application/json", produces = "application/json")
-  public String changeLogin(@RequestBody Like like) {
+  @PostMapping(
+    value = "/like",
+    consumes = "application/json",
+    produces = "application/json")
+  public String updateLikeStatus(@RequestBody final Like like) {
     Integer likesNr = postRepository.getPostWithId(like.post).getLikes();
-    postRepository.getPostWithId(like.post).addUser(userRepository.getUserWithId(like.user));
-    if (like.status){
-      postRepository.getPostWithId(like.post).addUser(userRepository.getUserWithId(like.user));
-      postRepository.changeLikes(like.post, likesNr+1);
-    }
-    else{
-      postRepository.getPostWithId(like.post).removeUser(userRepository.getUserWithId(like.user));
-      postRepository.changeLikes(like.post, likesNr-1);
+    postRepository.getPostWithId(like.post).addUser(
+      userRepository.getUserWithId(like.user));
+    if (like.status) {
+      postRepository.getPostWithId(like.post).addUser(
+        userRepository.getUserWithId(like.user));
+      postRepository.changeLikes(like.post, likesNr + 1);
+    } else {
+      postRepository.getPostWithId(like.post).removeUser(
+        userRepository.getUserWithId(like.user));
+      postRepository.changeLikes(like.post, likesNr - 1);
     }
     return "like";
   }
 
+  /**
+   * @HTTPRequestMethod GET
+   * @param userId Provided user id.
+   * @return All posts ID's liked by a provided user.
+   */
   @CrossOrigin
-  @GetMapping(path="/likedposts")
+  @GetMapping(path = "/likedposts")
   @ResponseBody
-  public Iterable<Integer> likedPosts(@RequestParam Integer id) {
-    return postRepository.getLikedPost(id);
+  public Iterable<Integer> userLikedPosts(@RequestParam final Integer userId) {
+    return postRepository.getLikedPost(userId);
   }
 
+  /**
+   * @HTTPRequestMethod GET
+   * @param creatorId Post creator ID.
+   * @return All posts created by provided user.
+   */
   @CrossOrigin
   @GetMapping("/get/posts/with/creatorId")
-  public @ResponseBody Iterable<Post> getPostsWithCreatorId(@RequestParam Integer creatorId) {
+  public @ResponseBody Iterable<Post> getPostsWithCreatorId(
+    @RequestParam final Integer creatorId) {
     return this.postRepository.getPostWithCreatorId(creatorId);
   }
 
+  /**
+   * @HTTPRequestMethod POST
+   * Updates user account privacy.
+   * @param postId Provided user ID.
+   * @return True if update was succesfull. False otherwise.
+   */
   @CrossOrigin
   @PostMapping("/update/privacy/{postId}")
-  public @ResponseBody boolean updatePostPrivacy(@PathVariable Integer postId) {
+  public @ResponseBody boolean updatePostPrivacy(
+    @PathVariable final Integer postId) {
     Post post = this.postRepository.getPostWithId(postId);
     if (post != null) {
       if (post.getPrivacy().equals(AccountPrivacies.getPublicAccess())) {
         post.setPrivacy(AccountPrivacies.getPrivateAccess());
-      } else post.setPrivacy(AccountPrivacies.getPublicAccess());
+      } else {
+        post.setPrivacy(AccountPrivacies.getPublicAccess());
+      }
       this.postRepository.save(post);
-      return true;  
-    } else return false;
+      return true;
+    } else {
+      return false;
+    }
   }
 
+  /**
+   * @HTTPRequestMethod POST
+   * Deletes post with a given ID.
+   * @param postId Provided post ID.
+   * @return True if delete operation was succesfull. False otherwise.
+   */
   @CrossOrigin
   @PostMapping("/delete/by/Id/{postId}")
-  public @ResponseBody boolean deletePost(@PathVariable Integer postId) {
+  public @ResponseBody boolean deletePost(@PathVariable final Integer postId) {
     Post post = this.postRepository.getPostWithId(postId);
     if (post != null) {
       this.postRepository.deletePostLikes(postId);
       this.postRepository.delete(post);
       return true;
-    } return false;
+    }
+    return false;
   }
 }

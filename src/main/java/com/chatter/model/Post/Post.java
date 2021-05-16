@@ -12,91 +12,192 @@ import java.util.HashSet;
 import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-// This tells Hibernate to make a table in database out of this class
-// Hibernate automatically translates the entity into a table.
-
 @Entity
 public class Post implements Serializable {
 
+  /**
+   * Post ID. Used to identify post in database.
+   * Generated automatically.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
+
+  /**
+   * Post creator ID.
+   * Thats the ID of the user who created the post.
+   */
   private Integer creatorId;
+
+  /**
+   * The post contents.
+   */
   private String text;
+
+  /**
+   * Post privacy setting.
+   */
   private String privacy;
+
+  /**
+   * Post number of likes.
+   */
   private Integer likes;
   // Users that liked this post
+
+  /**
+   * Set of users that liked this post.
+   * Used as a relation in database.
+   */
   @ManyToMany(mappedBy = "posts")
   @JsonIgnore
   private Set<User> users;
 
-  public Post() {}
+  /**
+   * Public constructor.
+   */
+  public Post() { }
 
-  public void addUser(User user) {
-    if (this.users == null) this.users = new HashSet<User>();
+  /**
+   * Executed when user likes the post
+   * Adds the user to set of users who liked this post.
+   * @param user User object that will be added.
+   */
+  public void addUser(final User user) {
+    if (this.users == null) {
+      this.users = new HashSet<User>();
+    }
     this.users.add(user);
   }
-  
-  public void removeUser(User user){
+
+  /**
+   * Executed when user unlikes the post
+   * Removes the user form set of users who liked this post.
+   * @param user User object that will be removed.
+   */
+  public void removeUser(final User user) {
     this.users.remove(user);
   }
 
-  public Post(Integer creatorId, String text, String privacy, Integer likes ) {
+  /**
+   * Constructor.
+   * @param creatorId
+   * @param text
+   * @param privacy
+   * @param likes
+   */
+  public Post(
+      final Integer creatorId,
+      final String text,
+      final String privacy,
+      final Integer likes) {
     this.creatorId = creatorId;
     this.text = text;
-    // 0 - post is public
-    // 1 - post is private
     this.privacy = privacy;
     this.likes = likes;
-  }  
-   // Getters
-   public Integer getId() {
-    return this.id;
-  }
-  public Integer getLikes() {
-    return this.likes;
-  }
-  public String getPrivacy(){
-    return this.privacy;
   }
 
+  // Getters
+
+  /**
+   * Post ID getter.
+   * @return Post ID.
+   */
+  public Integer getId() {
+    return this.id;
+  }
+
+  /**
+   * Post creator ID getter.
+   * @return Post creator ID.
+   */
+  public Integer getCreatorId() {
+    return this.creatorId;
+  }
+
+  /**
+   * Post content getter.
+   * @return Post content text.
+   */
   public String getText() {
     return this.text;
   }
 
-  public Integer getCreatorId() {
-    return this.creatorId;
+  /**
+   * Post privacy getter.
+   * @return Post privacy setting.
+   */
+  public String getPrivacy() {
+    return this.privacy;
   }
+
+  /**
+   * Likes amount getter.
+   * @return Number of likes under a post.
+   */
+  public Integer getLikes() {
+    return this.likes;
+  }
+
+  /**
+   * Set of users who liked the post getter.
+   * @return Set of users who liked the post.
+   */
   public Set<User> getUsers() {
     return this.users;
   }
 
   // Setters
-  public void setId(Integer id) {
+
+  /**
+   * Post ID setter.
+   * @param id New post ID.
+   */
+  public void setId(final Integer id) {
     this.id = id;
   }
 
-  public void setCreatorId(Integer creatorId) {
+  /**
+   * Post creator ID setter.
+   * @param creatorId New post creator ID.
+   */
+  public void setCreatorId(final Integer creatorId) {
     this.creatorId = creatorId;
   }
 
-  public void setText(String text) {
+  /**
+   * Post content setter.
+   * @param text New post content.
+   */
+  public void setText(final String text) {
     this.text = text;
   }
-  public void setLikes(Integer likes) {
-    this.likes = likes;
-  }
-  public void setPrivacy(String privacy){
+
+  /**
+   * Post privacy setter.
+   * @param privacy New post privacy.
+   */
+  public void setPrivacy(final String privacy) {
     this.privacy = privacy;
   }
 
-
-  public String toString() {
-    return "Id: " + this.id + ", " +
-    "Creator id: " + this.creatorId + ", " +
-    "Privacy: " + this.privacy + ", " +
-    "Text: " + this.text;
+  /**
+   * Post like amount setter.
+   * @param likes New post likes amount.
+   */
+  public void setLikes(final Integer likes) {
+    this.likes = likes;
   }
-  
-}
 
+  /**
+   * Serialises post object.
+   * @return Post object as a string.
+   */
+  public String toString() {
+    return "Id: " + this.id + ", "
+    + "Creator id: " + this.creatorId + ", "
+    + "Privacy: " + this.privacy + ", "
+    + "Text: " + this.text
+    + "Likes:" + this.likes;
+  }
+}

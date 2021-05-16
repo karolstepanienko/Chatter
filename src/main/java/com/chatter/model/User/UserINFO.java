@@ -2,19 +2,53 @@ package com.chatter.model.User;
 
 import lombok.Data;
 
+/**
+ * Sends data for site to display.
+ */
 @Data
 public class UserINFO {
 
+  /**
+   * User ID. Used to identify user in database.
+   * Generated automatically.
+   */
   private Integer id;
+
+  /**
+   * User userName. Unique amongst users,
+   */
   private String userName;
+
+  /**
+   * User login not checked.
+   */
   private String login;
+
+  /**
+   * User email.
+   */
   private String email;
+
+  /**
+   * User privacy setting.
+   */
   private String accountPrivacy;
+
+  /**
+   * User account role.
+   */
   private String role;
 
-  public UserINFO() {}
+  /**
+   * Constructor.
+   */
+  public UserINFO() { }
 
-  public UserINFO(UserDTO userDTO) {
+  /**
+   * Constructor.
+   * @param userDTO Given user data.
+   */
+  public UserINFO(final UserDTO userDTO) {
     this.id = userDTO.getId();
     this.userName = userDTO.getUserName();
     this.login = userDTO.getLogin();
@@ -23,12 +57,16 @@ public class UserINFO {
     this.accountPrivacy = "";
   }
 
-  public UserINFO(User user) {
+  /**
+   * Constructor.
+   * @param user Given user data.
+   */
+  public UserINFO(final User user) {
     this.id = user.getId();
     this.userName = user.getUserName();
     this.login = user.getLogin();
     this.email = user.getEmail();
     this.role = user.getRole();
     this.accountPrivacy = user.getAccountPrivacy();
-  } 
+  }
 }

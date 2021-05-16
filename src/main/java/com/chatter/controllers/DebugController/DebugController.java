@@ -12,20 +12,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controller with various development
+ * and debugging related endpoints.
+ */
 @RestController
 @RequestMapping("/debug")
 public class DebugController {
 
-  @Autowired  
+  /**
+   * User repository used to communicate with database.
+   * Makes user related changes.
+   * */
+  @Autowired
   private UserRepository userRepository;
 
+  /**
+   * @HTTPRequestMethod GET
+   * Returns all users registered in database.
+   * @return JSON with all users.
+   */
   @CrossOrigin
   @GetMapping("/all")
   public @ResponseBody Iterable<User> getAllUsers() {
-    // This returns a JSON or XML with the users
     return userRepository.findAll();
   }
 
+  /**
+   * @HTTPRequestMethod GET
+   * Test print method.
+   */
   @CrossOrigin
   @GetMapping("/test")
   public void testPrint() {

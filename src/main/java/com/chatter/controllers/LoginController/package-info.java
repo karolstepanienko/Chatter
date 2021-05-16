@@ -13,4 +13,4 @@
  * @author Kamil Matysek
  * @version 1.5
  */
-package com.chatter;
+package com.chatter.controllers.LoginController;

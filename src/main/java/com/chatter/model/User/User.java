@@ -7,18 +7,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 import java.util.HashSet;
 import java.util.Set;
 
-// Project imports:
-import com.chatter.model.Post.Post;
-
 import lombok.Data;
+
+// Project imports
+import com.chatter.model.Post.Post;
 
 // This tells Hibernate to make a table in database out of this class
 // Hibernate automatically translates the entity into a table.
@@ -26,19 +24,50 @@ import lombok.Data;
 @Entity
 public class User {
 
+  /**
+   * User ID. Used to identify user in database.
+   * Generated automatically.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(nullable=false)
+  @Column(nullable = false)
   private Integer id;
-  private Post post;
+
+  /**
+   * User userName. Unique amongst users,
+   */
   private String userName;
+
+  /**
+   * User login not checked.
+   */
   private String login;
+
+  /**
+   * User email.
+   */
   private String email;
+
+  /**
+   * User password hash.
+   * Created using BCrypt.
+   */
   private String passwordHash;
+
+  /**
+   * User privacy setting.
+   */
   private String accountPrivacy;
+
+  /**
+   * User account role.
+   */
   private String role;
-  // Liked posts
-  @ManyToMany(cascade={
+
+  /**
+   * Posts liked by user.
+   */
+  @ManyToMany(cascade = {
     CascadeType.PERSIST,
     CascadeType.MERGE
   })
@@ -48,21 +77,45 @@ public class User {
   )
   private Set<Post> posts;
 
-  public User() {}
+  /**
+   * Standard constructor.
+   */
+  public User() { }
 
-  public User(String userName, String login, String email, String passwordHash) {
+  /**
+   * Constructor with arguments.
+   * @param userName User userName.
+   * @param login User login.
+   * @param email User email.
+   * @param passwordHash User password hash.
+   */
+  public User(
+    final String userName,
+    final String login,
+    final String email,
+    final String passwordHash) {
     this.userName = userName;
     this.login = login;
     this.email = email;
     this.passwordHash = passwordHash;
   }
 
-  public void addPost(Post post) {
-    if (this.posts == null) this.posts= new HashSet<Post>();
+  /**
+   * Adds post when user likes it.
+   * @param post Post that was liked.
+   */
+  public void addPost(final Post post) {
+    if (this.posts == null) {
+      this.posts = new HashSet<Post>();
+    }
     this.posts.add(post);
   }
 
-  public void removePost(Post post) {
+  /**
+   * Removes post when user unlikes it.
+   * @param post Post to be removed.
+   */
+  public void removePost(final Post post) {
     this.posts.remove(post);
   }
 }
