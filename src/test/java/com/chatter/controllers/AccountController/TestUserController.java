@@ -3,6 +3,7 @@ package com.chatter.controllers.AccountController;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 
@@ -25,13 +27,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.chatter.model.User.UserDTO;
+import com.chatter.model.User.UserINFO;
 import com.chatter.model.Post.Post;
+import static com.chatter.model.Constants.AccountPrivacies.getPublicAccess;
 
-@TestMethodOrder( MethodOrderer.MethodName.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class TestUserController {
@@ -64,6 +67,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(1)
   public void test_1_RegisterTestUser() throws Exception {
     this.init();
 
@@ -74,8 +78,9 @@ public class TestUserController {
         )
       .andExpect(status().isCreated());
   }
-  
-  @Test 
+
+  @Test
+  @Order(2)
   public void test_2_getUserId() throws Exception {
     this.init();
 
@@ -90,7 +95,8 @@ public class TestUserController {
     this.testUser.setId(Integer.valueOf(mvcResult.getResponse().getContentAsString()));
   }
   
-  @Test 
+  @Test
+  @Order(3)
   public void test_3_SetUserLogin() throws Exception {
     this.init();
     // Sets user ID
@@ -107,9 +113,9 @@ public class TestUserController {
   }
 
   @Test
+  @Order(4)
   public void test_4_CheckUserNameAvailableFalse() throws Exception {
     this.init();
-    
 
     this.mockMvc.perform(
       get(String.join("", this.link, "/user/check/username"))
@@ -121,6 +127,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(5)
   public void test_5_CheckUserNameAvailableTrue() throws Exception {
     this.init();
     String userName = "Thisusernamewlldefinitelybeavailable";
@@ -135,6 +142,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(6)
   public void test_6_CheckEmailAvailableFalse() throws Exception {
     this.init();
     String email = "testEmail@email.com";
@@ -149,6 +157,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(7)
   public void test_7_CheckEmailAvailableTrue() throws Exception {
     this.init();
     String email = "thisEmailWilldefinitelyBeawailable@email.com";
@@ -163,6 +172,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(8)
   public void test_8_VerifyUserVerified() throws Exception {
     this.init();
     String userName = "testFirst";
@@ -182,6 +192,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(9)
   public void test_9_VerifyUserUnverified() throws Exception {
     this.init();
     String userName = "testFirst";
@@ -200,6 +211,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(10)
   public void test_10_getUserWithUserNameTrue() throws Exception {
     this.init();
     String userName = "testFirst";
@@ -217,6 +229,7 @@ public class TestUserController {
   }
 
   @Test
+  @Order(11)
   public void test_11_getUserWithUserNameNull() throws Exception {
     this.init();
     String userName = "thisUserDefinitelydoesnotExist";
@@ -232,7 +245,45 @@ public class TestUserController {
     assertEquals(mvcResult.getResponse().getContentAsString(), "");
   }
 
-  @Test void test_12_RemoveUserByUserName() throws Exception {
+  @Test
+  @Order(12)
+  public void test_12_SetUserEmail() throws Exception {
+    this.init();
+    // Sets user ID
+    this.test_2_getUserId();
+    this.testUser.setEmail("newTestEmail@email.com");
+
+    this.mockMvc.perform(
+      post(String.join("", this.link, "/user/update/email"))
+      .content(asJsonString(this.testUser))
+      .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$", is(true)));
+  }
+
+  @Test
+  @Order(13)
+  public void test_13_SetUserPrivacy() throws Exception {
+    this.init();
+    // Sets user ID
+    this.test_2_getUserId();
+    UserINFO userINFO = new UserINFO();
+    userINFO.setId(this.testUser.getId());
+    userINFO.setAccountPrivacy(getPublicAccess());
+
+    this.mockMvc.perform(
+      post(String.join("", this.link, "/user/update/privacy"))
+      .content(asJsonString(userINFO))
+      .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$", is(true)));
+  }
+
+  @Test 
+  @Order(14)
+  public void test_14_RemoveUserByUserName() throws Exception {
     this.init();
 
     this.mockMvc.perform(

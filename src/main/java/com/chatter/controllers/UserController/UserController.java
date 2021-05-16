@@ -156,6 +156,7 @@ public class UserController {
 
   /**
    * Upadates user email. Checks if email is unique.
+   * @Tested
    * @param userDTO Provided user data with new email.
    * @return True if provided upadate was successfull. False otherwise.
    */
@@ -175,6 +176,7 @@ public class UserController {
 
   /**
    * Upadates user account privacy.
+   * @Tested
    * @param userINFO Provided user data with new privacy setting.
    * @return True if provided upadate was successfull. False otherwise.
    */
