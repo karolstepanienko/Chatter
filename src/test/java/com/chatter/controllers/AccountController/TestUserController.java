@@ -22,15 +22,19 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import java.util.HashSet;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.chatter.model.User.UserDTO;
+import com.chatter.model.Post.Post;
 
 @TestMethodOrder( MethodOrderer.MethodName.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class TestAccountController {
+public class TestUserController {
   
   @Autowired
   private MockMvc mockMvc;
@@ -54,6 +58,8 @@ public class TestAccountController {
     this.link = String.join("", "http://localhost:", String.valueOf(this.port), "/api/account");
     this.testUser = new UserDTO();
     this.testUser.setUserName("testFirst");
+    this.testUser.setEmail("testEmail@email.com");
+    this.testUser.setLogin("testLogin");
     this.testUser.setPassword("12345");
   }
 
@@ -128,11 +134,109 @@ public class TestAccountController {
     .andExpect(jsonPath("$", is(true)));
   }
 
-  @Test void test_6_RemoveUserByUserName() throws Exception {
+  @Test
+  public void test_6_CheckEmailAvailableFalse() throws Exception {
+    this.init();
+    String email = "testEmail@email.com";
+
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/check/email"))
+      .param("email", email)
+      )
+    .andExpect(status().isOk())
+    // Root of json https://goessner.net/articles/JsonPath/
+    .andExpect(jsonPath("$", is(false)));
+  }
+
+  @Test
+  public void test_7_CheckEmailAvailableTrue() throws Exception {
+    this.init();
+    String email = "thisEmailWilldefinitelyBeawailable@email.com";
+
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/check/email"))
+      .param("email", email)
+      )
+    .andExpect(status().isOk())
+    // Root of json https://goessner.net/articles/JsonPath/
+    .andExpect(jsonPath("$", is(true)));
+  }
+
+  @Test
+  public void test_8_VerifyUserVerified() throws Exception {
+    this.init();
+    String userName = "testFirst";
+    String password = "12345";
+
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get"))
+      .param("userName", userName)
+      .param("password", password)
+      )
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("$.userName", is(userName)))
+    .andExpect(jsonPath("$.login", is("newLogin")))
+    .andExpect(jsonPath("$.email", is("testEmail@email.com")))
+    .andExpect(jsonPath("$.accountPrivacy", is("PRIVATE")))
+    .andExpect(jsonPath("$.role", is("USER")));
+  }
+
+  @Test
+  public void test_9_VerifyUserUnverified() throws Exception {
+    this.init();
+    String userName = "testFirst";
+    String password = "thispasswordwildefinitelyNotBeGood";
+
+    MvcResult mvcResult = this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get"))
+      .param("userName", userName)
+      .param("password", password)
+      )
+    .andExpect(status().isOk())
+    .andReturn();
+
+    // Checks if the response was empty
+    assertEquals(mvcResult.getResponse().getContentAsString(), "");
+  }
+
+  @Test
+  public void test_10_getUserWithUserNameTrue() throws Exception {
+    this.init();
+    String userName = "testFirst";
+
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get/user/by/userName"))
+      .param("userName", userName)
+      )
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("$.userName", is(userName)))
+    .andExpect(jsonPath("$.login", is("newLogin")))
+    .andExpect(jsonPath("$.email", is("testEmail@email.com")))
+    .andExpect(jsonPath("$.accountPrivacy", is("PRIVATE")))
+    .andExpect(jsonPath("$.role", is("USER")));
+  }
+
+  @Test
+  public void test_11_getUserWithUserNameNull() throws Exception {
+    this.init();
+    String userName = "thisUserDefinitelydoesnotExist";
+
+    MvcResult mvcResult = this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get/user/by/userName"))
+      .param("userName", userName)
+      )
+    .andExpect(status().isOk())
+    .andReturn();
+
+    // Checks if the response was empty
+    assertEquals(mvcResult.getResponse().getContentAsString(), "");
+  }
+
+  @Test void test_12_RemoveUserByUserName() throws Exception {
     this.init();
 
     this.mockMvc.perform(
-      delete(String.join("", this.link, "/user/delete/by/userName"))
+      post(String.join("", this.link, "/user/delete/by/userName"))
         .param("userName", this.testUser.getUserName())
         )
       .andExpect(status().isOk())

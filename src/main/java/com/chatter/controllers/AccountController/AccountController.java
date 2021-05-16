@@ -76,6 +76,7 @@ public final class AccountController {
 
   /**
    * @HTTPRequestMethod POST
+   * @Tested
    * Endpoint used to add user to the database.
    * @param userDTO User data transfer object with necessary user information.
    */
@@ -144,11 +145,12 @@ public final class AccountController {
 
   /**
    * Deletes user with a provided userName.
+   * @Tested
    * @param userName Provided ID of a user that will be deleted.
    * @return True if delete operation was successfull. False otherwise.
    */
   @CrossOrigin
-  @DeleteMapping("/user/delete/by/userName")
+  @PostMapping("/user/delete/by/userName")
   public boolean deleteUserByUserName(@RequestParam final String userName) {
     System.out.println(userName);
     User user = userRepository.getUserWithUserName(userName);

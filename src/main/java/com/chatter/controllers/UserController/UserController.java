@@ -57,7 +57,8 @@ public class UserController {
   }
 
   /**
-   * @HTTPRequestMethod GET
+   * @HTTPRequestMethod 
+   * @Tested
    * Checks against the database if provided userName is available.
    * @param userName Provided userName.
    * @return True if userName is available. False otherwise.
@@ -70,6 +71,7 @@ public class UserController {
 
   /**
    * @HTTPRequestMethod GET
+   * @Tested
    * Checks against the database if provided email is available.
    * @param email Provided email.
    * @return True if email is available. False otherwise.
@@ -82,6 +84,7 @@ public class UserController {
 
   /**
    * @HTTPRequestMethod GET
+   * @Tested
    * Verifies credentials provided on login.
    * @param userName Provided userName.
    * @param password Provided plain text password.
@@ -103,6 +106,7 @@ public class UserController {
 
   /**
    * @HTTPRequestMethod GET
+   * @Tested
    * @param userName Provided userName.
    * @return User object with provided userName. Null if user does not exist.
    */
@@ -114,25 +118,9 @@ public class UserController {
     return user;
   }
 
-  // /**
-  //  * Checks
-  //  * @param userDTO
-  //  * @return
-  //  */
-  // @CrossOrigin
-  // @PostMapping("/check/password")
-  // public @ResponseBody boolean checkUserPassword(
-  //  @RequestBody UserDTO userDTO) {
-  //   User verifiedUser = this.userRepository
-  //  .getUserWithUserName(userDTO.getUserName());
-  //   if (verifiedUser != null && this.passwordEncoder
-  //  .matches(userDTO.getPassword(), verifiedUser.getPasswordHash())) {
-  //     return true;
-  //   } else return false;
-  // }
-
   /**
-   * @HTTPRequestMethod GET
+   * @HTTPRequestMethod 
+   * @Tested
    * @param userName Provided userName.
    * @return User's ID whose userName was provided.
    */
@@ -149,6 +137,7 @@ public class UserController {
 
   /**
    * Upadates user login.
+   * @Tested
    * @param userDTO Provided user data with new login.
    * @return True if provided upadate was successfull. False otherwise.
    */
