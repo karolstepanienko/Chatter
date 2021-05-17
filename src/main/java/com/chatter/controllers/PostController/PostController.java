@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 // Project imports
 import com.chatter.model.Post.Post;
@@ -44,6 +46,7 @@ public class PostController {
    * @return True if post saving was successfull.
    */
   @CrossOrigin
+  @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/addpost")
   public boolean addPost(@RequestBody final Post post) {
     this.postRepository.save(post);
@@ -150,5 +153,18 @@ public class PostController {
       return true;
     }
     return false;
+  }
+
+  /**
+   * @HTTPRequestMethod POST
+   * Deletes all posts created during tests.
+   * @return True if delete operation was succesfull. False otherwise.
+   */
+  @CrossOrigin
+  @PostMapping("/delete/{userId}")
+  public @ResponseBody boolean deletePosts(@PathVariable final Integer userId) {
+    this.postRepository.deleteUserPosts(userId);
+    return true;
+
   }
 }
