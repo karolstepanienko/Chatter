@@ -36,6 +36,7 @@ const ButtonActivatedTextBox = (props) => {
     return(
       <div className={props.elementClassName}>
         <input
+          className="input"
           type="text"
           value={props.textBoxValue}
           onChange={(evt) => props.handleTextChange(evt)}/>

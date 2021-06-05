@@ -59,19 +59,19 @@ const User = (props) => {
   const getUserInfo = () => {
     return (
       <div className="user-page">
-        <h3 className="title">User page</h3>
-          <div className="key">Username:</div>
-          <div className = "value">{user.userName}</div>
-          <div className="key">Login:</div>
-          <div className = "value">
-            <DisplayLogin login={user.login}/>
-          </div>
-          <div className="key">Email: </div>
-          <div className = "value">{user.email}</div>
-          <DisplayUserPosts 
-            display={DisplayNotLoggedInUserPost}
-            id={user.id}
-            userName={user.userName}/>
+        <h2 className="title-user-page">User page</h2>
+        <div className="key">Username:</div>
+        <div className = "value">{user.userName}</div>
+        <div className="key">Login:</div>
+        <div className = "value">
+          <DisplayLogin login={user.login}/>
+        </div>
+        <div className="key">Email: </div>
+        <div className = "value">{user.email}</div>
+        <DisplayUserPosts 
+          display={DisplayNotLoggedInUserPost}
+          id={user.id}
+          userName={user.userName}/>
       </div>
     )
   }

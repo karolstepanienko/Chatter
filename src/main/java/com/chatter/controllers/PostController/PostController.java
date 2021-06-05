@@ -158,6 +158,7 @@ public class PostController {
   /**
    * @HTTPRequestMethod POST
    * Deletes all posts created during tests.
+   * @param userId User ID number.
    * @return True if delete operation was succesfull. False otherwise.
    */
   @CrossOrigin

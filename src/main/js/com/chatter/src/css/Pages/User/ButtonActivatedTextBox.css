@@ -6,6 +6,10 @@
   border-radius: 20em;
 }
 
+.input {
+  width:100%;
+}
+
 .button-change {
   background-color: greenyellow;
   width: 80%;

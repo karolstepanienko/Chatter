@@ -1,10 +1,17 @@
 .user-page {
   display: flex;
   flex-flow: wrap;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-.user-userName,
+.title-user-page {
+  width: 100%;
+  text-align-last: center;
+  font-weight: 700;
+  color: yellow;
+}
+
+.user-userName
 .user-login,
 .user-email {
   width: 100%;
