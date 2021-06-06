@@ -72,6 +72,13 @@ public class AccountController {
     } else return true;
   }
 
+  /**
+   * @HTTPRequestMethod POST
+   * Registers new user in the database.
+   * @Tested
+   * @param signUpRequest Request object containing user userName and password.
+   * @return ResponseEntity with appropriate message, based on the success of registration.
+   */
   @CrossOrigin
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/register/add/user")
@@ -115,6 +122,7 @@ public class AccountController {
   /**
    * @HTTPRequestMethod GET
    * Returns user userName when provided user database ID.
+   * Used when displaying autors of public posts.
    * @param id Provided ID.
    * @return User with a given ID.
    */
@@ -150,6 +158,7 @@ public class AccountController {
   }
 
   /**
+   * @HTTPRequestMethod POST
    * Deletes user with a provided userName.
    * @Tested
    * @param userName Provided ID of a user that will be deleted.

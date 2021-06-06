@@ -94,6 +94,13 @@ public class LoginController {
     }
   }
 
+  /**
+   * @HTTPRequestMethod POST
+   * Signs user in and creates appropriate JWT token.
+   * @Tested
+   * @param loginRequest Request object containing user userName and password.
+   * @return JWTResponseEntity
+   */
   @CrossOrigin
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
