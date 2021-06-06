@@ -14,14 +14,14 @@ const DisplayLoggedInUserPost = (props) => {
   const handlePostDelete = () => {
     if (window.confirm("Are you sure, you want to delete this post?")) {
       // Deletes by path variable
-      axios.post(`${link}/post/delete/by/Id/${props.post.id}`).then(
+      axios.post(`${link}/post/delete/by/Id/${props.post.id}`, "", props.createConfig()).then(
         res => props.handlePostRemove(props.post.id)
       ).catch( err => console.log(err))  
     }
   }
 
   const handlePrivacyChange = () => {
-    axios.post(`${link}/post/update/privacy/${props.post.id}`).then(
+    axios.post(`${link}/post/update/privacy/${props.post.id}`, "", props.createConfig()).then(
       res => alert("Post privacy setting changed.")
     ).catch(err => console.log(err))
   }

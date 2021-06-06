@@ -48,6 +48,7 @@ public class PostController {
    */
   @CrossOrigin
   @ResponseStatus(HttpStatus.CREATED)
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/addpost")
   public boolean addPost(@RequestBody final Post post) {
     this.postRepository.save(post);
@@ -123,6 +124,7 @@ public class PostController {
    * @return True if update was succesfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/update/privacy/{postId}")
   public @ResponseBody boolean updatePostPrivacy(
     @PathVariable final Integer postId) {
@@ -147,6 +149,7 @@ public class PostController {
    * @return True if delete operation was succesfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/delete/by/Id/{postId}")
   public @ResponseBody boolean deletePost(@PathVariable final Integer postId) {
     Post post = this.postRepository.getPostWithId(postId);
@@ -165,6 +168,7 @@ public class PostController {
    * @return True if delete operation was succesfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/delete/{userId}")
   public @ResponseBody boolean deletePosts(@PathVariable final Integer userId) {
     this.postRepository.deleteUserPosts(userId);
