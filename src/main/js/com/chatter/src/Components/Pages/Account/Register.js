@@ -17,11 +17,10 @@ export default class Register extends React.Component {
     this.password = '';
     this.passwordRepeat = '';
     this.user = {
-      id: null,
       userName: '',
-      login: '',
       email: '',
       password: '',
+      role: 'USER',
     }
   }  
 
@@ -36,6 +35,7 @@ export default class Register extends React.Component {
       this.validateEmail() &&
       this.validateUserName() &&
       this.equalPasswords()) {
+        console.log(this.user);
         this.registerUser();
     } else alert("Unknown error.");
   }

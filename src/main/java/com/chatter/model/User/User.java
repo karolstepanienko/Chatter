@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.UniqueConstraint;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +24,11 @@ import com.chatter.model.Post.Post;
 // Hibernate automatically translates the entity into a table.
 @Data
 @Entity
+@Table(	name = "user", 
+		uniqueConstraints = { 
+			@UniqueConstraint(columnNames = "username"),
+			@UniqueConstraint(columnNames = "email") 
+})
 public class User {
 
   /**
@@ -60,9 +67,9 @@ public class User {
   private String accountPrivacy;
 
   /**
-   * User account role.
+   * User account roles.
    */
-  private String role;
+	private String role;
 
   /**
    * Posts liked by user.

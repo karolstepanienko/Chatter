@@ -122,6 +122,8 @@ const mapStateToProps = state => ({
   accountPrivacy: state.user.user.accountPrivacy,
   role: state.user.user.role,
   postList: state.user.user.postList,
+  tokenType: state.user.user.tokenType,
+  accessToken: state.user.user.accessToken
 });
 
 export default connect(mapStateToProps)(LoggedInUserProfile);

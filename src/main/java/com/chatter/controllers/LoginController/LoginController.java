@@ -1,16 +1,30 @@
 package com.chatter.controllers.LoginController;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.chatter.Security.jwt.JwtUtils;
+import com.chatter.Security.services.UserDetailsImplementation;
 // Project imports
 import com.chatter.model.User.User;
 import com.chatter.model.User.UserDTO;
+import com.chatter.payload.request.LoginRequest;
+import com.chatter.payload.response.JwtResponse;
 import com.chatter.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +46,12 @@ public class LoginController {
    * */
   @Autowired
   private PasswordEncoder passwordEncoder;
+
+  @Autowired
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private JwtUtils jwtUtils;
 
   /**
    * @HTTPRequestMethod POST
@@ -71,6 +91,53 @@ public class LoginController {
         verifiedUser.getPasswordHash());
     } else {
       return false;
+    }
+  }
+
+  @CrossOrigin
+	@PostMapping("/signin")
+	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.generateJwtToken(authentication);
+		
+		UserDetailsImplementation userDetails = (UserDetailsImplementation) authentication.getPrincipal();		
+    // String role = userDetails.getAuthorities().stream().toList().toString();
+		List<String> roles = userDetails.getAuthorities()
+      .stream()
+      .map(item -> item.getAuthority())
+      .collect(Collectors.toList());
+
+		return ResponseEntity.ok(new JwtResponse(
+      jwt, 
+      userDetails.getId(), 
+      userDetails.getUsername(), 
+      userDetails.getEmail(), 
+      roles));
+	}
+
+  /**
+   * @HTTPRequestMethod GET
+   * @Tested
+   * Verifies credentials provided on login.
+   * @param userName Provided userName.
+   * @param password Provided plain text password.
+   * @return Verified user if provided data was correct. False otherwise.
+   */
+  @CrossOrigin
+  @GetMapping("/get")
+  public @ResponseBody User getVerifiedUser(
+    @RequestParam final String userName,
+    @RequestParam final String password) {
+    User user = this.userRepository.getUserWithUserName(userName);
+    if (user != null
+    && this.passwordEncoder.matches(password, user.getPasswordHash())) {
+      return user;
+    } else {
+      return null;
     }
   }
 }

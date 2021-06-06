@@ -37,9 +37,9 @@ public class UserDTO {
   private String password;
 
   /**
-   * User account role.
+   * User account roles.
    */
-  private String role;
+	private String role;
 
   /**
    * Basic constructor.

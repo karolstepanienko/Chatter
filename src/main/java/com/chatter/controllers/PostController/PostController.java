@@ -58,6 +58,7 @@ public class PostController {
    * Returns all public posts to display them.
    * @return JSON with all public posts.
    */
+  @CrossOrigin
   @GetMapping(path = "/allposts")
   public @ResponseBody Iterable<Post> getAllPublicPosts() {
     return this.postRepository.getPostWithPrivacy(

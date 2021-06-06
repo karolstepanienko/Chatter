@@ -3,6 +3,8 @@ package com.chatter.controllers.AccountController;
 // Spring-boot imports
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,15 +17,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chatter.model.Constants.Roles;
 // Project imports
 import com.chatter.model.User.User;
-import com.chatter.model.User.UserDTO;
+import com.chatter.payload.request.SignupRequest;
+import com.chatter.payload.response.MessageResponse;
 import com.chatter.repositories.UserRepository;
-// import com.chatter.model.Post.Change;
 
 @RestController
 @RequestMapping("/api/account")
-public final class AccountController {
+public class AccountController {
 
   /**
    * User repository used to communicate with database.
@@ -40,15 +43,15 @@ public final class AccountController {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  /**
-   * Acoount controller logic.
-   * Class that provides simple logic to AccountController.
-   */
-  private AccountControllerLogic acLogic;
+  // /**
+  //  * Acoount controller logic.
+  //  * Class that provides simple logic to AccountController.
+  //  */
+  // private AccountControllerLogic acLogic;
 
-  AccountController() {
-    acLogic = new AccountControllerLogic();
-  }
+  // AccountController() {
+  //   acLogic = new AccountControllerLogic();
+  // }
 
   /**
    * @HTTPRequestMethod POST
@@ -59,7 +62,9 @@ public final class AccountController {
   @CrossOrigin()
   @PostMapping("/register/check/username")
   public boolean checkUserUserNameAvailable(@RequestBody final User user) {
-    return this.acLogic.checkUserNameAvailable(user, userRepository);
+    if (this.userRepository.existsByUserName(user.getUserName())) {
+      return false;
+    } else return true;
   }
 
   /**
@@ -71,28 +76,51 @@ public final class AccountController {
   @CrossOrigin()
   @PostMapping("/register/check/email")
   public boolean checkUserEmailAvailable(@RequestBody final User user) {
-    return this.acLogic.checkUserEmailAvailable(user, userRepository);
+    if (this.userRepository.existsByUserName(user.getEmail())) {
+      return false;
+    } else return true;
   }
 
-  /**
-   * @HTTPRequestMethod POST
-   * @Tested
-   * Endpoint used to add user to the database.
-   * @param userDTO User data transfer object with necessary user information.
-   */
   @CrossOrigin
   @ResponseStatus(HttpStatus.CREATED)
   @PostMapping("/register/add/user")
-  public void addUser(@RequestBody final UserDTO userDTO) {
+	public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+		if (userRepository.existsByUserName(signUpRequest.getUserName())) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: Username is already taken!"));
+		}
 
-    User user = this.acLogic.createUserFromUserDTO(
-      userDTO,
-      this.passwordEncoder.encode(userDTO.getPassword()));
+		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Error: Email is already in use!"));
+		}
 
-    if (this.acLogic.checkUserUnique(user, userRepository)) {
-      userRepository.save(user);
+		// Create new user's account
+		User user = new User(
+      signUpRequest.getUserName(),
+      "",
+      signUpRequest.getEmail(),
+      passwordEncoder.encode(signUpRequest.getPassword()));
+
+		String role = signUpRequest.getRole();
+		// Set<Role> roles = new HashSet<>();
+
+    if (Roles.roleExists(role)) {
+      user.setRole(role);
+    } else {
+      return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Role does not exist."));
     }
-  }
+
+		userRepository.save(user);
+    // ResponseEntity<?> response = ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    // response.status(HttpStatus.CREATED);
+
+		return new ResponseEntity<>(new MessageResponse("User registered successfully!"), HttpStatus.CREATED);
+	}
 
   /**
    * @HTTPRequestMethod GET
@@ -137,6 +165,7 @@ public final class AccountController {
    * @return True if delete operation was successfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER')")
   @PostMapping("/user/delete/by/userName")
   public boolean deleteUserByUserName(@RequestParam final String userName) {
     System.out.println(userName);

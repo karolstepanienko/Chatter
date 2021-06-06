@@ -14,6 +14,11 @@ public final class Roles {
   private static String userRole = "USER";
 
   /**
+   * MODERATOR user role.
+   */
+  private static String moderatorRole = "MODERATOR";
+
+  /**
    * ADMIN user role.
    */
   private static String adminRole = "ADMIN";
@@ -29,11 +34,23 @@ public final class Roles {
   }
 
   /**
+   * MODERATOR role getter.
+   * @return MODERATOR role.
+   */
+  public static String getModeratorRole() {
+    return moderatorRole;
+  }
+
+  /**
    * ADMIN role getter.
    * @return ADMIN role.
    */
   public static String getAdminRole() {
     return adminRole;
+  }
+
+  public static Boolean roleExists(String role) {
+    return getAllRoles().values().contains(role);
   }
 
   /**
@@ -43,6 +60,7 @@ public final class Roles {
   public static Map<String, String> getAllRoles() {
     Map<String, String> map = new HashMap<String, String>();
     map.put("userRole", userRole);
+    map.put("moderatorRole", moderatorRole);
     map.put("adminRole", adminRole);
     return map;
   }

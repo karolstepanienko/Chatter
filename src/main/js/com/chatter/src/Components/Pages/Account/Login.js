@@ -15,6 +15,8 @@ export const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [verifiedUser, setVerifiedUser] = useState("");
+  const [tokenType, setTokenType] = useState("");
+  const [accessToken, setAccessToken] = useState("");
   const [badUsernameOrPassword, setBadUsernameOrPassword] = useState(false);
 
   const dispatch = useDispatch();
@@ -23,6 +25,7 @@ export const Login = () => {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
+    getLoggedInData();
     getVerifiedUser();
   }
 
@@ -36,8 +39,25 @@ export const Login = () => {
     setPassword(evt.target.value);
   }
 
+  const getUserDetails = () => {
+    var userDetails = {
+      userName: userName,
+      password: password 
+    };
+    return userDetails;
+  }
+
+  const getLoggedInData = () => {
+    axios.post(`${link}/account/login/signin`, getUserDetails()).then(
+      res => {
+        setTokenType(res.data.tokenType);
+        setAccessToken(res.data.accessToken);
+      }
+    )
+  }
+
   const getVerifiedUser = () => {
-    axios.get(`${link}/account/user/get?userName=${userName}&password=${password}`).then(
+    axios.get(`${link}/account/login/get?userName=${userName}&password=${password}`).then(
       res => {
         if (res.data != "") {
           setVerifiedUser(res.data);
@@ -57,7 +77,9 @@ export const Login = () => {
       email: verifiedUser.email,
       accountPrivacy: verifiedUser.accountPrivacy,
       role: verifiedUser.role,
-      postList: verifiedUser.postList
+      postList: verifiedUser.postList,
+      tokenType: tokenType,
+      accessToken: accessToken
     }
     return stateUser;
   }
@@ -69,7 +91,7 @@ export const Login = () => {
 
   useEffect( () => {
     if (verifiedUser != "") logUserIn();
-  }, [getVerifiedUser, setBadUsernameOrPassword, handleLoginSubmit])
+  }, [getLoggedInData, getVerifiedUser, setBadUsernameOrPassword, handleLoginSubmit])
 
   return (
     <div className="login-page">

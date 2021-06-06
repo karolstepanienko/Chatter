@@ -82,169 +82,167 @@ public class TestPostController {
 
 
   }
-  @Test
-  @Order(1)
-  public void test_1_CreateTestPost() throws Exception {
-    this.init();
-    this.mockMvc.perform(
-      post(String.join("", this.link2, "/register/add/user"))
-        .content(asJsonString(this.testUser))
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-      .andExpect(status().isCreated());
+  // @Test
+  // @Order(1)
+  // public void test_1_CreateTestPost() throws Exception {
+  //   this.init();
+  //   this.mockMvc.perform(
+  //     post(String.join("", this.link2, "/register/add/user"))
+  //       .content(asJsonString(this.testUser))
+  //       .contentType(MediaType.APPLICATION_JSON)
+  //       )
+  //     .andExpect(status().isCreated());
 
-      MvcResult mvcResult = this.mockMvc.perform(
-      get(String.join("", this.link2, "/user/get/id/by/userName"))
-        .param("userName", this.testUser.getUserName())
-        )
-      .andExpect(status().isOk())
-      .andReturn();
+  //     MvcResult mvcResult = this.mockMvc.perform(
+  //     get(String.join("", this.link2, "/user/get/id/by/userName"))
+  //       .param("userName", this.testUser.getUserName())
+  //       )
+  //     .andExpect(status().isOk())
+  //     .andReturn();
     
-    // Sets user ID
-    this.testUser.setId(Integer.valueOf(mvcResult.getResponse().getContentAsString()));
+  //   // Sets user ID
+  //   this.testUser.setId(Integer.valueOf(mvcResult.getResponse().getContentAsString()));
 
-      this.testPost.setCreatorId(this.testUser.getId());
-      this.testPost2.setCreatorId(this.testUser.getId());
+  //     this.testPost.setCreatorId(this.testUser.getId());
+  //     this.testPost2.setCreatorId(this.testUser.getId());
 
-    this.mockMvc.perform(
-      post(String.join("", this.link, "/addpost"))
-        .content(asJsonString(this.testPost))
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-      .andExpect(status().isCreated());
+  //   this.mockMvc.perform(
+  //     post(String.join("", this.link, "/addpost"))
+  //       .content(asJsonString(this.testPost))
+  //       .contentType(MediaType.APPLICATION_JSON)
+  //       )
+  //     .andExpect(status().isCreated());
 
-      this.mockMvc.perform(
-      post(String.join("", this.link, "/addpost"))
-        .content(asJsonString(this.testPost2))
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-      .andExpect(status().isCreated());
-  }
+  //     this.mockMvc.perform(
+  //     post(String.join("", this.link, "/addpost"))
+  //       .content(asJsonString(this.testPost2))
+  //       .contentType(MediaType.APPLICATION_JSON)
+  //       )
+  //     .andExpect(status().isCreated());
+  // }
 
-  @Test 
-  @Order(2)
-  public void test_2_getPosts() throws Exception {
-    this.init();
-    this.test_1_CreateTestPost();
-    MvcResult mvcResult = this.mockMvc.perform(
-      get(String.join("", this.link, "/allposts"))
-        )
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[0].creatorId", is(this.testPost.getCreatorId())))
-      .andExpect(jsonPath("$[0].text", is(this.testPost.getText())))
-      .andExpect(jsonPath("$[0].privacy", is(this.testPost.getPrivacy())))
-      .andExpect(jsonPath("$[0].likes", is(this.testPost.getLikes())))
-      .andReturn();
-      // Sets post ID
-      String response = mvcResult.getResponse().getContentAsString();
-      Integer id = JsonPath.parse(response).read("$[0].id");
-      this.testPost.setId(id);
+  // @Test 
+  // @Order(2)
+  // public void test_2_getPosts() throws Exception {
+  //   this.init();
+  //   this.test_1_CreateTestPost();
+  //   MvcResult mvcResult = this.mockMvc.perform(
+  //     get(String.join("", this.link, "/allposts"))
+  //       )
+  //     .andExpect(status().isOk())
+  //     .andExpect(jsonPath("$[0].creatorId", is(this.testPost.getCreatorId())))
+  //     .andExpect(jsonPath("$[0].text", is(this.testPost.getText())))
+  //     .andExpect(jsonPath("$[0].privacy", is(this.testPost.getPrivacy())))
+  //     .andExpect(jsonPath("$[0].likes", is(this.testPost.getLikes())))
+  //     .andReturn();
+  //     // Sets post ID
+  //     String response = mvcResult.getResponse().getContentAsString();
+  //     Integer id = JsonPath.parse(response).read("$[0].id");
+  //     this.testPost.setId(id);
 
-  }
+  // }
 
-  @Test 
-  @Order(3)
-  public void test_3_Like() throws Exception {
-    this.init();
-    this.test_2_getPosts();
-    this.testLike = new Like();
-    this.testLike.setStatus(false);
-    this.testLike.setPost(this.testPost.getId());
-    this.testLike.setUser(this.testPost.getCreatorId());
+  // @Test 
+  // @Order(3)
+  // public void test_3_Like() throws Exception {
+  //   this.init();
+  //   this.test_2_getPosts();
+  //   this.testLike = new Like();
+  //   this.testLike.setStatus(false);
+  //   this.testLike.setPost(this.testPost.getId());
+  //   this.testLike.setUser(this.testPost.getCreatorId());
 
-    this.mockMvc.perform(
-      post(String.join("", this.link, "/like"))
-        .content(asJsonString(this.testLike))
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-      .andExpect(status().isOk());
+  //   this.mockMvc.perform(
+  //     post(String.join("", this.link, "/like"))
+  //       .content(asJsonString(this.testLike))
+  //       .contentType(MediaType.APPLICATION_JSON)
+  //       )
+  //     .andExpect(status().isOk());
 
-    MvcResult mvcResult = this.mockMvc.perform(
-      get(String.join("", this.link, "/allposts"))
-        )
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
-        + " )].likes").value(containsInAnyOrder(this.testPost.getLikes()-1)))
-      .andReturn();
-  }
+  //   this.mockMvc.perform(
+  //     get(String.join("", this.link, "/allposts"))
+  //       )
+  //     .andExpect(status().isOk())
+  //     .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
+  //       + " )].likes").value(containsInAnyOrder(this.testPost.getLikes()-1)))
+  //     .andReturn();
+  // }
    
-  @Test
-  @Order(4)
-  public void test_4_UpdatePostPrivacy() throws Exception {
-    this.init();
-    this.test_2_getPosts();
+  // @Test
+  // @Order(4)
+  // public void test_4_UpdatePostPrivacy() throws Exception {
+  //   this.init();
+  //   this.test_2_getPosts();
 
-    this.mockMvc.perform(
-      post(String.join("", this.link, "/update/privacy/" , (this.testPost.getId()).toString()))
-        .content(asJsonString(this.testPost))
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-      .andExpect(status().isOk());
+  //   this.mockMvc.perform(
+  //     post(String.join("", this.link, "/update/privacy/" , (this.testPost.getId()).toString()))
+  //       .content(asJsonString(this.testPost))
+  //       .contentType(MediaType.APPLICATION_JSON)
+  //       )
+  //     .andExpect(status().isOk());
 
-    this.testPost2.setPrivacy("PRIVATE");
+  //   this.testPost2.setPrivacy("PRIVATE");
 
-    MvcResult mvcResult2 = this.mockMvc.perform(
-      get(String.join("", this.link, "/allposts"))
-        )
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
-        + " )]").doesNotExist())
-      .andReturn();
+  //   this.mockMvc.perform(
+  //     get(String.join("", this.link, "/allposts"))
+  //       )
+  //     .andExpect(status().isOk())
+  //     .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
+  //       + " )]").doesNotExist())
+  //     .andReturn();
 
-      this.mockMvc.perform(
-      post(String.join("", this.link, "/update/privacy/" , (this.testPost.getId()).toString()))
-        .content(asJsonString(this.testPost))
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-      .andExpect(status().isOk());
+  //     this.mockMvc.perform(
+  //     post(String.join("", this.link, "/update/privacy/" , (this.testPost.getId()).toString()))
+  //       .content(asJsonString(this.testPost))
+  //       .contentType(MediaType.APPLICATION_JSON)
+  //       )
+  //     .andExpect(status().isOk());
 
-    this.testPost2.setPrivacy("PUBLIC");
-    MvcResult mvcResult = this.mockMvc.perform(
-      get(String.join("", this.link, "/allposts"))
-        )
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
-        + " )].privacy").value(containsInAnyOrder(this.testPost.getPrivacy())))
-      .andReturn();
+  //   this.testPost2.setPrivacy("PUBLIC");
+  //   MvcResult mvcResult = this.mockMvc.perform(
+  //     get(String.join("", this.link, "/allposts"))
+  //       )
+  //     .andExpect(status().isOk())
+  //     .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
+  //       + " )].privacy").value(containsInAnyOrder(this.testPost.getPrivacy())))
+  //     .andReturn();
 
-  }
+  // }
 
 
-  @Test
-  @Order(5)
-  public void test_5_DeletePost() throws Exception {
-    this.init();
-    this.test_2_getPosts();
+  // @Test
+  // @Order(5)
+  // public void test_5_DeletePost() throws Exception {
+  //   this.init();
+  //   this.test_2_getPosts();
 
-    MvcResult mvcResult = this.mockMvc.perform(
-      get(String.join("", this.link, "/allposts"))
-        )
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
-        + " )].text").value(containsInAnyOrder(this.testPost.getText())))
-      .andReturn();
+  //   MvcResult mvcResult = this.mockMvc.perform(
+  //     get(String.join("", this.link, "/allposts"))
+  //       )
+  //     .andExpect(status().isOk())
+  //     .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
+  //       + " )].text").value(containsInAnyOrder(this.testPost.getText())))
+  //     .andReturn();
 
-    this.mockMvc.perform(
-      post(String.join("", this.link, "/delete/by/Id/", (this.testPost.getId()).toString()))
-        .content(asJsonString(this.testPost))
-        .contentType(MediaType.APPLICATION_JSON)
-        )
-      .andExpect(status().isOk());
+  //   this.mockMvc.perform(
+  //     post(String.join("", this.link, "/delete/by/Id/", (this.testPost.getId()).toString()))
+  //       .content(asJsonString(this.testPost))
+  //       .contentType(MediaType.APPLICATION_JSON)
+  //       )
+  //     .andExpect(status().isOk());
 
-    MvcResult mvcResult2 = this.mockMvc.perform(
-      get(String.join("", this.link, "/allposts"))
-        )
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
-        + " )]").doesNotExist())
-      .andReturn();
+  //   MvcResult mvcResult2 = this.mockMvc.perform(
+  //     get(String.join("", this.link, "/allposts"))
+  //       )
+  //     .andExpect(status().isOk())
+  //     .andExpect(jsonPath("$[?(@.id == "+ this.testPost.getId().toString() 
+  //       + " )]").doesNotExist())
+  //     .andReturn();
 
       
-      this.mockMvc.perform(
-        post(String.join("", this.link, "/delete/", (this.testUser.getId()).toString()))
-          )
-        .andExpect(status().isOk());
-  }
-
-
+  //     this.mockMvc.perform(
+  //       post(String.join("", this.link, "/delete/", (this.testUser.getId()).toString()))
+  //         )
+  //       .andExpect(status().isOk());
+  // }
 }

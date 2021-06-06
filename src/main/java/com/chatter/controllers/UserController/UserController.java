@@ -1,6 +1,5 @@
 package com.chatter.controllers.UserController;
 
-import com.chatter.controllers.AccountController.AccountControllerLogic;
 import com.chatter.model.Constants.AccountPrivacies;
 // Project imports
 import com.chatter.model.User.User;
@@ -45,16 +44,6 @@ public class UserController {
    * */
   @Autowired
   private PasswordEncoder passwordEncoder;
-
-  /**
-   * Acoount controller logic.
-   * Class that provides simple logic to AccountController.
-   */
-  private AccountControllerLogic acLogic;
-
-  UserController() {
-    acLogic = new AccountControllerLogic();
-  }
 
   /**
    * @HTTPRequestMethod
@@ -165,8 +154,7 @@ public class UserController {
   public boolean updateUserEmail(@RequestBody final UserDTO userDTO) {
     User user = this.userRepository.getUserWithId(userDTO.getId());
     user.setEmail(userDTO.getEmail());
-    if (user != null
-    && this.acLogic.checkUserEmailAvailable(user, userRepository)) {
+    if (user != null && !this.userRepository.existsByEmail(user.getEmail())) {
       this.userRepository.save(user);
       return true;
     } else {

@@ -1,5 +1,7 @@
 package com.chatter.repositories;
 
+import java.util.Optional;
+
 import com.chatter.model.User.User;
 
 import org.springframework.data.jpa.repository.Modifying;
@@ -54,4 +56,10 @@ public interface UserRepository extends CrudRepository<User, Integer> {
   @Query(value = "UPDATE user SET login = :val WHERE id = :id",
   nativeQuery = true)
   void changeLogin(@Param("id") Integer id, @Param("val") String val);
+
+  Boolean existsByUserName(String userName);
+
+  Boolean existsByEmail(String email);
+
+  Optional<User> findByUserName(String userName);
 }
