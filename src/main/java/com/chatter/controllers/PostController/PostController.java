@@ -109,7 +109,7 @@ public class PostController {
    * @return All posts created by provided user.
    */
   @CrossOrigin
-  @PreAuthorize("hasAuthority('USER')")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @GetMapping("/get/posts/with/creatorId")
   public @ResponseBody Iterable<Post> getPostsWithCreatorId(
     @RequestParam final Integer creatorId) {

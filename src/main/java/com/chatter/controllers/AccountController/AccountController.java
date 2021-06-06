@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.chatter.model.Constants.AccountPrivacies;
 import com.chatter.model.Constants.Roles;
 // Project imports
 import com.chatter.model.User.User;
@@ -114,6 +115,7 @@ public class AccountController {
 					.badRequest()
 					.body(new MessageResponse("Role does not exist."));
     }
+    user.setAccountPrivacy(AccountPrivacies.getPrivateAccess());
 
 		userRepository.save(user);
     // ResponseEntity<?> response = ResponseEntity.ok(new MessageResponse("User registered successfully!"));
@@ -147,7 +149,7 @@ public class AccountController {
    * @return True if delete operation was successfull. False otherwise.
    */
   @CrossOrigin
-  @PreAuthorize("hasAuthority('USER')")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @DeleteMapping("/user/delete/by/id")
   public boolean deleteUserById(@RequestParam final Integer id) {
     User user = userRepository.getUserWithId(id);

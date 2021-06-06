@@ -67,6 +67,7 @@ public class UserController {
    * @return True if email is available. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @GetMapping("/check/email")
   public boolean checkEmailUnique(@RequestParam final String email) {
     return this.userRepository.getUserWithEmail(email) == null;
@@ -132,6 +133,7 @@ public class UserController {
    * @return True if provided upadate was successfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/update/login")
   public boolean updateUserLogin(@RequestBody final UserDTO userDTO) {
     User user = this.userRepository.getUserWithId(userDTO.getId());
@@ -151,6 +153,7 @@ public class UserController {
    * @return True if provided upadate was successfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/update/email")
   public boolean updateUserEmail(@RequestBody final UserDTO userDTO) {
     User user = this.userRepository.getUserWithId(userDTO.getId());
@@ -170,6 +173,7 @@ public class UserController {
    * @return True if provided upadate was successfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/update/privacy")
   public boolean updateUserPrivacy(@RequestBody final UserINFO userINFO) {
     User user = this.userRepository.getUserWithId(userINFO.getId());
@@ -189,7 +193,7 @@ public class UserController {
    * @return True if delete operation was successfull. False otherwise.
    */
   @CrossOrigin
-  @PreAuthorize("hasAuthority('USER')")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/delete")
   public boolean deleteUserAndAllHisPosts(@RequestParam final Integer userId) {
     User user = this.userRepository.getUserWithId(userId);

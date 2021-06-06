@@ -35,7 +35,7 @@ const EmailChangeTextBox = (props) => {
   }
 
   const checkEmailAvailable = async () => {
-    axios.get(`${link}/account/user/check/email?email=${newEmail}`)
+    axios.get(`${link}/account/user/check/email?email=${newEmail}`, props.createConfig())
     .then(res => {setEmailAvailable(res.data) })
     .catch(
       err => console.log(err)
@@ -86,7 +86,7 @@ const EmailChangeTextBox = (props) => {
   }
 
   const submitNewEmail = async () => {
-    axios.post(`${link}/account/user/update/email`, getUserDTO()).then(
+    axios.post(`${link}/account/user/update/email`, getUserDTO(), props.createConfig()).then(
       res => {
         if(res.data) {
           updateEmailInState();
@@ -106,12 +106,7 @@ const EmailChangeTextBox = (props) => {
   }
 
   useEffect( () => {
-    // Here the Email is set
     if(validateEmail() && submit) {
-      console.log("submitted:")
-      console.log(validateEmail());
-      console.log("this would be subbmitted");
-      console.log(newEmail);
       submitNewEmail();
       clean();
     }

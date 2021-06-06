@@ -32,7 +32,7 @@ const ChangePrivacy = (props) => {
 
   const updateAccountPrivacyDatabase = () => {
     if (!checkIfEmpty() && !privacyUpdated) {
-      axios.post(`${link}/account/user/update/privacy`, getUserINFO()).then(
+      axios.post(`${link}/account/user/update/privacy`, getUserINFO(), props.createConfig()).then(
         res => setPrivacyUpdated(res.data)
       ).catch(
         err => console.log(err)

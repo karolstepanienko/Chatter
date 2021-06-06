@@ -15,7 +15,6 @@ const DisplayUserPosts = (props) => {
   }
 
   const fetchPosts = () => {
-    console.log(props);
     if (userExists){
       axios.get(`${link}/post/get/posts/with/creatorId?creatorId=${props.id}`, props.createConfig()).then(
         res => setUserPosts(res.data)

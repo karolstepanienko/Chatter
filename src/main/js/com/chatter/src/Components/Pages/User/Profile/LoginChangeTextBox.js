@@ -6,9 +6,6 @@ import { link } from '../../../../Constants/Constants';
 import ButtonActivatedTextBox from './ButtonActivatedTextBox';
 
 
-axios.defaults.baseURL = `${link}/account/user`;
-
-
 const LoginChangeTextBox = (props) => {
   const [newLogin, setNewLogin] = useState("");
   const [confirmation, setConfirmation] = useState({visible: false,
@@ -35,7 +32,7 @@ const LoginChangeTextBox = (props) => {
 
   const handleLoginSubmit = () => {
     props.handleTextBoxVisibility();
-    axios.post(`/update/login`, getUserDTO()).then(
+    axios.post(`${link}/account/user/update/login`, getUserDTO(), props.createConfig()).then(
       res => {
         if(res.data) {
           props.dispatch(updateLogin(newLogin));

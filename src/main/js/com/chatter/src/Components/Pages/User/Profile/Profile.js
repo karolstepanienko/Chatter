@@ -79,6 +79,7 @@ export const LoggedInUserProfile = (props) => {
             className="change-login"
             isChanging={isChangingLogin}
             dispatch={dispatch}
+            createConfig={createConfig}
             handleTextBoxVisibility={handleLoginChangeTextBoxVisibility}
           {...props}/>
         </div>
@@ -92,6 +93,7 @@ export const LoggedInUserProfile = (props) => {
             className="change-email"
             isChanging={isChangingEmail}
             dispatch={dispatch}
+            createConfig={createConfig}
             handleTextBoxVisibility={handleEmailChangeTextBoxVisibility}
             {...props}/>
         </div>
@@ -104,6 +106,7 @@ export const LoggedInUserProfile = (props) => {
           <ChangePrivacy
             className="change-privacy"
             dispatch={dispatch}
+            createConfig={createConfig}
             {...props}/>
         </div>
         <div className="div-delete-account">
