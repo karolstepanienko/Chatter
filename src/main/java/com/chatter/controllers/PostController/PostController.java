@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 // Project imports
 import com.chatter.model.Post.Post;
@@ -108,6 +109,7 @@ public class PostController {
    * @return All posts created by provided user.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER')")
   @GetMapping("/get/posts/with/creatorId")
   public @ResponseBody Iterable<Post> getPostsWithCreatorId(
     @RequestParam final Integer creatorId) {

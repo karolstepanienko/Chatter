@@ -36,7 +36,6 @@ export const LoggedInUserProfile = (props) => {
   }
 
   const createConfig = () => {
-    console.log(props.accessToken);
     let config = {
       headers: {
         Authorization: props.tokenType + " " + props.accessToken
@@ -118,7 +117,10 @@ export const LoggedInUserProfile = (props) => {
             onClick={handleLogout}>
           Logout</button>
         </div>
-        <DisplayUserPosts display={DisplayLoggedInUserPost} {...props}/>
+        <DisplayUserPosts 
+          display={DisplayLoggedInUserPost}
+          createConfig={createConfig}
+          {...props}/>
       </div>
     </div>
   )
