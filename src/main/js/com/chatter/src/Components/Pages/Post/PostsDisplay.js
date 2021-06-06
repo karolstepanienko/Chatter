@@ -84,7 +84,7 @@ class  PostsDisplay extends React.Component {
     getLogin(id,i){
       if (id!=null){
       var tab = this.state.login;
-      axios.get(`${link}/account/getUserName?id=${id}`, this.createConfig()) 
+      axios.get(`${link}/account/getUserName?id=${id}`) 
       .then((response) => {
         if (response.data != ""){tab[i]=(response.data)}
       {this.setState({login: tab});}

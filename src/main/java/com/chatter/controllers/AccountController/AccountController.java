@@ -44,16 +44,6 @@ public class AccountController {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
-  // /**
-  //  * Acoount controller logic.
-  //  * Class that provides simple logic to AccountController.
-  //  */
-  // private AccountControllerLogic acLogic;
-
-  // AccountController() {
-  //   acLogic = new AccountControllerLogic();
-  // }
-
   /**
    * @HTTPRequestMethod POST
    * Checks against the database if provided userName is available.
@@ -118,8 +108,6 @@ public class AccountController {
     user.setAccountPrivacy(AccountPrivacies.getPrivateAccess());
 
 		userRepository.save(user);
-    // ResponseEntity<?> response = ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-    // response.status(HttpStatus.CREATED);
 
 		return new ResponseEntity<>(new MessageResponse("User registered successfully!"), HttpStatus.CREATED);
 	}
@@ -132,7 +120,6 @@ public class AccountController {
    */
   @CrossOrigin
   @GetMapping("/getUserName")
-  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @ResponseBody
   public String getUserNameWithId(@RequestParam final Integer id) {
     User user = this.userRepository.getUserWithId(id);
@@ -169,7 +156,7 @@ public class AccountController {
    * @return True if delete operation was successfull. False otherwise.
    */
   @CrossOrigin
-  @PreAuthorize("hasAuthority('USER')")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @PostMapping("/user/delete/by/userName")
   public boolean deleteUserByUserName(@RequestParam final String userName) {
     System.out.println(userName);

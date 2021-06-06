@@ -119,6 +119,7 @@ public class UserController {
    * @return User's ID whose userName was provided.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @GetMapping("/get/id/by/userName")
   public @ResponseBody Integer getUserId(@RequestParam final String userName) {
     User user = this.userRepository.getUserWithUserName(userName);

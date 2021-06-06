@@ -18,10 +18,14 @@ const User = (props) => {
   let params = useParams();
   let history = useHistory();
 
-  const checkUserLoggedIn = () => {
+  const checkLoggedInUserAccount = () => {
     if (props.userName === params.userName) {
       history.push('/profile');
     }
+  }
+
+  const checkUserLoggedIn = () => {
+    return props.id != null;
   }
 
   const checkInputData = () => {
@@ -32,9 +36,18 @@ const User = (props) => {
     else return true;
   }
 
+  const createConfig = () => {
+    let config = {
+      headers: {
+        Authorization: props.tokenType + " " + props.accessToken
+      }
+    };
+    return config;
+  }
+
   const getUserWithUserName = async () => {
     if (user === "") {
-      axios.get(`${link}/account/user/get/user/by/userName?userName=${params.userName}`)
+      axios.get(`${link}/account/user/get/user/by/userName?userName=${params.userName}`, createConfig())
       .then(
         res =>{
           if(res.data !== "") {
@@ -50,7 +63,7 @@ const User = (props) => {
   }
 
   const main = () => {
-    checkUserLoggedIn();
+    checkLoggedInUserAccount();
     if(checkInputData()) {
       getUserWithUserName();
     }
@@ -70,8 +83,17 @@ const User = (props) => {
         <div className = "value">{user.email}</div>
         <DisplayUserPosts 
           display={DisplayNotLoggedInUserPost}
+          createConfig={createConfig}
           id={user.id}
           userName={user.userName}/>
+      </div>
+    )
+  }
+
+  const getNotLoggedInUserScreen = () => {
+    return (
+      <div className="user-page">
+        User pages can be seen only by logged in users.
       </div>
     )
   }
@@ -103,12 +125,14 @@ const User = (props) => {
   }
 
   const display = () => {
-    if (userExists) {
-      if (isLoaded) {
-        if (user.accountPrivacy === Privacies.publicAccess) return getUserInfo();
-        else return getAccountPrivate();
-      } else return getLoading();
-    } else return getUserDoesNotExist();
+    if (checkUserLoggedIn()) {
+      if (userExists) {
+        if (isLoaded) {
+          if (user.accountPrivacy === Privacies.publicAccess) return getUserInfo();
+          else return getAccountPrivate();
+        } else return getLoading();
+      } else return getUserDoesNotExist();
+    } else return getNotLoggedInUserScreen();
   }
 
   // Runs the given method on page load
@@ -126,7 +150,9 @@ const User = (props) => {
 
 const mapStateToProps = state => ({
   id: state.user.user.id,
-  userName: state.user.user.userName
+  userName: state.user.user.userName,
+  tokenType: state.user.user.tokenType,
+  accessToken: state.user.user.accessToken
 });
 
 export default connect(mapStateToProps)(User);

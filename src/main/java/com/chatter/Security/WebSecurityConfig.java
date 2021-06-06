@@ -99,6 +99,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .and()
 			.authorizeRequests()
       .antMatchers("/api/post/allposts").permitAll()
+      .antMatchers("/api/account/getUserName").permitAll()
       .antMatchers("/api/account/register/**").permitAll()
       .antMatchers("/api/account/login/**").permitAll()
       .antMatchers("/debug/**").permitAll()
