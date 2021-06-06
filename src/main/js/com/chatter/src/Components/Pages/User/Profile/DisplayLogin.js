@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const DisplayLogin = (props) => {
   const [loginEmpty, setLoginEmpty] = useState(true);
@@ -13,6 +14,10 @@ const DisplayLogin = (props) => {
   useEffect( () => checkLoginEmpty(), [props]);
 
   return (loginEmpty ? <div>No login set.</div> : <div>{props.login}</div>);
+};
+
+DisplayLogin.propTypes = {
+  login: PropTypes.string
 };
 
 export default DisplayLogin;

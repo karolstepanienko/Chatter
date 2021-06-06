@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 import "../../../css/Pages/Post/PostsDisplay.css";
@@ -46,7 +47,7 @@ class  PostsDisplay extends React.Component {
         }
       var like={status:evt.target.checked, user:this.state.id, post:id};
       axios.post(`${link}/post/like`, like, this.createConfig())
-      .then((response) => {this.componentDidMount();});
+      .then(() => {this.componentDidMount();});
       this.componentDidMount();
   }
 
@@ -102,10 +103,10 @@ class  PostsDisplay extends React.Component {
         if (this.state.id==null)
         {var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)}  disabled></input>; }
         else if(this.state.liked.includes(post.id)){
-          var input = <input type="checkbox" key={i} checked = {true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>;
+          input = <input type="checkbox" key={i} checked = {true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>;
         }
         else {
-          var input = <input type="checkbox" checked = {false} key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>;
+          input = <input type="checkbox" checked = {false} key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>;
         }
         return (
           <div className="post">
@@ -136,7 +137,13 @@ class  PostsDisplay extends React.Component {
         </div>
       );
       }
-    }
+}
+
+PostsDisplay.propTypes = {
+  id: PropTypes.number,  
+  tokenType: PropTypes.string,
+  accessToken: PropTypes.string
+};
 
 const mapStateToProps = state => ({
   id: state.user.user.id,

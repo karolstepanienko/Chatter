@@ -1,5 +1,8 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+
 
 import { Privacies } from "../../../Constants/Constants";
 
@@ -34,6 +37,13 @@ const DisplayNotLoggedInUserPost = (props) => {
     </div>
     ) : ( null )
   );
+};
+
+DisplayNotLoggedInUserPost.propTypes = {
+  userName: PropTypes.string,
+  post: PropTypes.object,
+  text: PropTypes.string,
+  privacy: PropTypes.string
 };
 
 export default DisplayNotLoggedInUserPost;

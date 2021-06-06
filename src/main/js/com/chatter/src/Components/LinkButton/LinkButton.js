@@ -5,9 +5,6 @@ import { withRouter } from "react-router";
 const LinkButton = (props) => {
   const {
     history,
-    location,
-    match,
-    staticContext,
     to,
     onClick,
     ...rest
@@ -25,7 +22,9 @@ const LinkButton = (props) => {
 
 LinkButton.propTypes = {
   to: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  history: PropTypes.object,
+  onClick: PropTypes.func
 };
 
 export default withRouter(LinkButton);

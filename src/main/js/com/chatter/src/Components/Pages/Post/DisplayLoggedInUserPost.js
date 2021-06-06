@@ -1,5 +1,8 @@
+import React from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+
 
 import { link } from "../../../Constants/Constants";
 
@@ -15,14 +18,14 @@ const DisplayLoggedInUserPost = (props) => {
     if (window.confirm("Are you sure, you want to delete this post?")) {
       // Deletes by path variable
       axios.post(`${link}/post/delete/by/Id/${props.post.id}`, "", props.createConfig()).then(
-        res => props.handlePostRemove(props.post.id)
+        () => props.handlePostRemove(props.post.id)
       ).catch( err => console.log(err));  
     }
   };
 
   const handlePrivacyChange = () => {
     axios.post(`${link}/post/update/privacy/${props.post.id}`, "", props.createConfig()).then(
-      res => alert("Post privacy setting changed.")
+      () => alert("Post privacy setting changed.")
     ).catch(err => console.log(err));
   };
 
@@ -46,6 +49,16 @@ const DisplayLoggedInUserPost = (props) => {
       </button>
     </div>
   );
+};
+
+DisplayLoggedInUserPost.propTypes = {
+  id: PropTypes.number,
+  userName: PropTypes.string,
+  post: PropTypes.object,
+  text: PropTypes.string,
+  handlePostDelete: PropTypes.func,
+  handlePostRemove: PropTypes.func,
+  createConfig: PropTypes.func
 };
 
 export default DisplayLoggedInUserPost;

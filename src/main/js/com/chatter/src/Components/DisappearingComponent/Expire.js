@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 import "../../css/Expire/Expire.css";
 
@@ -19,5 +20,13 @@ const Expire = props => {
     {props.children}</div> : <div />;
 };
 
+Expire.propType = {
+  badUsernameOrPassword: PropTypes.func,
+  reset: PropTypes.func,
+  delay: PropTypes.number,
+  visible: PropTypes.number,
+  className: PropTypes.string,
+  children: PropTypes.object
+};
 
 export default Expire;

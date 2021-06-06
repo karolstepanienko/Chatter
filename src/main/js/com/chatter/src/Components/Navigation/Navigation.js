@@ -18,7 +18,6 @@ import ReRoute from "../Navigation/ReRoute";
 
 import User from "../Pages/User/NotLoggedIn/User";
 import  Post  from "../Post/Post";
-import Friends from "../Pages/User/Friends";
 import LoggedInUserProfile from "../Pages/User/Profile/Profile";
 
 
@@ -46,8 +45,6 @@ const Navigation = () => {
               <ReRoute component={User} redirectPath='/login' />}/>
             <Route path='/addpost' render={ () => 
               <ReRoute component={Post} redirectPath='/login' />}/>
-            <Route path='/friends' render={ () =>
-                <ReRoute component={Friends} redirectPath='/login' />}/>
 
             {/* Last, default route. */}
             <Route component={NoMatch} />

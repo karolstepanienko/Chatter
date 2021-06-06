@@ -5,7 +5,7 @@ import PostsDisplay from "../Post/PostsDisplay";
 import LinkButton from "../../LinkButton/LinkButton";
 import ProfileLink from "../../ProfileLink/ProfileLink";
 
-export const Home = (props) => (
+export const Home = () => (
   <div className="home">
     <h2 className="home-title">Home page</h2>
     <div className="content-left">

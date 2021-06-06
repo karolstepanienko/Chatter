@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import PropTypes from "prop-types";
+
 
 // Internal imports:
 import "../../../css/Pages/Account/Register.css";
@@ -176,3 +178,7 @@ export default class Register extends React.Component {
     );
   }
 }
+
+Register.propTypes = {
+  history: PropTypes.object
+};

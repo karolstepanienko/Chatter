@@ -1,5 +1,7 @@
+import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 import { Privacies, link } from "../../Constants/Constants";
 import Expire from "../DisappearingComponent/Expire";
@@ -88,7 +90,19 @@ const ChangePrivacy = (props) => {
       />
     </div>
   );
+};
 
+ChangePrivacy.propTypes = {
+  id: PropTypes.number,
+  userName: PropTypes.string,
+  login: PropTypes.string,
+  email: PropTypes.string,
+  role: PropTypes.string,
+  dispatch: PropTypes.string,
+  tokenType: PropTypes.string,
+  accessToken: PropTypes.string,
+  createConfig: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default ChangePrivacy;

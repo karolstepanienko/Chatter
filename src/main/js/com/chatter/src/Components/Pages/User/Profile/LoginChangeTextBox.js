@@ -1,4 +1,6 @@
+import React from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
 
 import { useState } from "react";
 import { updateLogin } from "../../../../State/userSlice";
@@ -48,7 +50,7 @@ const LoginChangeTextBox = (props) => {
     );
   };
 
-  const clean = (props) => {
+  const clean = () => {
     setNewLogin("");
     setConfirmation({visible: false,
       value: "",
@@ -78,5 +80,21 @@ const LoginChangeTextBox = (props) => {
     
   );
 };
+
+LoginChangeTextBox.propTypes = {
+  id: PropTypes.number,
+  userName: PropTypes.string,
+  login: PropTypes.string,
+  passwordHash: PropTypes.string,
+  handleTextBoxVisibility: PropTypes.func,
+  email: PropTypes.string,
+  accountPrivacy: PropTypes.string,
+  tokenType: PropTypes.string,
+  accessToken: PropTypes.string,
+  createConfig: PropTypes.func,
+  dispatch: PropTypes.func,
+  isChanging: PropTypes.func
+};
+
 
 export default LoginChangeTextBox;

@@ -1,6 +1,8 @@
+import React from "react";
 import axios from "axios";
 import Expire from "../../../DisappearingComponent/Expire";
 import {CSSTransition} from "react-transition-group";
+import PropTypes from "prop-types";
 
 import { link } from "../../../../Constants/Constants";
 import "../../../../css/Pages/User/ButtonActivatedTextBox.css";
@@ -68,6 +70,22 @@ const ButtonActivatedTextBox = (props) => {
       {chooseConfirmation()}
     </div>
   );
+};
+
+ButtonActivatedTextBox.propTypes = {
+  id: PropTypes.number,
+  textBoxVisible: PropTypes.bool,
+  confirmation: PropTypes.object,
+  visible: PropTypes.bool,
+  elementClassName: PropTypes.string,
+  textBoxValue: PropTypes.string,
+  handleTextChange: PropTypes.func,
+  submitMessage: PropTypes.func,
+  handleCancel: PropTypes.func,
+  handleSubmit: PropTypes.func,
+  handleTextBoxVisibility: PropTypes.func,
+  resetConfirmation: PropTypes.func,
+  initMessage: PropTypes.string
 };
 
 export default ButtonActivatedTextBox;

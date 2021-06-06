@@ -1,4 +1,7 @@
+import React from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
+
 
 import { useState, useEffect } from "react";
 import { updateEmail } from "../../../../State/userSlice";
@@ -62,7 +65,7 @@ const EmailChangeTextBox = (props) => {
     showFailure();
   };
 
-  const clean = (props) => {
+  const clean = () => {
     setNewEmail("");
     setSubmit(false);
     setEmailAvailable(false);
@@ -131,6 +134,22 @@ const EmailChangeTextBox = (props) => {
       />
     </div>
   );
+};
+
+EmailChangeTextBox.propTypes = {
+  id: PropTypes.number,
+  userName: PropTypes.string,
+  login: PropTypes.string,
+  passwordHash: PropTypes.string,
+  handleTextBoxVisibility: PropTypes.func,
+  email: PropTypes.string,
+  accountPrivacy: PropTypes.string,
+  tokenType: PropTypes.string,
+  accessToken: PropTypes.string,
+  createConfig: PropTypes.func,
+  dispatch: PropTypes.func,
+  isChanging: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default EmailChangeTextBox;

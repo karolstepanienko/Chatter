@@ -3,7 +3,7 @@ import React from "react";
 import "../../css/Navigation/NavBar.css";
 
 import { Link } from "react-router-dom";
-import { Nav, Navbar, Form, FormControl } from "react-bootstrap";
+import { Nav, Navbar, Form } from "react-bootstrap";
 
 import ProfileLink from "../ProfileLink/ProfileLink";
 

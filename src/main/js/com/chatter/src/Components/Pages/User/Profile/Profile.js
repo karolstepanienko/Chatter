@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
 
 import "../../../../css/Pages/User/Profile.css";
 import { connect } from "react-redux";
@@ -127,6 +128,16 @@ export const LoggedInUserProfile = (props) => {
       </div>
     </div>
   );
+};
+
+LoggedInUserProfile.propTypes = {
+  id: PropTypes.number,
+  userName: PropTypes.string,
+  login: PropTypes.string,
+  email: PropTypes.string,
+  accountPrivacy: PropTypes.string,
+  tokenType: PropTypes.string,
+  accessToken: PropTypes.string
 };
 
 const mapStateToProps = state => ({
