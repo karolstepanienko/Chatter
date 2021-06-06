@@ -26,7 +26,6 @@ export const Login = () => {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     getLoggedInData();
-    getVerifiedUser();
   }
 
   const handleUserNameChange = (evt) => {
@@ -53,7 +52,10 @@ export const Login = () => {
         setTokenType(res.data.tokenType);
         setAccessToken(res.data.accessToken);
       }
-    )
+    ).catch(err => {
+      setBadUsernameOrPassword(true);
+      console.log(err);
+    });
   }
 
   const getVerifiedUser = () => {
@@ -90,8 +92,12 @@ export const Login = () => {
   }
 
   useEffect( () => {
+    getVerifiedUser();
+  }, [tokenType, accessToken])
+
+  useEffect( () => {
     if (verifiedUser != "") logUserIn();
-  }, [getLoggedInData, getVerifiedUser, setBadUsernameOrPassword, handleLoginSubmit])
+  }, [verifiedUser])
 
   return (
     <div className="login-page">

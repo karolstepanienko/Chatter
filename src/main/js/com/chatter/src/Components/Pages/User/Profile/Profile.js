@@ -35,10 +35,20 @@ export const LoggedInUserProfile = (props) => {
     history.push('/');
   }
 
+  const createConfig = () => {
+    console.log(props.accessToken);
+    let config = {
+      headers: {
+        Authorization: props.tokenType + " " + props.accessToken
+      }
+    };
+    return config;
+  }
+
   const handleAccountDelete = () => {
     if (window.confirm("Are you sure, you want to delete this account?\n"
     + "All user posts will be also deleted.")) {
-      axios.post(`${link}/account/user/delete?userId=${props.id}`).then(
+      axios.post(`${link}/account/user/delete?userId=${props.id}`, "", createConfig()).then(
         res => {
           if (res.data) {
             handleLogout();

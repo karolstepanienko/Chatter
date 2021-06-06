@@ -147,6 +147,7 @@ public class AccountController {
    * @return True if delete operation was successfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER')")
   @DeleteMapping("/user/delete/by/id")
   public boolean deleteUserById(@RequestParam final Integer id) {
     User user = userRepository.getUserWithId(id);

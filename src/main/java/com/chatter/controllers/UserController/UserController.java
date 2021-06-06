@@ -9,6 +9,7 @@ import com.chatter.repositories.PostRepository;
 import com.chatter.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -188,6 +189,7 @@ public class UserController {
    * @return True if delete operation was successfull. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER')")
   @PostMapping("/delete")
   public boolean deleteUserAndAllHisPosts(@RequestParam final Integer userId) {
     User user = this.userRepository.getUserWithId(userId);
