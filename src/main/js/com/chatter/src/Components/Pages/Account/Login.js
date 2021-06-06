@@ -58,8 +58,17 @@ export const Login = () => {
     });
   }
 
+  const createConfig = () => {
+    let config = {
+      headers: {
+        Authorization: tokenType + " " + accessToken
+      }
+    };
+    return config;
+  }
+
   const getVerifiedUser = () => {
-    axios.get(`${link}/account/login/get?userName=${userName}&password=${password}`).then(
+    axios.get(`${link}/account/login/get?userName=${userName}&password=${password}`, createConfig()).then(
       res => {
         if (res.data != "") {
           setVerifiedUser(res.data);

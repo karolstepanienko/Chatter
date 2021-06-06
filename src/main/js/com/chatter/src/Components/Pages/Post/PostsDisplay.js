@@ -21,6 +21,16 @@ class  PostsDisplay extends React.Component {
       };
     }
 
+    createConfig() {
+      let config = {
+        headers: {
+          Authorization: this.props.tokenType + " " + this.props.accessToken
+        }
+      };
+      return config;
+    }
+  
+
     handleLike(evt,i,id){
         if(evt.target.checked){
           this.state.liked.push(id);
@@ -35,7 +45,7 @@ class  PostsDisplay extends React.Component {
       }
         }
       var like={status:evt.target.checked, user:this.state.id, post:id}
-      axios.post(`${link}/post/like`, like)
+      axios.post(`${link}/post/like`, like, this.createConfig())
       .then((response) => {this.componentDidMount()})
       this.componentDidMount()
   }
@@ -61,7 +71,7 @@ class  PostsDisplay extends React.Component {
   
     liked(){
       if (this.state.id!=null){
-        axios.get(`${link}/post/likedposts?userId=${this.state.id}`) 
+        axios.get(`${link}/post/likedposts?userId=${this.state.id}`, this.createConfig()) 
         .then((response2) => {
           if (response2.data != ""){this.setState({liked: response2.data});}
         {console.log(response2.data);}
@@ -74,7 +84,7 @@ class  PostsDisplay extends React.Component {
     getLogin(id,i){
       if (id!=null){
       var tab = this.state.login;
-      axios.get(`${link}/account/getUserName?id=${id}`) 
+      axios.get(`${link}/account/getUserName?id=${id}`, this.createConfig()) 
       .then((response) => {
         if (response.data != ""){tab[i]=(response.data)}
       {this.setState({login: tab});}
@@ -129,7 +139,9 @@ class  PostsDisplay extends React.Component {
     }
 
 const mapStateToProps = state => ({
-  id: state.user.user.id
+  id: state.user.user.id,
+  tokenType: state.user.user.tokenType,
+  accessToken: state.user.user.accessToken
 });
 
 export default connect(mapStateToProps)(PostsDisplay)

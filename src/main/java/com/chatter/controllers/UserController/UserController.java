@@ -54,6 +54,7 @@ public class UserController {
    * @return True if userName is available. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @GetMapping("/check/username")
   public boolean checkUserNameUnique(@RequestParam final String userName) {
     return this.userRepository.getUserWithUserName(userName) == null;
@@ -82,6 +83,7 @@ public class UserController {
    * @return Verified user if provided data was correct. False otherwise.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @GetMapping("/get")
   public @ResponseBody User getVerifiedUser(
     @RequestParam final String userName,
@@ -102,6 +104,7 @@ public class UserController {
    * @return User object with provided userName. Null if user does not exist.
    */
   @CrossOrigin
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @GetMapping("/get/user/by/userName")
   public @ResponseBody User getUserWithUserName(
     @RequestParam final String userName) {

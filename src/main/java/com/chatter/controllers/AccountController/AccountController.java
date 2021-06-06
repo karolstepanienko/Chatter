@@ -132,6 +132,7 @@ public class AccountController {
    */
   @CrossOrigin
   @GetMapping("/getUserName")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @ResponseBody
   public String getUserNameWithId(@RequestParam final Integer id) {
     User user = this.userRepository.getUserWithId(id);

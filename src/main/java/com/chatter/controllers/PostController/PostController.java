@@ -41,6 +41,18 @@ public class PostController {
   private PostRepository postRepository;
 
   /**
+   * @HTTPRequestMethod GET
+   * Returns all public posts to display them.
+   * @return JSON with all public posts.
+   */
+  @CrossOrigin
+  @GetMapping(path = "/allposts")
+  public @ResponseBody Iterable<Post> getAllPublicPosts() {
+    return this.postRepository.getPostWithPrivacy(
+      AccountPrivacies.getPublicAccess());
+  }
+
+  /**
    * @HTTPRequestMethod POST
    * Adds provided post to database.
    * @param post Provided post data.
@@ -56,18 +68,6 @@ public class PostController {
   }
 
   /**
-   * @HTTPRequestMethod GET
-   * Returns all public posts to display them.
-   * @return JSON with all public posts.
-   */
-  @CrossOrigin
-  @GetMapping(path = "/allposts")
-  public @ResponseBody Iterable<Post> getAllPublicPosts() {
-    return this.postRepository.getPostWithPrivacy(
-      AccountPrivacies.getPublicAccess());
-  }
-
-  /**
    * @HTTPRequestMethod POST
    * Updates like status for given post.
    * @param like Post and like data.
@@ -78,6 +78,7 @@ public class PostController {
     value = "/like",
     consumes = "application/json",
     produces = "application/json")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   public boolean updateLikeStatus(@RequestBody final Like like) {
     Integer likesNr = postRepository.getPostWithId(like.getPost()).getLikes();
     if (like.getStatus()) {
@@ -99,6 +100,7 @@ public class PostController {
    */
   @CrossOrigin
   @GetMapping(path = "/likedposts")
+  @PreAuthorize("hasAuthority('USER') or hasAuthority('MODERATOR') or hasAuthority('ADMIN')")
   @ResponseBody
   public Iterable<Integer> userLikedPosts(@RequestParam final Integer userId) {
     return postRepository.getLikedPost(userId);
