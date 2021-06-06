@@ -17,6 +17,7 @@
     "plugins": [
         "react"
     ],
+    "ignorePatterns": ["build/**"],
     "rules": {
       "semi": ["warn", "always"],
       "quotes": ["warn", "double"]
