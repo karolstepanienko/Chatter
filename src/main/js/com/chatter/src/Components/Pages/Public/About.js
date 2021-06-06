@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import '../../../css/Pages/Public/About.css';
+import "../../../css/Pages/Public/About.css";
 
 export const About = () => (
   <div className="grid">
@@ -12,4 +12,4 @@ export const About = () => (
       <li>Karol Stepanienko</li>
     </ul>
   </div>
-)
+);

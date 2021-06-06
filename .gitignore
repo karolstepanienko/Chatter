@@ -42,6 +42,7 @@ buildNumber.properties
 /src/main/js/com/chatter/yarn-debug.log*
 /src/main/js/com/chatter/yarn-error.log*
 /src/main/js/com/chatter/.env
+/src/main/js/com/chatter/eslint_result.json
 
 /src/main/js/com/chatter/package-lock.json
 /src/main/js/com/chatter/README.md

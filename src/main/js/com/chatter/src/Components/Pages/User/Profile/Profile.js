@@ -1,18 +1,18 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import '../../../../css/Pages/User/Profile.css';
+import "../../../../css/Pages/User/Profile.css";
 import { connect } from "react-redux";
-import { logout } from '../../../../State/userSlice';
-import ChangePrivacy from '../../../Dropdown/ChangePrivacy';
-import EmailChangeTextBox from './EmailChangeTextBox';
-import LoginChangeTextBox from './LoginChangeTextBox';
-import DisplayLogin from './DisplayLogin';
-import DisplayUserPosts from '../../Post/DisplayUserPosts';
-import { link } from '../../../../Constants/Constants';
-import DisplayLoggedInUserPost from '../../Post/DisplayLoggedInUserPost';
+import { logout } from "../../../../State/userSlice";
+import ChangePrivacy from "../../../Dropdown/ChangePrivacy";
+import EmailChangeTextBox from "./EmailChangeTextBox";
+import LoginChangeTextBox from "./LoginChangeTextBox";
+import DisplayLogin from "./DisplayLogin";
+import DisplayUserPosts from "../../Post/DisplayUserPosts";
+import { link } from "../../../../Constants/Constants";
+import DisplayLoggedInUserPost from "../../Post/DisplayLoggedInUserPost";
 
 
 export const LoggedInUserProfile = (props) => {
@@ -24,16 +24,16 @@ export const LoggedInUserProfile = (props) => {
 
   const handleLoginChangeTextBoxVisibility = () => {
     setIsChangingLogin(!isChangingLogin);
-  }
+  };
 
   const handleEmailChangeTextBoxVisibility = () => {
     setIsChangingEmail(!isChangingEmail);
-  }
+  };
 
   const handleLogout = () => {
     dispatch(logout());
-    history.push('/');
-  }
+    history.push("/");
+  };
 
   const createConfig = () => {
     let config = {
@@ -42,7 +42,7 @@ export const LoggedInUserProfile = (props) => {
       }
     };
     return config;
-  }
+  };
 
   const handleAccountDelete = () => {
     if (window.confirm("Are you sure, you want to delete this account?\n"
@@ -53,9 +53,9 @@ export const LoggedInUserProfile = (props) => {
             handleLogout();
           }
         }
-      ).catch(err => console.log(err))  
+      ).catch(err => console.log(err));  
     }
-  }
+  };
 
   useEffect( () => {}, [dispatch]);
 
@@ -126,8 +126,8 @@ export const LoggedInUserProfile = (props) => {
           {...props}/>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => ({
   id: state.user.user.id,

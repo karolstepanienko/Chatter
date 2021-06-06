@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 const DisplayLogin = (props) => {
   const [loginEmpty, setLoginEmpty] = useState(true);
@@ -6,13 +6,13 @@ const DisplayLogin = (props) => {
   const checkLoginEmpty = () => {
     if (props.login === "") setLoginEmpty(true);
     else setLoginEmpty(false);
-  }
+  };
 
-  useEffect( () => {checkLoginEmpty()}, [])
+  useEffect( () => {checkLoginEmpty();}, []);
 
-  useEffect( () => checkLoginEmpty(), [props])
+  useEffect( () => checkLoginEmpty(), [props]);
 
-  return (loginEmpty ? <div>No login set.</div> : <div>{props.login}</div>)
-}
+  return (loginEmpty ? <div>No login set.</div> : <div>{props.login}</div>);
+};
 
 export default DisplayLogin;

@@ -1,9 +1,9 @@
-import axios from 'axios';
-import Expire from '../../../DisappearingComponent/Expire';
-import {CSSTransition} from 'react-transition-group';
+import axios from "axios";
+import Expire from "../../../DisappearingComponent/Expire";
+import {CSSTransition} from "react-transition-group";
 
-import { link } from '../../../../Constants/Constants';
-import '../../../../css/Pages/User/ButtonActivatedTextBox.css'
+import { link } from "../../../../Constants/Constants";
+import "../../../../css/Pages/User/ButtonActivatedTextBox.css";
 
 axios.defaults.baseURL = `${link}/account/user`;
 
@@ -12,7 +12,7 @@ const ButtonActivatedTextBox = (props) => {
   const chooseRenderObject = () => {
     if (props.textBoxVisible) return textBoxAndSubmitButton();
     else return changeInitButton();
-  }
+  };
 
   const chooseConfirmation = () => {
     return (
@@ -29,8 +29,8 @@ const ButtonActivatedTextBox = (props) => {
           delay="3000" 
           children={props.confirmation.value}/>
       </CSSTransition>
-    )
-  }
+    );
+  };
 
   const textBoxAndSubmitButton = () => {
     return(
@@ -49,8 +49,8 @@ const ButtonActivatedTextBox = (props) => {
           value="Cancel"
           onClick={props.handleCancel}/>
       </div>
-    )
-  }
+    );
+  };
 
   const changeInitButton = () => {
     return(
@@ -59,15 +59,15 @@ const ButtonActivatedTextBox = (props) => {
         onClick={props.handleTextBoxVisibility}>
           {props.initMessage}
       </button>
-    )
-  }
+    );
+  };
 
   return (
     <div>
       {chooseRenderObject()}
       {chooseConfirmation()}
     </div>
-  )
-}
+  );
+};
 
 export default ButtonActivatedTextBox;

@@ -1,10 +1,10 @@
-import React from 'react';
-import axios from 'axios';
-import {Link} from 'react-router-dom';
+import React from "react";
+import axios from "axios";
+import {Link} from "react-router-dom";
 
 // Internal imports:
-import '../../../css/Pages/Account/Register.css';
-import { link, validEmailRegex } from '../../../Constants/Constants';
+import "../../../css/Pages/Account/Register.css";
+import { link, validEmailRegex } from "../../../Constants/Constants";
 
 const linkRegister = `${link}/account/register`;
 
@@ -14,14 +14,14 @@ export default class Register extends React.Component {
     this.userNameFree = true;
     this.emailFree = true;
     this.malformedUserName = false;
-    this.password = '';
-    this.passwordRepeat = '';
+    this.password = "";
+    this.passwordRepeat = "";
     this.user = {
-      userName: '',
-      email: '',
-      password: '',
-      role: 'USER',
-    }
+      userName: "",
+      email: "",
+      password: "",
+      role: "USER",
+    };
   }  
 
   handleRegister(evt) {
@@ -62,13 +62,13 @@ export default class Register extends React.Component {
 
   checkUserNameAvailable() {
     axios.post(`${linkRegister}/check/username`, this.user)
-    .then(res => { this.userNameFree = res.data });
+    .then(res => { this.userNameFree = res.data; });
     return this.userNameFree;
   }
 
   checkEmailAvailable() {
     axios.post(`${linkRegister}/check/email`, this.user)
-    .then(res => { this.emailFree = res.data });
+    .then(res => { this.emailFree = res.data; });
     return this.emailFree;
   }
 
@@ -108,8 +108,8 @@ export default class Register extends React.Component {
 
   equalPasswords() {
     if(this.password == this.passwordRepeat &&
-      this.password != '' &&
-      this.passwordRepeat != ''
+      this.password != "" &&
+      this.passwordRepeat != ""
       ) {
         this.user.password = this.password;
         return true;
@@ -171,8 +171,8 @@ export default class Register extends React.Component {
           </input>
         </form>
         
-        <Link to={'/login'}>Or login instead.</Link>
+        <Link to={"/login"}>Or login instead.</Link>
       </div>
     );
   }
-};
+}

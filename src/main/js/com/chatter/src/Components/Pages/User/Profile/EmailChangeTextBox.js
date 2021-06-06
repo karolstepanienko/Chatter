@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { useState, useEffect } from 'react';
-import { updateEmail } from '../../../../State/userSlice';
-import { validEmailRegex } from '../../../../Constants/Constants';
-import { link } from '../../../../Constants/Constants';
-import ButtonActivatedTextBox from './ButtonActivatedTextBox';
+import { useState, useEffect } from "react";
+import { updateEmail } from "../../../../State/userSlice";
+import { validEmailRegex } from "../../../../Constants/Constants";
+import { link } from "../../../../Constants/Constants";
+import ButtonActivatedTextBox from "./ButtonActivatedTextBox";
 
 
 const EmailChangeTextBox = (props) => {
@@ -22,25 +22,25 @@ const EmailChangeTextBox = (props) => {
     evt.preventDefault();
     setNewEmail(evt.target.value);
     validateEmail();
-  }
+  };
 
   const validateEmail = () => {
     if(emailAvailable && emailValid) return true;
     else return false;
-  }
+  };
 
   const checkEmailFormat = () => {
     if(validEmailRegex.test(newEmail)) setEmailValid(true);
     else setEmailValid(false);
-  }
+  };
 
   const checkEmailAvailable = async () => {
     axios.get(`${link}/account/user/check/email?email=${newEmail}`, props.createConfig())
-    .then(res => {setEmailAvailable(res.data) })
+    .then(res => {setEmailAvailable(res.data); })
     .catch(
       err => console.log(err)
-    )
-  }
+    );
+  };
 
   const getUserDTO = () => {
     var user = {
@@ -49,10 +49,10 @@ const EmailChangeTextBox = (props) => {
       login: props.login,
       email: newEmail,
       password: props.passwordHash,
-      role: '',
-    }
+      role: "",
+    };
     return user;
-  }
+  };
   const handleEmailSubmit = () => {
     props.handleTextBoxVisibility();
     checkEmailFormat();
@@ -60,7 +60,7 @@ const EmailChangeTextBox = (props) => {
     setSubmit(true);
     // Failure will be overwritten by success
     showFailure();
-  }
+  };
 
   const clean = (props) => {
     setNewEmail("");
@@ -71,19 +71,19 @@ const EmailChangeTextBox = (props) => {
       value: "",
       className: ""
     });
-  }
+  };
 
   const handleCancel = () => {
     props.handleTextBoxVisibility();
     clean();
-  }
+  };
 
   const showFailure = () => {
     setConfirmation({visible: true,
       value: "Email change not successfull.",
       className: "failure"
      });
-  }
+  };
 
   const submitNewEmail = async () => {
     axios.post(`${link}/account/user/update/email`, getUserDTO(), props.createConfig()).then(
@@ -99,11 +99,11 @@ const EmailChangeTextBox = (props) => {
     ).catch(
       err => console.log(err)
     );
-  }
+  };
 
   const updateEmailInState = () => {
     props.dispatch(updateEmail(newEmail));
-  }
+  };
 
   useEffect( () => {
     if(validateEmail() && submit) {
@@ -130,7 +130,7 @@ const EmailChangeTextBox = (props) => {
         {...props}
       />
     </div>
-  )
-}
+  );
+};
 
 export default EmailChangeTextBox;

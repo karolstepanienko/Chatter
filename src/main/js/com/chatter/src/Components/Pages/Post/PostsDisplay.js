@@ -1,10 +1,10 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
-import { Link } from 'react-router-dom';
-import '../../../css/Pages/Post/PostsDisplay.css';
-import { link }from '../../../Constants/Constants';
-import { connect } from 'react-redux';
+import { Link } from "react-router-dom";
+import "../../../css/Pages/Post/PostsDisplay.css";
+import { link }from "../../../Constants/Constants";
+import { connect } from "react-redux";
 
 
 class  PostsDisplay extends React.Component {
@@ -44,10 +44,10 @@ class  PostsDisplay extends React.Component {
           }  
       }
         }
-      var like={status:evt.target.checked, user:this.state.id, post:id}
+      var like={status:evt.target.checked, user:this.state.id, post:id};
       axios.post(`${link}/post/like`, like, this.createConfig())
-      .then((response) => {this.componentDidMount()})
-      this.componentDidMount()
+      .then((response) => {this.componentDidMount();});
+      this.componentDidMount();
   }
 
     async componentDidMount() {
@@ -55,9 +55,9 @@ class  PostsDisplay extends React.Component {
       const response = await fetch(url);
       const data = await response.json();
       this.setState({ items: data, isLoaded: false});
-      var tab1=[]
+      var tab1=[];
       for (let i = 0; i < data.length; i++){
-        tab1.push("unknown")
+        tab1.push("unknown");
       }
       this.setState({login: tab1});
       for (let i = 0; i < data.length; i++) {
@@ -86,7 +86,7 @@ class  PostsDisplay extends React.Component {
       var tab = this.state.login;
       axios.get(`${link}/account/getUserName?id=${id}`) 
       .then((response) => {
-        if (response.data != ""){tab[i]=(response.data)}
+        if (response.data != ""){tab[i]=(response.data);}
       {this.setState({login: tab});}
       }, (error) => {
         console.log(error);
@@ -100,12 +100,12 @@ class  PostsDisplay extends React.Component {
         var a = i;
         var linkUserPage =`/user/${(logins[i])}`;
         if (this.state.id==null)
-        {var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)}  disabled></input> }
+        {var input = <input type="checkbox" key={i} onChange={evt =>this.handleLike(evt,a,post.id)}  disabled></input>; }
         else if(this.state.liked.includes(post.id)){
-          var input = <input type="checkbox" key={i} checked = {true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>
+          var input = <input type="checkbox" key={i} checked = {true} onChange={evt =>this.handleLike(evt,a,post.id) } ></input>;
         }
         else {
-          var input = <input type="checkbox" checked = {false} key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>
+          var input = <input type="checkbox" checked = {false} key={i} onChange={evt =>this.handleLike(evt,a,post.id)} ></input>;
         }
         return (
           <div className="post">
@@ -122,8 +122,8 @@ class  PostsDisplay extends React.Component {
             <br></br>
             <br></br>
           </div>
-            )
-        })
+            );
+        });
         return val;
     }
     render() {
@@ -144,4 +144,4 @@ const mapStateToProps = state => ({
   accessToken: state.user.user.accessToken
 });
 
-export default connect(mapStateToProps)(PostsDisplay)
+export default connect(mapStateToProps)(PostsDisplay);

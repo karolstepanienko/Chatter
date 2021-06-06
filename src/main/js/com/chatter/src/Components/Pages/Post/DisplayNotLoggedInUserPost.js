@@ -1,24 +1,24 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-import { Privacies } from '../../../Constants/Constants';
+import { Privacies } from "../../../Constants/Constants";
 
 
 const DisplayNotLoggedInUserPost = (props) => {
   const [isPublic, setIsPublic] = useState(false);
 
   const getLink = () => {
-    var link_to_user = `/user/${props.userName}`
+    var link_to_user = `/user/${props.userName}`;
     return link_to_user;
-  }
+  };
 
   const checkPrivacy = () => {
     if (props.post.privacy === Privacies.publicAccess) {
       setIsPublic(true);
     } else setIsPublic(false);
-  }
+  };
 
-  useEffect(() => checkPrivacy(), [])
+  useEffect(() => checkPrivacy(), []);
 
   return (
     isPublic ? (
@@ -33,7 +33,7 @@ const DisplayNotLoggedInUserPost = (props) => {
       </div>
     </div>
     ) : ( null )
-  )
-}
+  );
+};
 
 export default DisplayNotLoggedInUserPost;

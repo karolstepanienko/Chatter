@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 
 const ReRoute = (props) => {
@@ -11,8 +11,8 @@ const ReRoute = (props) => {
     ) : (
       <props.component />
     )
-  )
-}
+  );
+};
 
 const mapStateToProps = state => ({
   id: state.user.user.id

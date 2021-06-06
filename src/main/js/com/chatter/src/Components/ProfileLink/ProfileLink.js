@@ -1,4 +1,4 @@
-import { connect } from "react-redux"
+import { connect } from "react-redux";
 
 const ProfileLink = (props) => {
 
@@ -6,14 +6,14 @@ const ProfileLink = (props) => {
     return ( props.id === null ?
       (null)
       :
-      (<props.component to={'/profile'} className={props.className}>
+      (<props.component to={"/profile"} className={props.className}>
         {props.message}
       </props.component>)
-    )
-  }
+    );
+  };
 
-  return (display())
-}
+  return (display());
+};
 
 const mapStateToProps = state => ({
   id: state.user.user.id

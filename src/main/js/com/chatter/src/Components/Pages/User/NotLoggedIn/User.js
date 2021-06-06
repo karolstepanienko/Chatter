@@ -1,13 +1,13 @@
-import '../../../../css/Pages/User/NotLoggedIn/User.css';
-import axios from 'axios';
+import "../../../../css/Pages/User/NotLoggedIn/User.css";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { connect } from 'react-redux';
-import { useParams, useHistory } from 'react-router';
+import { connect } from "react-redux";
+import { useParams, useHistory } from "react-router";
 
-import { link, Privacies } from '../../../../Constants/Constants';
-import DisplayUserPosts from '../../Post/DisplayUserPosts';
-import DisplayNotLoggedInUserPost from '../../Post/DisplayNotLoggedInUserPost';
-import DisplayLogin from '../Profile/DisplayLogin';
+import { link, Privacies } from "../../../../Constants/Constants";
+import DisplayUserPosts from "../../Post/DisplayUserPosts";
+import DisplayNotLoggedInUserPost from "../../Post/DisplayNotLoggedInUserPost";
+import DisplayLogin from "../Profile/DisplayLogin";
 
 
 const User = (props) => {
@@ -20,13 +20,13 @@ const User = (props) => {
 
   const checkLoggedInUserAccount = () => {
     if (props.userName === params.userName) {
-      history.push('/profile');
+      history.push("/profile");
     }
-  }
+  };
 
   const checkUserLoggedIn = () => {
     return props.id != null;
-  }
+  };
 
   const checkInputData = () => {
     if (params.userName === undefined) {
@@ -34,7 +34,7 @@ const User = (props) => {
       return false;
     }
     else return true;
-  }
+  };
 
   const createConfig = () => {
     let config = {
@@ -43,7 +43,7 @@ const User = (props) => {
       }
     };
     return config;
-  }
+  };
 
   const getUserWithUserName = async () => {
     if (user === "") {
@@ -58,16 +58,16 @@ const User = (props) => {
         }
       ).catch(
         err => console.log(err)
-      )
+      );
     }
-  }
+  };
 
   const main = () => {
     checkLoggedInUserAccount();
     if(checkInputData()) {
       getUserWithUserName();
     }
-  }
+  };
 
   const getUserInfo = () => {
     return (
@@ -87,32 +87,32 @@ const User = (props) => {
           id={user.id}
           userName={user.userName}/>
       </div>
-    )
-  }
+    );
+  };
 
   const getNotLoggedInUserScreen = () => {
     return (
       <div className="user-page">
         User pages can be seen only by logged in users.
       </div>
-    )
-  }
+    );
+  };
 
   const getUserDoesNotExist = () => {
     return (
       <div className="user-page">
         User does not exist :/
       </div>
-    )
-  }
+    );
+  };
 
   const getLoading = () => {
     return (
       <div className="user-page">
         Loading...
       </div>
-    )
-  }
+    );
+  };
 
   const getAccountPrivate = () => {
     return (
@@ -121,8 +121,8 @@ const User = (props) => {
           This account is private.
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const display = () => {
     if (checkUserLoggedIn()) {
@@ -133,20 +133,20 @@ const User = (props) => {
         } else return getLoading();
       } else return getUserDoesNotExist();
     } else return getNotLoggedInUserScreen();
-  }
+  };
 
   // Runs the given method on page load
   useEffect(() => {
     main();
-  }, [])
+  }, []);
 
   // Waits for user load
   useEffect(() => {
     setIsLoaded(true);
-  }, [getUserWithUserName])
+  }, [getUserWithUserName]);
 
-  return (display())
-}
+  return (display());
+};
 
 const mapStateToProps = state => ({
   id: state.user.user.id,

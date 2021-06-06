@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import '../../../css/Pages/Public/NoMatch.css';
+import "../../../css/Pages/Public/NoMatch.css";
 
 export const NoMatch = () => (
   <div className="main">
@@ -8,4 +8,4 @@ export const NoMatch = () => (
     <p className="message">Page does not exist.</p>
     <p className="art">( ͡° ʖ̯ ͡°)</p>
   </div>
-)
+);

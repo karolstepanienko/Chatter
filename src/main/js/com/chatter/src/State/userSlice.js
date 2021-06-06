@@ -6,12 +6,12 @@ export const userSlice = createSlice({
   initialState: {
     user: {
       id: null,
-      userName: '',
-      login: '',
-      email: '',
-      accountPrivacy: '',
-      role: '',
-      postList: '', 
+      userName: "",
+      login: "",
+      email: "",
+      accountPrivacy: "",
+      role: "",
+      postList: "", 
     }
   },
     // Actions - functions that set data in the state
@@ -23,12 +23,12 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.user = {
           id: null,
-          userName: '',
-          login: '',
-          email: '',
-          accountPrivacy: '',
-          role: '',
-          postList: '', 
+          userName: "",
+          login: "",
+          email: "",
+          accountPrivacy: "",
+          role: "",
+          postList: "", 
       };
     },
     updateLogin: (state, action) => {
@@ -41,7 +41,7 @@ export const userSlice = createSlice({
       state.user.accountPrivacy = action.payload;
     }
   }
-})
+});
 
 
 

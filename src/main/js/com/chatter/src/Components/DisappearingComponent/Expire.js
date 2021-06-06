@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import '../../css/Expire/Expire.css'
+import "../../css/Expire/Expire.css";
 
 const Expire = props => {
   const [visible, setVisible] = useState(true);

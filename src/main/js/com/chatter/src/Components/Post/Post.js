@@ -1,9 +1,10 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
-import '../../css/Pages/Post/Postadding.css';
-import { link, Privacies }from '../../Constants/Constants';
+import "../../css/Pages/Post/Postadding.css";
+import { link, Privacies }from "../../Constants/Constants";
 
 
 const Post = (props)=> {
@@ -11,9 +12,9 @@ const Post = (props)=> {
     id: null,
     creatorId: props.id,
     privacy: Privacies.publicAccess,
-    text: '',
+    text: "",
     likes: 0
-  }
+  };
 
   const createConfig = () => {
     let config = {
@@ -22,14 +23,14 @@ const Post = (props)=> {
       }
     };
     return config;
-  }
+  };
 
   function handleAddingPost(evt) {
     evt.preventDefault();
     axios.post(`${link}/post/addpost`, post, createConfig());
     alert("Post have been added");
     document.forms["post_texti"].reset();
-    post.text='';
+    post.text="";
     post.privacy=Privacies.publicAccess;
   }
 
@@ -39,10 +40,10 @@ const Post = (props)=> {
 
   function handlePrivacyChange(evt){
     if(evt.target.checked){
-      post.privacy = Privacies.privateAccess
+      post.privacy = Privacies.privateAccess;
     }
     else{
-      post.privacy = Privacies.publicAccess
+      post.privacy = Privacies.publicAccess;
     }
   }
 
@@ -62,7 +63,7 @@ const Post = (props)=> {
       </textarea>
       <input type="checkbox" id="checkbox" name="privacy"  
         onChange={evt =>handlePrivacyChange(evt)}></input>
-      <label for="scales"> The post is private</label>
+      <label htmlFor="scales"> The post is private</label>
     </form>
     
     <form>
@@ -74,8 +75,14 @@ const Post = (props)=> {
       </input>
     </form>
   </div>
-  )
-}
+  );
+};
+
+Post.propTypes = {
+  id: PropTypes.number,
+  tokenType: PropTypes.string,
+  accessToken: PropTypes.string
+};
 
 const mapStateToProps = state => ({
   id: state.user.user.id,

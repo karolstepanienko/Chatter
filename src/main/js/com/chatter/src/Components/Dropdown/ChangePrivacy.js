@@ -1,9 +1,9 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-import { Privacies, link } from '../../Constants/Constants';
-import Expire from '../DisappearingComponent/Expire';
-import { updateAccountPrivacyStore } from '../../State/userSlice';
+import { Privacies, link } from "../../Constants/Constants";
+import Expire from "../DisappearingComponent/Expire";
+import { updateAccountPrivacyStore } from "../../State/userSlice";
 
 
 const ChangePrivacy = (props) => {
@@ -13,22 +13,22 @@ const ChangePrivacy = (props) => {
 
   const handleChangePrivacyClick = () => {
     setShow(!show);
-  }
+  };
 
   const checkIfEmpty = () => {
     if (newPrivacy === "") return true;
     else return false;
-  }
+  };
 
   const handleSetPublic = () => {
     setNewPrivacy(Privacies.publicAccess);
     setShow(!show);
-  }
+  };
 
   const handleSetPrivate = () => {
     setNewPrivacy(Privacies.privateAccess);
     setShow(!show);
-  }
+  };
 
   const updateAccountPrivacyDatabase = () => {
     if (!checkIfEmpty() && !privacyUpdated) {
@@ -36,9 +36,9 @@ const ChangePrivacy = (props) => {
         res => setPrivacyUpdated(res.data)
       ).catch(
         err => console.log(err)
-      )
+      );
     }
-  }
+  };
 
   const getUserINFO = () => {
     var userINFO = {
@@ -48,17 +48,17 @@ const ChangePrivacy = (props) => {
       email: props.email,
       accountPrivacy: newPrivacy,
       role: props.role
-    }
+    };
     return userINFO;
-  }
+  };
 
   useEffect(() => {
     updateAccountPrivacyDatabase();
-  }, [newPrivacy])
+  }, [newPrivacy]);
 
   useEffect(() => {
     if (privacyUpdated) props.dispatch(updateAccountPrivacyStore(newPrivacy));
-  }, [newPrivacy, updateAccountPrivacyDatabase])
+  }, [newPrivacy, updateAccountPrivacyDatabase]);
 
   return (
     <div>
@@ -87,8 +87,8 @@ const ChangePrivacy = (props) => {
         reset={setPrivacyUpdated}
       />
     </div>
-  )
+  );
 
-}
+};
 
 export default ChangePrivacy;

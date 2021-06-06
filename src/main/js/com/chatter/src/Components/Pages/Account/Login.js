@@ -1,14 +1,14 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import '../../../css/Pages/Account/Register.css';
-import '../../../css/Expire/Expire.css'
+import "../../../css/Pages/Account/Register.css";
+import "../../../css/Expire/Expire.css";
 
-import { link } from '../../../Constants/Constants';
-import { login } from '../../../State/userSlice';
-import Expire from '../../DisappearingComponent/Expire';
+import { link } from "../../../Constants/Constants";
+import { login } from "../../../State/userSlice";
+import Expire from "../../DisappearingComponent/Expire";
 
 
 export const Login = () => {
@@ -26,17 +26,17 @@ export const Login = () => {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     getLoggedInData();
-  }
+  };
 
   const handleUserNameChange = (evt) => {
     evt.preventDefault();
     setUserName(evt.target.value);
-  }
+  };
 
   const handlePasswordChange = (evt) => {
     evt.preventDefault();
     setPassword(evt.target.value);
-  }
+  };
 
   const getUserDetails = () => {
     var userDetails = {
@@ -44,7 +44,7 @@ export const Login = () => {
       password: password 
     };
     return userDetails;
-  }
+  };
 
   const getLoggedInData = () => {
     axios.post(`${link}/account/login/signin`, getUserDetails()).then(
@@ -56,7 +56,7 @@ export const Login = () => {
       setBadUsernameOrPassword(true);
       console.log(err);
     });
-  }
+  };
 
   const createConfig = () => {
     let config = {
@@ -65,7 +65,7 @@ export const Login = () => {
       }
     };
     return config;
-  }
+  };
 
   const getVerifiedUser = () => {
     axios.get(`${link}/account/login/get?userName=${userName}&password=${password}`, createConfig()).then(
@@ -77,8 +77,8 @@ export const Login = () => {
           setBadUsernameOrPassword(true);
         }
       }
-    ).catch(err => {console.log(err)});
-  }
+    ).catch(err => {console.log(err);});
+  };
 
   const getStateUserFromUser = () => {
     var stateUser = {
@@ -91,22 +91,22 @@ export const Login = () => {
       postList: verifiedUser.postList,
       tokenType: tokenType,
       accessToken: accessToken
-    }
+    };
     return stateUser;
-  }
+  };
 
   const logUserIn = () => {
     dispatch(login(getStateUserFromUser()));
-    history.push('/profile');
-  }
+    history.push("/profile");
+  };
 
   useEffect( () => {
     getVerifiedUser();
-  }, [tokenType, accessToken])
+  }, [tokenType, accessToken]);
 
   useEffect( () => {
     if (verifiedUser != "") logUserIn();
-  }, [verifiedUser])
+  }, [verifiedUser]);
 
   return (
     <div className="login-page">
@@ -145,10 +145,10 @@ export const Login = () => {
             reset={setBadUsernameOrPassword}
           />
 
-      <Link to={'/register'}>Do not have an account? Register here.</Link>
+      <Link to={"/register"}>Do not have an account? Register here.</Link>
     </div>
-  )
-}
+  );
+};
 
 const ExpireWrapper = (props) => {
   return (
@@ -158,5 +158,5 @@ const ExpireWrapper = (props) => {
     reset={props.reset}
     children="Bad user name or password."
     {...props}/>
-  )
-}
+  );
+};

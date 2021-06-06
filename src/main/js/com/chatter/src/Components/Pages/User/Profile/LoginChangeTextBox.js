@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
-import { useState } from 'react';
-import { updateLogin } from '../../../../State/userSlice';
-import { link } from '../../../../Constants/Constants';
-import ButtonActivatedTextBox from './ButtonActivatedTextBox';
+import { useState } from "react";
+import { updateLogin } from "../../../../State/userSlice";
+import { link } from "../../../../Constants/Constants";
+import ButtonActivatedTextBox from "./ButtonActivatedTextBox";
 
 
 const LoginChangeTextBox = (props) => {
@@ -16,7 +16,7 @@ const LoginChangeTextBox = (props) => {
   const handleLoginChange = (evt) => {
     evt.preventDefault();
     setNewLogin(evt.target.value);
-  }
+  };
 
   const getUserDTO = () => {
     var userDTO = {
@@ -25,10 +25,10 @@ const LoginChangeTextBox = (props) => {
       login: newLogin,
       email: props.email,
       password: props.passwordHash,
-      role: '',
-    }
+      role: "",
+    };
     return userDTO;
-  }
+  };
 
   const handleLoginSubmit = () => {
     props.handleTextBoxVisibility();
@@ -45,20 +45,20 @@ const LoginChangeTextBox = (props) => {
       }
     ).catch(
       err => console.log(err)
-    )
-  }
+    );
+  };
 
   const clean = (props) => {
     setNewLogin("");
     setConfirmation({visible: false,
       value: "",
       className: ""});
-  }
+  };
 
   const handleCancel = () => {
     props.handleTextBoxVisibility();
     clean();
-  }
+  };
 
   return (
     <ButtonActivatedTextBox
@@ -76,7 +76,7 @@ const LoginChangeTextBox = (props) => {
       {...props}
     />
     
-  )
-}
+  );
+};
 
 export default LoginChangeTextBox;

@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import '../../../css/Pages/Public/Home.css';
-import PostsDisplay from '../Post/PostsDisplay';
-import LinkButton from '../../LinkButton/LinkButton';
-import ProfileLink from '../../ProfileLink/ProfileLink';
+import "../../../css/Pages/Public/Home.css";
+import PostsDisplay from "../Post/PostsDisplay";
+import LinkButton from "../../LinkButton/LinkButton";
+import ProfileLink from "../../ProfileLink/ProfileLink";
 
 export const Home = (props) => (
   <div className="home">
@@ -19,4 +19,4 @@ export const Home = (props) => (
     <div className="content-right">
     </div>
   </div>
-)
+);

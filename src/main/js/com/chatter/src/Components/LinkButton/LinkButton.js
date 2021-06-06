@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
+import React from "react";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 
 const LinkButton = (props) => {
   const {
@@ -11,7 +11,7 @@ const LinkButton = (props) => {
     to,
     onClick,
     ...rest
-  } = props
+  } = props;
   return (
     <button
       {...rest}
@@ -20,12 +20,12 @@ const LinkButton = (props) => {
         history.push(to);
       }}
     ></button>
-  )
-}
+  );
+};
 
 LinkButton.propTypes = {
   to: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired
-}
+};
 
-export default withRouter(LinkButton)
+export default withRouter(LinkButton);
