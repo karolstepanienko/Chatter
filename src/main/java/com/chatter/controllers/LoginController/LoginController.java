@@ -53,46 +53,46 @@ public class LoginController {
 	@Autowired
 	private JwtUtils jwtUtils;
 
-  /**
-   * @HTTPRequestMethod POST
-   * Verifies the given user data against the database.
-   * @param unverifiedUser Provided unverified user data.
-   * @return Verified user if provided data was correct. False otherwise.
-   */
-  @CrossOrigin
-  @PostMapping("/user/get")
-  public @ResponseBody User getVerifiedUser(
-    @RequestBody final User unverifiedUser) {
-    User verifiedUser = this.userRepository
-      .getUserWithUserName(unverifiedUser.getUserName());
-    if (verifiedUser != null) {
-      System.out.println(verifiedUser);
-      return verifiedUser;
-    } else {
-      return null;
-    }
-  }
+  // /**
+  //  * @HTTPRequestMethod POST
+  //  * Verifies the given user data against the database.
+  //  * @param unverifiedUser Provided unverified user data.
+  //  * @return Verified user if provided data was correct. False otherwise.
+  //  */
+  // @CrossOrigin
+  // @PostMapping("/user/get")
+  // public @ResponseBody User getVerifiedUser(
+  //   @RequestBody final User unverifiedUser) {
+  //   User verifiedUser = this.userRepository
+  //     .getUserWithUserName(unverifiedUser.getUserName());
+  //   if (verifiedUser != null) {
+  //     System.out.println(verifiedUser);
+  //     return verifiedUser;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
-  /**
-   * @HTTPRequestMethod POST
-   * Checks user password against the data in database.
-   * @param userDTO Provided user data.
-   * @return True if provided data was correct. False otherwise.
-   */
-  @CrossOrigin
-  @PostMapping("/user/check/password")
-  public @ResponseBody boolean checkUserPassword(
-    @RequestBody final UserDTO userDTO) {
-    User verifiedUser = this.userRepository
-      .getUserWithUserName(userDTO.getUserName());
-    if (verifiedUser != null) {
-      return this.passwordEncoder.matches(
-        userDTO.getPassword(),
-        verifiedUser.getPasswordHash());
-    } else {
-      return false;
-    }
-  }
+  // /**
+  //  * @HTTPRequestMethod POST
+  //  * Checks user password against the data in database.
+  //  * @param userDTO Provided user data.
+  //  * @return True if provided data was correct. False otherwise.
+  //  */
+  // @CrossOrigin
+  // @PostMapping("/user/check/password")
+  // public @ResponseBody boolean checkUserPassword(
+  //   @RequestBody final UserDTO userDTO) {
+  //   User verifiedUser = this.userRepository
+  //     .getUserWithUserName(userDTO.getUserName());
+  //   if (verifiedUser != null) {
+  //     return this.passwordEncoder.matches(
+  //       userDTO.getPassword(),
+  //       verifiedUser.getPasswordHash());
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   /**
    * @HTTPRequestMethod POST

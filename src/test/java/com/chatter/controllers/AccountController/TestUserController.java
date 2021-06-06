@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -22,6 +23,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 // import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.transaction.Transactional;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -86,6 +90,8 @@ public class TestUserController {
   }
 
   @Test
+  @Transactional
+  @Rollback(false)
   @Order(1)
   public void test_1_RegisterTestUser() throws Exception {
     this.init();
@@ -100,6 +106,8 @@ public class TestUserController {
   }
 
   @Test
+  @Transactional
+  @Rollback(false)
   @Order(2)
   public void test_2_LogUserIn() throws Exception {
     this.init();
@@ -116,215 +124,235 @@ public class TestUserController {
     JSONObject jsonObject = new JSONObject(mvcResult.getResponse().getContentAsString());
     this.tokenType = jsonObject.get("tokenType").toString();
     this.accessToken = jsonObject.get("accessToken").toString();
-    System.out.println(this.tokenType);
-    System.out.println(this.accessToken);
   }
 
-  // @Test
-  // @Order(2)
-  // public void test_2_getUserId() throws Exception {
-  //   this.init();
+  @Test
+  @Order(3)
+  public void test_3_getUserId() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
 
-  //   MvcResult mvcResult = this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/get/id/by/userName"))
-  //       .param("userName", this.testUser.getUserName())
-  //       )
-  //     .andExpect(status().isOk())
-  //     .andReturn();
+    MvcResult mvcResult = this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get/id/by/userName"))
+        .param("userName", this.testUser.getUserName())
+        .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+        )
+      .andExpect(status().isOk())
+      .andReturn();
     
-  //   // Sets user ID
-  //   this.testUser.setId(Integer.valueOf(mvcResult.getResponse().getContentAsString()));
-  // }
+    // Sets user ID
+    this.testUser.setId(Integer.valueOf(mvcResult.getResponse().getContentAsString()));
+  }
   
-  // @Test
-  // @Order(3)
-  // public void test_3_SetUserLogin() throws Exception {
-  //   this.init();
-  //   // Sets user ID
-  //   this.test_2_getUserId();
-  //   this.testUser.setLogin("newLogin");
+  @Test
+  @Order(4)
+  public void test_4_SetUserLogin() throws Exception {
+    this.init();
+    // Sets user ID
+    this.test_3_getUserId();
+    this.testUser.setLogin("newLogin");
 
-  //   this.mockMvc.perform(
-  //     post(String.join("", this.link, "/user/update/login"))
-  //     .content(asJsonString(this.testUser))
-  //     .contentType(MediaType.APPLICATION_JSON)
-  //     )
-  //     .andExpect(status().isOk())
-  //     .andExpect(jsonPath("$", is(true)));
-  // }
+    this.mockMvc.perform(
+      post(String.join("", this.link, "/user/update/login"))
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      .content(asJsonString(this.testUser))
+      .contentType(MediaType.APPLICATION_JSON)
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$", is(true)));
+  }
 
-  // @Test
-  // @Order(4)
-  // public void test_4_CheckUserNameAvailableFalse() throws Exception {
-  //   this.init();
+  @Test
+  @Order(5)
+  public void test_5_CheckUserNameAvailableFalse() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
 
-  //   this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/check/username"))
-  //     .param("userName", this.testUser.getUserName())
-  //     )
-  //   .andExpect(status().isOk())
-  //   // Root of json https://goessner.net/articles/JsonPath/
-  //   .andExpect(jsonPath("$", is(false)));
-  // }
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/check/username"))
+      .param("userName", this.testUser.getUserName())
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    // Root of json https://goessner.net/articles/JsonPath/
+    .andExpect(jsonPath("$", is(false)));
+  }
 
-  // @Test
-  // @Order(5)
-  // public void test_5_CheckUserNameAvailableTrue() throws Exception {
-  //   this.init();
-  //   String userName = "Thisusernamewlldefinitelybeavailable";
+  @Test
+  @Order(6)
+  public void test_6_CheckUserNameAvailableTrue() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
+    String userName = "Thisusernamewlldefinitelybeavailable";
 
-  //   this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/check/username"))
-  //     .param("userName", userName)
-  //     )
-  //   .andExpect(status().isOk())
-  //   // Root of json https://goessner.net/articles/JsonPath/
-  //   .andExpect(jsonPath("$", is(true)));
-  // }
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/check/username"))
+      .param("userName", userName)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    // Root of json https://goessner.net/articles/JsonPath/
+    .andExpect(jsonPath("$", is(true)));
+  }
 
-  // @Test
-  // @Order(6)
-  // public void test_6_CheckEmailAvailableFalse() throws Exception {
-  //   this.init();
-  //   String email = "testEmail@email.com";
+  @Test
+  @Order(7)
+  public void test_7_CheckEmailAvailableFalse() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
+    String email = "testEmail@email.com";
 
-  //   this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/check/email"))
-  //     .param("email", email)
-  //     )
-  //   .andExpect(status().isOk())
-  //   // Root of json https://goessner.net/articles/JsonPath/
-  //   .andExpect(jsonPath("$", is(false)));
-  // }
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/check/email"))
+      .param("email", email)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    // Root of json https://goessner.net/articles/JsonPath/
+    .andExpect(jsonPath("$", is(false)));
+  }
 
-  // @Test
-  // @Order(7)
-  // public void test_7_CheckEmailAvailableTrue() throws Exception {
-  //   this.init();
-  //   String email = "thisEmailWilldefinitelyBeawailable@email.com";
+  @Test
+  @Order(8)
+  public void test_8_CheckEmailAvailableTrue() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
+    String email = "thisEmailWilldefinitelyBeawailable@email.com";
 
-  //   this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/check/email"))
-  //     .param("email", email)
-  //     )
-  //   .andExpect(status().isOk())
-  //   // Root of json https://goessner.net/articles/JsonPath/
-  //   .andExpect(jsonPath("$", is(true)));
-  // }
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/check/email"))
+      .param("email", email)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    // Root of json https://goessner.net/articles/JsonPath/
+    .andExpect(jsonPath("$", is(true)));
+  }
 
-  // @Test
-  // @Order(8)
-  // public void test_8_VerifyUserVerified() throws Exception {
-  //   this.init();
-  //   String userName = "testFirst";
-  //   String password = "12345";
+  @Test
+  @Order(9)
+  public void test_9_VerifyUserVerified() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
 
-  //   this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/get"))
-  //     .param("userName", userName)
-  //     .param("password", password)
-  //     )
-  //   .andExpect(status().isOk())
-  //   .andExpect(jsonPath("$.userName", is(userName)))
-  //   .andExpect(jsonPath("$.login", is("newLogin")))
-  //   .andExpect(jsonPath("$.email", is("testEmail@email.com")))
-  //   .andExpect(jsonPath("$.accountPrivacy", is("PRIVATE")))
-  //   .andExpect(jsonPath("$.role", is("USER")));
-  // }
+    String userName = "testFirst";
+    String password = "12345";
 
-  // @Test
-  // @Order(9)
-  // public void test_9_VerifyUserUnverified() throws Exception {
-  //   this.init();
-  //   String userName = "testFirst";
-  //   String password = "thispasswordwildefinitelyNotBeGood";
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get"))
+      .param("userName", userName)
+      .param("password", password)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("$.userName", is(userName)))
+    .andExpect(jsonPath("$.login", is("newLogin")))
+    .andExpect(jsonPath("$.email", is("testEmail@email.com")))
+    .andExpect(jsonPath("$.accountPrivacy", is("PRIVATE")))
+    .andExpect(jsonPath("$.role", is("USER")));
+  }
 
-  //   MvcResult mvcResult = this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/get"))
-  //     .param("userName", userName)
-  //     .param("password", password)
-  //     )
-  //   .andExpect(status().isOk())
-  //   .andReturn();
+  @Test
+  @Order(10)
+  public void test_10_VerifyUserUnverified() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
+    String userName = "testFirst";
+    String password = "thispasswordwildefinitelyNotBeGood";
 
-  //   // Checks if the response was empty
-  //   assertEquals(mvcResult.getResponse().getContentAsString(), "");
-  // }
+    MvcResult mvcResult = this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get"))
+      .param("userName", userName)
+      .param("password", password)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    .andReturn();
 
-  // @Test
-  // @Order(10)
-  // public void test_10_getUserWithUserNameTrue() throws Exception {
-  //   this.init();
-  //   String userName = "testFirst";
+    // Checks if the response was empty
+    assertEquals(mvcResult.getResponse().getContentAsString(), "");
+  }
 
-  //   this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/get/user/by/userName"))
-  //     .param("userName", userName)
-  //     )
-  //   .andExpect(status().isOk())
-  //   .andExpect(jsonPath("$.userName", is(userName)))
-  //   .andExpect(jsonPath("$.login", is("newLogin")))
-  //   .andExpect(jsonPath("$.email", is("testEmail@email.com")))
-  //   .andExpect(jsonPath("$.accountPrivacy", is("PRIVATE")))
-  //   .andExpect(jsonPath("$.role", is("USER")));
-  // }
+  @Test
+  @Order(11)
+  public void test_11_getUserWithUserNameTrue() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
+    String userName = "testFirst";
 
-  // @Test
-  // @Order(11)
-  // public void test_11_getUserWithUserNameNull() throws Exception {
-  //   this.init();
-  //   String userName = "thisUserDefinitelydoesnotExist";
+    this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get/user/by/userName"))
+      .param("userName", userName)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("$.userName", is(userName)))
+    .andExpect(jsonPath("$.login", is("newLogin")))
+    .andExpect(jsonPath("$.email", is("testEmail@email.com")))
+    .andExpect(jsonPath("$.accountPrivacy", is("PRIVATE")))
+    .andExpect(jsonPath("$.role", is("USER")));
+  }
 
-  //   MvcResult mvcResult = this.mockMvc.perform(
-  //     get(String.join("", this.link, "/user/get/user/by/userName"))
-  //     .param("userName", userName)
-  //     )
-  //   .andExpect(status().isOk())
-  //   .andReturn();
+  @Test
+  @Order(12)
+  public void test_12_getUserWithUserNameNull() throws Exception {
+    this.init();
+    this.test_2_LogUserIn();
+    String userName = "thisUserDefinitelydoesnotExist";
 
-  //   // Checks if the response was empty
-  //   assertEquals(mvcResult.getResponse().getContentAsString(), "");
-  // }
+    MvcResult mvcResult = this.mockMvc.perform(
+      get(String.join("", this.link, "/user/get/user/by/userName"))
+      .param("userName", userName)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+    .andExpect(status().isOk())
+    .andReturn();
 
-  // @Test
-  // @Order(12)
-  // public void test_12_SetUserEmail() throws Exception {
-  //   this.init();
-  //   // Sets user ID
-  //   this.test_2_getUserId();
-  //   this.testUser.setEmail("newTestEmail@email.com");
+    // Checks if the response was empty
+    assertEquals(mvcResult.getResponse().getContentAsString(), "");
+  }
 
-  //   this.mockMvc.perform(
-  //     post(String.join("", this.link, "/user/update/email"))
-  //     .content(asJsonString(this.testUser))
-  //     .contentType(MediaType.APPLICATION_JSON)
-  //     )
-  //     .andExpect(status().isOk())
-  //     .andExpect(jsonPath("$", is(true)));
-  // }
+  @Test
+  @Order(13)
+  public void test_13_SetUserEmail() throws Exception {
+    this.init();
+    // Sets user ID
+    this.test_3_getUserId();
+    this.testUser.setEmail("newTestEmail@email.com");
 
-  // @Test
-  // @Order(13)
-  // public void test_13_SetUserPrivacy() throws Exception {
-  //   this.init();
-  //   // Sets user ID
-  //   this.test_2_getUserId();
-  //   UserINFO userINFO = new UserINFO();
-  //   userINFO.setId(this.testUser.getId());
-  //   userINFO.setAccountPrivacy(getPublicAccess());
+    this.mockMvc.perform(
+      post(String.join("", this.link, "/user/update/email"))
+      .content(asJsonString(this.testUser))
+      .contentType(MediaType.APPLICATION_JSON)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$", is(true)));
+  }
 
-  //   this.mockMvc.perform(
-  //     post(String.join("", this.link, "/user/update/privacy"))
-  //     .content(asJsonString(userINFO))
-  //     .contentType(MediaType.APPLICATION_JSON)
-  //     )
-  //     .andExpect(status().isOk())
-  //     .andExpect(jsonPath("$", is(true)));
-  // }
+  @Test
+  @Order(14)
+  public void test_14_SetUserPrivacy() throws Exception {
+    this.init();
+    // Sets user ID
+    this.test_3_getUserId();
+    UserINFO userINFO = new UserINFO();
+    userINFO.setId(this.testUser.getId());
+    userINFO.setAccountPrivacy(getPublicAccess());
+
+    this.mockMvc.perform(
+      post(String.join("", this.link, "/user/update/privacy"))
+      .content(asJsonString(userINFO))
+      .contentType(MediaType.APPLICATION_JSON)
+      .header("Authorization", String.join(" ", this.tokenType, this.accessToken))
+      )
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$", is(true)));
+  }
 
   @Test 
-  @Order(3)
-  public void test_14_RemoveUserByUserName() throws Exception {
+  @Order(15)
+  public void test_15_RemoveUserByUserName() throws Exception {
     this.init();
     this.test_2_LogUserIn();
 
