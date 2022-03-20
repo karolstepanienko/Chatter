@@ -2,7 +2,7 @@
 Social media web application. Project finished June 2021.
 
 ## Wiki:
-- [Wiki](../../wiki/Home.md)
+- [Wiki](../../wiki/)
 
 ## Technologies used:
 - [SpringBoot](https://spring.io/projects/spring-boot)
